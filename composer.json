@@ -1,41 +1,53 @@
 {
-    "name": "league/plates",
-    "description": "Plates, the native PHP template system that's fast, easy to use and easy to extend.",
+    "name": "mobicms/render",
+    "description": "mobiCMS native PHP template engine",
+    "type": "library",
+    "homepage": "https://github.com/mobicms/render",
+    "license": "MIT",
     "keywords": [
-        "league",
-        "package",
+        "mobicms",
+        "render",
         "templating",
         "templates",
         "views"
     ],
-    "homepage": "http://platesphp.com",
-    "license": "MIT",
-    "authors" : [
+    "authors": [
         {
             "name": "Jonathan Reinink",
             "email": "jonathan@reinink.ca",
             "role": "Developer"
+        },
+        {
+            "name": "mobiCMS Contributors",
+            "homepage": "https://github.com/mobicms/render/graphs/contributors"
         }
     ],
-    "require" : {
-        "php": "^5.3 | ^7.0"
+    "require": {
+        "php": "^7.2"
     },
     "require-dev": {
-        "mikey179/vfsStream": "^1.4",
-        "phpunit/phpunit": "~4.0",
-        "squizlabs/php_codesniffer": "~1.5"
+        "phpunit/phpunit": "^8.3",
+        "squizlabs/php_codesniffer": "^3.4",
+        "mikey179/vfsstream": "^1.6"
     },
     "autoload": {
         "psr-4": {
             "League\\Plates\\": "src"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0-dev"
+    "autoload-dev": {
+        "psr-4": {
+            "MobicmsTest\\": "test"
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
 }

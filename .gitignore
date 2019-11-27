@@ -1,4 +1,6 @@
-build
-composer.lock
-vendor
-docs/_site
+.idea
+/*.cache
+/clover.xml
+/composer.lock
+/phpunit.xml
+/vendor
