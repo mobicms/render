@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "League\\Plates\\": "src"
+            "Mobicms\\Render\\": "src"
         }
     },
     "autoload-dev": {

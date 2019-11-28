@@ -9,7 +9,7 @@ declare(strict_types=1);
  * @link        http://mobicms.org mobiCMS Project
  */
 
-namespace League\Plates;
+namespace Mobicms\Render;
 
 /**
  * A common interface for extensions.

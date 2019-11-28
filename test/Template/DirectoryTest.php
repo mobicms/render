@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace MobicmsTest;
 
-use League\Plates\Template\Directory;
+use Mobicms\Render\Template\Directory;
 use LogicException;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;

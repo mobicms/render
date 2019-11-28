@@ -9,9 +9,9 @@ declare(strict_types=1);
  * @link        http://mobicms.org mobiCMS Project
  */
 
-namespace League\Plates\Template;
+namespace Mobicms\Render\Template;
 
-use League\Plates\ExtensionInterface;
+use Mobicms\Render\ExtensionInterface;
 use LogicException;
 
 /**
@@ -98,9 +98,9 @@ class Func
      */
     public function call(Template $template = null, array $arguments = [])
     {
-        if (is_array($this->callback) &&
-            isset($this->callback[0]) &&
-            $this->callback[0] instanceof ExtensionInterface
+        if (is_array($this->callback)
+            && isset($this->callback[0])
+            && $this->callback[0] instanceof ExtensionInterface
         ) {
             $this->callback[0]->template = $template;
         }

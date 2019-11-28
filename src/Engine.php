@@ -9,16 +9,16 @@ declare(strict_types=1);
  * @link        http://mobicms.org mobiCMS Project
  */
 
-namespace League\Plates;
+namespace Mobicms\Render;
 
-use League\Plates\Template\Data;
-use League\Plates\Template\Directory;
-use League\Plates\Template\FileExtension;
-use League\Plates\Template\Folders;
-use League\Plates\Template\Func;
-use League\Plates\Template\Functions;
-use League\Plates\Template\Name;
-use League\Plates\Template\Template;
+use Mobicms\Render\Template\Data;
+use Mobicms\Render\Template\Directory;
+use Mobicms\Render\Template\FileExtension;
+use Mobicms\Render\Template\Folders;
+use Mobicms\Render\Template\Func;
+use Mobicms\Render\Template\Functions;
+use Mobicms\Render\Template\Name;
+use Mobicms\Render\Template\Template;
 
 /**
  * Template API and environment settings storage

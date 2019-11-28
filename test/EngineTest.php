@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace MobicmsTest;
 
-use League\Plates\Engine;
-use League\Plates\Template\Folders;
-use League\Plates\Template\Func;
-use League\Plates\Template\Template;
+use Mobicms\Render\Engine;
+use Mobicms\Render\Template\Folders;
+use Mobicms\Render\Template\Func;
+use Mobicms\Render\Template\Template;
 use LogicException;
 use MobicmsTest\Extension\DummyExtensionBar;
 use MobicmsTest\Extension\DummyExtensionFoo;

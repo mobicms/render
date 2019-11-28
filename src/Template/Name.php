@@ -9,9 +9,9 @@ declare(strict_types=1);
  * @link        http://mobicms.org mobiCMS Project
  */
 
-namespace League\Plates\Template;
+namespace Mobicms\Render\Template;
 
-use League\Plates\Engine;
+use Mobicms\Render\Engine;
 use LogicException;
 
 /**

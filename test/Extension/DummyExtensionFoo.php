@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace MobicmsTest\Extension;
 
-use League\Plates\Engine;
-use League\Plates\ExtensionInterface;
+use Mobicms\Render\Engine;
+use Mobicms\Render\ExtensionInterface;
 
 class DummyExtensionFoo implements ExtensionInterface
 {

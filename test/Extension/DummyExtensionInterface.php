@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace MobicmsTest\Extension;
 
-use League\Plates\ExtensionInterface;
+use Mobicms\Render\ExtensionInterface;
 
 interface DummyExtensionInterface extends ExtensionInterface
 {

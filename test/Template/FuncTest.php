@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace MobicmsTest;
 
-use League\Plates\Template\Func;
+use Mobicms\Render\Template\Func;
 use LogicException;
 use MobicmsTest\Extension\DummyExtensionInterface;
 use PHPUnit\Framework\TestCase;

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace MobicmsTest;
 
-use League\Plates\Template\FileExtension;
+use Mobicms\Render\Template\FileExtension;
 use PHPUnit\Framework\TestCase;
 
 class FileExtensionTest extends TestCase
