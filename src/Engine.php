@@ -2,7 +2,6 @@
 
 namespace League\Plates;
 
-use League\Plates\Extension\ExtensionInterface;
 use League\Plates\Template\Data;
 use League\Plates\Template\Directory;
 use League\Plates\Template\FileExtension;
