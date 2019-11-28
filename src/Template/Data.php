@@ -14,29 +14,24 @@ namespace League\Plates\Template;
 use LogicException;
 
 /**
- * Preassigned template data.
+ * Preassigned template data
  */
 class Data
 {
-    /**
-     * Variables shared by all templates.
-     * @var array
-     */
+    /** @var array Variables shared by all templates */
     protected $sharedVariables = [];
 
-    /**
-     * Specific template variables.
-     * @var array
-     */
+    /** @var array Specific template variables */
     protected $templateVariables = [];
 
     /**
-     * Add template data.
-     * @param  array             $data;
-     * @param  null|string|array $templates;
+     * Add template data
+     *
+     * @param array             $data
+     * @param null|string|array $templates
      * @return Data
      */
-    public function add(array $data, $templates = null)
+    public function add(array $data, $templates = null) : Data
     {
         if (null === $templates) {
             return $this->shareWithAll($data);
@@ -56,11 +51,12 @@ class Data
     }
 
     /**
-     * Add data shared with all templates.
-     * @param  array $data;
+     * Add data shared with all templates
+     *
+     * @param array $data
      * @return Data
      */
-    public function shareWithAll($data)
+    public function shareWithAll(array $data) : self
     {
         $this->sharedVariables = array_merge($this->sharedVariables, $data);
 
@@ -68,12 +64,13 @@ class Data
     }
 
     /**
-     * Add data shared with some templates.
-     * @param  array $data;
-     * @param  array $templates;
+     * Add data shared with some templates
+     *
+     * @param array $data
+     * @param array $templates
      * @return Data
      */
-    public function shareWithSome($data, array $templates)
+    public function shareWithSome(array $data, array $templates) : self
     {
         foreach ($templates as $template) {
             if (isset($this->templateVariables[$template])) {
@@ -87,11 +84,12 @@ class Data
     }
 
     /**
-     * Get template data.
-     * @param  null|string $template;
+     * Get template data
+     *
+     * @param null|string $template
      * @return array
      */
-    public function get($template = null)
+    public function get(?string $template = null) : array
     {
         if (isset($template, $this->templateVariables[$template])) {
             return array_merge($this->sharedVariables, $this->templateVariables[$template]);

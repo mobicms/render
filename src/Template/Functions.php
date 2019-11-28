@@ -14,23 +14,21 @@ namespace League\Plates\Template;
 use LogicException;
 
 /**
- * A collection of template functions.
+ * A collection of template functions
  */
 class Functions
 {
-    /**
-     * Array of template functions.
-     * @var array
-     */
+    /** @var array Array of template functions */
     protected $functions = [];
 
     /**
-     * Add a new template function.
-     * @param  string    $name;
-     * @param  callback  $callback;
+     * Add a new template function
+     *
+     * @param string   $name
+     * @param callable $callback
      * @return Functions
      */
-    public function add($name, $callback)
+    public function add(string $name, callable $callback) : self
     {
         if ($this->exists($name)) {
             throw new LogicException(
@@ -44,11 +42,12 @@ class Functions
     }
 
     /**
-     * Remove a template function.
-     * @param  string    $name;
+     * Remove a template function
+     *
+     * @param string $name
      * @return Functions
      */
-    public function remove($name)
+    public function remove(string $name) : self
     {
         if (! $this->exists($name)) {
             throw new LogicException(
@@ -62,11 +61,12 @@ class Functions
     }
 
     /**
-     * Get a template function.
-     * @param  string $name
+     * Get a template function
+     *
+     * @param string $name
      * @return Func
      */
-    public function get($name)
+    public function get(string $name) : Func
     {
         if (! $this->exists($name)) {
             throw new LogicException('The template function "' . $name . '" was not found.');
@@ -76,11 +76,12 @@ class Functions
     }
 
     /**
-     * Check if a template function exists.
-     * @param  string  $name
+     * Check if a template function exists
+     *
+     * @param string $name
      * @return bool
      */
-    public function exists($name)
+    public function exists(string $name) : bool
     {
         return isset($this->functions[$name]);
     }

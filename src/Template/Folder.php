@@ -14,35 +14,27 @@ namespace League\Plates\Template;
 use LogicException;
 
 /**
- * A template folder.
+ * A template folder
  */
 class Folder
 {
-    /**
-     * The folder name.
-     * @var string
-     */
+    /** @var string The folder name */
     protected $name;
 
-    /**
-     * The folder path.
-     * @var string
-     */
+    /** @var string The folder path */
     protected $path;
 
-    /**
-     * The folder fallback status.
-     * @var bool
-     */
+    /** @var bool The folder fallback status */
     protected $fallback;
 
     /**
-     * Create a new Folder instance.
-     * @param string  $name
-     * @param string  $path
-     * @param bool $fallback
+     * Create a new Folder instance
+     *
+     * @param string $name
+     * @param string $path
+     * @param bool   $fallback
      */
-    public function __construct($name, $path, $fallback = false)
+    public function __construct(string $name, string $path, bool $fallback = false)
     {
         $this->setName($name);
         $this->setPath($path);
@@ -50,11 +42,12 @@ class Folder
     }
 
     /**
-     * Set the folder name.
-     * @param  string $name
+     * Set the folder name
+     *
+     * @param string $name
      * @return Folder
      */
-    public function setName($name)
+    public function setName(string $name) : self
     {
         $this->name = $name;
 
@@ -62,20 +55,22 @@ class Folder
     }
 
     /**
-     * Get the folder name.
+     * Get the folder name
+     *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
     /**
-     * Set the folder path.
-     * @param  string $path
+     * Set the folder path
+     *
+     * @param string $path
      * @return Folder
      */
-    public function setPath($path)
+    public function setPath(string $path) : self
     {
         if (! is_dir($path)) {
             throw new LogicException('The specified directory path "' . $path . '" does not exist.');
@@ -87,20 +82,22 @@ class Folder
     }
 
     /**
-     * Get the folder path.
+     * Get the folder path
+     *
      * @return string
      */
-    public function getPath()
+    public function getPath() : string
     {
         return $this->path;
     }
 
     /**
-     * Set the folder fallback status.
-     * @param  bool $fallback
+     * Set the folder fallback status
+     *
+     * @param bool $fallback
      * @return Folder
      */
-    public function setFallback($fallback)
+    public function setFallback(bool $fallback) : self
     {
         $this->fallback = $fallback;
 
@@ -108,10 +105,11 @@ class Folder
     }
 
     /**
-     * Get the folder fallback status.
+     * Get the folder fallback status
+     *
      * @return bool
      */
-    public function getFallback()
+    public function getFallback() : bool
     {
         return $this->fallback;
     }

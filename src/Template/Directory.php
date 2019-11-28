@@ -14,31 +14,25 @@ namespace League\Plates\Template;
 use LogicException;
 
 /**
- * Default template directory.
+ * Default template directory
  */
 class Directory
 {
-    /**
-     * Template directory path.
-     * @var string
-     */
+    /** @var string Template directory path */
     protected $path;
 
-    /**
-     * Create new Directory instance.
-     * @param string $path
-     */
-    public function __construct($path = null)
+    public function __construct(string $path = null)
     {
         $this->set($path);
     }
 
     /**
-     * Set path to templates directory.
-     * @param  string|null $path Pass null to disable the default directory.
+     * Set path to templates directory
+     *
+     * @param string|null $path Pass null to disable the default directory
      * @return Directory
      */
-    public function set($path)
+    public function set(?string $path) : self
     {
         if (null !== $path && ! is_dir($path)) {
             throw new LogicException(
@@ -52,10 +46,11 @@ class Directory
     }
 
     /**
-     * Get path to templates directory.
-     * @return string
+     * Get path to templates directory
+     *
+     * @return string|null
      */
-    public function get()
+    public function get() : ?string
     {
         return $this->path;
     }

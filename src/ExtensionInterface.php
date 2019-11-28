@@ -16,5 +16,5 @@ namespace League\Plates;
  */
 interface ExtensionInterface
 {
-    public function register(Engine $engine);
+    public function register(Engine $engine) : void;
 }

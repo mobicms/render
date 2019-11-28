@@ -14,24 +14,22 @@ namespace League\Plates\Template;
 use LogicException;
 
 /**
- * A collection of template folders.
+ * A collection of template folders
  */
 class Folders
 {
-    /**
-     * Array of template folders.
-     * @var array
-     */
+    /** @var array Array of template folders */
     protected $folders = [];
 
     /**
-     * Add a template folder.
-     * @param  string  $name
-     * @param  string  $path
-     * @param  bool $fallback
+     * Add a template folder
+     *
+     * @param string $name
+     * @param string $path
+     * @param bool   $fallback
      * @return Folders
      */
-    public function add($name, $path, $fallback = false)
+    public function add(string $name, string $path, bool $fallback = false) : self
     {
         if ($this->exists($name)) {
             throw new LogicException('The template folder "' . $name . '" is already being used.');
@@ -43,11 +41,12 @@ class Folders
     }
 
     /**
-     * Remove a template folder.
-     * @param  string  $name
+     * Remove a template folder
+     *
+     * @param string $name
      * @return Folders
      */
-    public function remove($name)
+    public function remove(string $name) : self
     {
         if (! $this->exists($name)) {
             throw new LogicException('The template folder "' . $name . '" was not found.');
@@ -59,11 +58,12 @@ class Folders
     }
 
     /**
-     * Get a template folder.
-     * @param  string $name
+     * Get a template folder
+     *
+     * @param string $name
      * @return Folder
      */
-    public function get($name)
+    public function get(string $name) : Folder
     {
         if (! $this->exists($name)) {
             throw new LogicException('The template folder "' . $name . '" was not found.');
@@ -73,11 +73,12 @@ class Folders
     }
 
     /**
-     * Check if a template folder exists.
-     * @param  string  $name
+     * Check if a template folder exists
+     *
+     * @param string $name
      * @return bool
      */
-    public function exists($name)
+    public function exists(string $name) : bool
     {
         return isset($this->folders[$name]);
     }

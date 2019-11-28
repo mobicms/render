@@ -12,31 +12,25 @@ declare(strict_types=1);
 namespace League\Plates\Template;
 
 /**
- * Template file extension.
+ * Template file extension
  */
 class FileExtension
 {
-    /**
-     * Template file extension.
-     * @var string
-     */
+    /** @var string Template file extension */
     protected $fileExtension;
 
-    /**
-     * Create new FileExtension instance.
-     * @param null|string $fileExtension
-     */
-    public function __construct($fileExtension = 'php')
+    public function __construct(?string $fileExtension = 'php')
     {
         $this->set($fileExtension);
     }
 
     /**
-     * Set the template file extension.
-     * @param  null|string   $fileExtension
+     * Set the template file extension
+     *
+     * @param null|string $fileExtension
      * @return FileExtension
      */
-    public function set($fileExtension)
+    public function set(?string $fileExtension) : self
     {
         $this->fileExtension = $fileExtension;
 
@@ -44,10 +38,11 @@ class FileExtension
     }
 
     /**
-     * Get the template file extension.
-     * @return string
+     * Get the template file extension
+     *
+     * @return string|null
      */
-    public function get()
+    public function get() : ?string
     {
         return $this->fileExtension;
     }

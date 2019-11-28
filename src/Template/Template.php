@@ -16,64 +16,67 @@ use LogicException;
 use Throwable;
 
 /**
- * Container which holds template data and provides access to template functions.
+ * Container which holds template data and provides access to template functions
  */
 class Template
 {
     /**
-     * Instance of the template engine.
+     * Instance of the template engine
+     *
      * @var Engine
      */
     protected $engine;
 
     /**
-     * The name of the template.
+     * The name of the template
+     *
      * @var Name
      */
     protected $name;
 
     /**
-     * The data assigned to the template.
+     * The data assigned to the template
+     *
      * @var array
      */
     protected $data = [];
 
     /**
-     * An array of section content.
+     * An array of section content
+     *
      * @var array
      */
     protected $sections = [];
 
     /**
-     * The name of the section currently being rendered.
+     * The name of the section currently being rendered
+     *
      * @var string
      */
     protected $sectionName;
 
     /**
-     * Whether the section should be appended or not.
+     * Whether the section should be appended or not
+     *
      * @var bool
      */
     protected $appendSection;
 
     /**
-     * The name of the template layout.
+     * The name of the template layout
+     *
      * @var string
      */
     protected $layoutName;
 
     /**
-     * The data assigned to the template layout.
+     * The data assigned to the template layout
+     *
      * @var array
      */
     protected $layoutData;
 
-    /**
-     * Create new Template instance.
-     * @param Engine $engine
-     * @param string $name
-     */
-    public function __construct(Engine $engine, $name)
+    public function __construct(Engine $engine, string $name)
     {
         $this->engine = $engine;
         $this->name = new Name($engine, $name);
@@ -82,67 +85,71 @@ class Template
     }
 
     /**
-     * Magic method used to call extension functions.
-     * @param  string $name
-     * @param  array  $arguments
+     * Magic method used to call extension functions
+     *
+     * @param string $name
+     * @param array  $arguments
      * @return mixed
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         return $this->engine->getFunction($name)->call($this, $arguments);
     }
 
     /**
-     * Alias for render() method.
-     * @throws \Throwable
-     * @throws \Exception
+     * Alias for render() method
+     *
      * @return string
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function __toString()
+    public function __toString() : string
     {
         return $this->render();
     }
 
     /**
-     * Assign or get template data.
-     * @param  array $data
-     * @return mixed
+     * Assign or get template data
+     *
+     * @param array $data
+     * @return array
      */
-    public function data(array $data = null)
+    public function data(array $data = []) : array
     {
-        if (null === $data) {
-            return $this->data;
-        }
-
         $this->data = array_merge($this->data, $data);
+
+        return $this->data;
     }
 
     /**
-     * Check if the template exists.
+     * Check if the template exists
+     *
      * @return bool
      */
-    public function exists()
+    public function exists() : bool
     {
         return $this->name->doesPathExist();
     }
 
     /**
-     * Get the template path.
+     * Get the template path
+     *
      * @return string
      */
-    public function path()
+    public function path() : string
     {
         return $this->name->getPath();
     }
 
     /**
-     * Render the template and layout.
-     * @param  array  $data
-     * @throws \Throwable
-     * @throws \Exception
+     * Render the template and layout
+     *
+     * @param array $data
      * @return string
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function render(array $data = [])
+    public function render(array $data = []) : string
     {
         $this->data($data);
         unset($data);
@@ -179,23 +186,23 @@ class Template
     }
 
     /**
-     * Set the template's layout.
-     * @param  string $name
-     * @param  array  $data
-     * @return null
+     * Set the template's layout
+     *
+     * @param string $name
+     * @param array  $data
      */
-    public function layout($name, array $data = [])
+    public function layout(string $name, array $data = []) : void
     {
         $this->layoutName = $name;
         $this->layoutData = $data;
     }
 
     /**
-     * Start a new section block.
-     * @param  string  $name
-     * @return null
+     * Start a new section block
+     *
+     * @param string $name
      */
-    public function start($name)
+    public function start(string $name) : void
     {
         if ($name === 'content') {
             throw new LogicException(
@@ -213,22 +220,20 @@ class Template
     }
 
     /**
-     * Start a new append section block.
-     * @param  string $name
-     * @return null
+     * Start a new append section block
+     *
+     * @param string $name
      */
-    public function push($name)
+    public function push(string $name) : void
     {
         $this->appendSection = true;
-
         $this->start($name);
     }
 
     /**
-     * Stop the current section block.
-     * @return null
+     * Stop the current section block
      */
-    public function stop()
+    public function stop() : void
     {
         if (null === $this->sectionName) {
             throw new LogicException(
@@ -248,21 +253,21 @@ class Template
     }
 
     /**
-     * Alias of stop().
-     * @return null
+     * Alias of stop()
      */
-    public function end()
+    public function end() : void
     {
         $this->stop();
     }
 
     /**
-     * Returns the content for a section block.
-     * @param  string      $name    Section name
-     * @param  string      $default Default section content
+     * Returns the content for a section block
+     *
+     * @param string $name    Section name
+     * @param string $default Default section content
      * @return string|null
      */
-    public function section($name, $default = null)
+    public function section(string $name, string $default = null) : ?string
     {
         if (! isset($this->sections[$name])) {
             return $default;
@@ -272,34 +277,38 @@ class Template
     }
 
     /**
-     * Fetch a rendered template.
-     * @param  string $name
-     * @param  array  $data
+     * Fetch a rendered template
+     *
+     * @param string $name
+     * @param array  $data
      * @return string
+     * @throws Throwable
      */
-    public function fetch($name, array $data = [])
+    public function fetch(string $name, array $data = []) : string
     {
         return $this->engine->render($name, $data);
     }
 
     /**
-     * Output a rendered template.
-     * @param  string $name
-     * @param  array  $data
-     * @return null
+     * Output a rendered template
+     *
+     * @param string $name
+     * @param array  $data
+     * @throws Throwable
      */
-    public function insert($name, array $data = [])
+    public function insert(string $name, array $data = []) : void
     {
         echo $this->engine->render($name, $data);
     }
 
     /**
-     * Apply multiple functions to variable.
-     * @param  mixed  $var
-     * @param  string $functions
+     * Apply multiple functions to variable
+     *
+     * @param mixed  $var
+     * @param string $functions
      * @return mixed
      */
-    public function batch($var, $functions)
+    public function batch($var, string $functions)
     {
         foreach (explode('|', $functions) as $function) {
             if ($this->engine->doesFunctionExist($function)) {
@@ -317,12 +326,13 @@ class Template
     }
 
     /**
-     * Escape string.
-     * @param  string      $string
-     * @param  null|string $functions
+     * Escape string
+     *
+     * @param string      $string
+     * @param null|string $functions
      * @return string
      */
-    public function escape($string, $functions = null)
+    public function escape(string $string, ?string $functions = null) : string
     {
         static $flags;
 
@@ -338,12 +348,13 @@ class Template
     }
 
     /**
-     * Alias to escape function.
-     * @param  string      $string
-     * @param  null|string $functions
+     * Alias to escape function
+     *
+     * @param string      $string
+     * @param null|string $functions
      * @return string
      */
-    public function e($string, $functions = null)
+    public function e(string $string, ?string $functions = null) : string
     {
         return $this->escape($string, $functions);
     }

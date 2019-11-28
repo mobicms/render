@@ -21,46 +21,26 @@ use League\Plates\Template\Name;
 use League\Plates\Template\Template;
 
 /**
- * Template API and environment settings storage.
+ * Template API and environment settings storage
  */
 class Engine
 {
-    /**
-     * Default template directory.
-     * @var Directory
-     */
+    /** @var Directory Default template directory */
     protected $directory;
 
-    /**
-     * Template file extension.
-     * @var FileExtension
-     */
+    /** @var FileExtension Template file extension */
     protected $fileExtension;
 
-    /**
-     * Collection of template folders.
-     * @var Folders
-     */
+    /** @var Folders Collection of template folders */
     protected $folders;
 
-    /**
-     * Collection of template functions.
-     * @var Functions
-     */
+    /** @var Functions Collection of template functions */
     protected $functions;
 
-    /**
-     * Collection of preassigned template data.
-     * @var Data
-     */
+    /** @var Data Collection of preassigned template data */
     protected $data;
 
-    /**
-     * Create new Engine instance.
-     * @param string $directory
-     * @param string $fileExtension
-     */
-    public function __construct($directory = null, $fileExtension = 'php')
+    public function __construct(string $directory = null, string $fileExtension = 'php')
     {
         $this->directory = new Directory($directory);
         $this->fileExtension = new FileExtension($fileExtension);
@@ -70,11 +50,12 @@ class Engine
     }
 
     /**
-     * Set path to templates directory.
-     * @param  string|null $directory Pass null to disable the default directory.
+     * Set path to templates directory
+     *
+     * @param string|null $directory Pass null to disable the default directory
      * @return Engine
      */
-    public function setDirectory($directory)
+    public function setDirectory(?string $directory) : self
     {
         $this->directory->set($directory);
 
@@ -82,20 +63,22 @@ class Engine
     }
 
     /**
-     * Get path to templates directory.
-     * @return string
+     * Get path to templates directory
+     *
+     * @return string|null
      */
-    public function getDirectory()
+    public function getDirectory() : ?string
     {
         return $this->directory->get();
     }
 
     /**
-     * Set the template file extension.
-     * @param  string|null $fileExtension Pass null to manually set it.
+     * Set the template file extension
+     *
+     * @param string|null $fileExtension Pass null to manually set it
      * @return Engine
      */
-    public function setFileExtension($fileExtension)
+    public function setFileExtension(?string $fileExtension) : self
     {
         $this->fileExtension->set($fileExtension);
 
@@ -104,21 +87,23 @@ class Engine
 
     /**
      * Get the template file extension.
-     * @return string
+     *
+     * @return string|null
      */
-    public function getFileExtension()
+    public function getFileExtension() : ?string
     {
         return $this->fileExtension->get();
     }
 
     /**
-     * Add a new template folder for grouping templates under different namespaces.
-     * @param  string  $name
-     * @param  string  $directory
-     * @param  bool $fallback
+     * Add a new template folder for grouping templates under different namespaces
+     *
+     * @param string $name
+     * @param string $directory
+     * @param bool   $fallback
      * @return Engine
      */
-    public function addFolder($name, $directory, $fallback = false)
+    public function addFolder(string $name, string $directory, bool $fallback = false) : self
     {
         $this->folders->add($name, $directory, $fallback);
 
@@ -126,11 +111,12 @@ class Engine
     }
 
     /**
-     * Remove a template folder.
-     * @param  string $name
+     * Remove a template folder
+     *
+     * @param string $name
      * @return Engine
      */
-    public function removeFolder($name)
+    public function removeFolder(string $name) : self
     {
         $this->folders->remove($name);
 
@@ -138,21 +124,23 @@ class Engine
     }
 
     /**
-     * Get collection of all template folders.
+     * Get collection of all template folders
+     *
      * @return Folders
      */
-    public function getFolders()
+    public function getFolders() : Folders
     {
         return $this->folders;
     }
 
     /**
-     * Add preassigned template data.
-     * @param  array             $data;
-     * @param  null|string|array $templates;
+     * Add preassigned template data
+     *
+     * @param array             $data
+     * @param null|string|array $templates
      * @return Engine
      */
-    public function addData(array $data, $templates = null)
+    public function addData(array $data, $templates = null) : self
     {
         $this->data->add($data, $templates);
 
@@ -160,22 +148,24 @@ class Engine
     }
 
     /**
-     * Get all preassigned template data.
-     * @param  null|string $template;
+     * Get all preassigned template data
+     *
+     * @param null|string $template
      * @return array
      */
-    public function getData($template = null)
+    public function getData(?string $template = null) : array
     {
         return $this->data->get($template);
     }
 
     /**
-     * Register a new template function.
-     * @param  string   $name;
-     * @param  callback $callback;
+     * Register a new template function
+     *
+     * @param string   $name
+     * @param callable $callback
      * @return Engine
      */
-    public function registerFunction($name, $callback)
+    public function registerFunction(string $name, callable $callback) : self
     {
         $this->functions->add($name, $callback);
 
@@ -183,11 +173,12 @@ class Engine
     }
 
     /**
-     * Remove a template function.
-     * @param  string $name;
+     * Remove a template function
+     *
+     * @param string $name
      * @return Engine
      */
-    public function dropFunction($name)
+    public function dropFunction(string $name) : self
     {
         $this->functions->remove($name);
 
@@ -195,31 +186,34 @@ class Engine
     }
 
     /**
-     * Get a template function.
-     * @param  string $name
+     * Get a template function
+     *
+     * @param string $name
      * @return Func
      */
-    public function getFunction($name)
+    public function getFunction(string $name) : Func
     {
         return $this->functions->get($name);
     }
 
     /**
-     * Check if a template function exists.
-     * @param  string  $name
+     * Check if a template function exists
+     *
+     * @param string $name
      * @return bool
      */
-    public function doesFunctionExist($name)
+    public function doesFunctionExist(string $name) : bool
     {
         return $this->functions->exists($name);
     }
 
     /**
-     * Load an extension.
-     * @param  ExtensionInterface $extension
+     * Load an extension
+     *
+     * @param ExtensionInterface $extension
      * @return Engine
      */
-    public function loadExtension(ExtensionInterface $extension)
+    public function loadExtension(ExtensionInterface $extension) : self
     {
         $extension->register($this);
 
@@ -227,11 +221,12 @@ class Engine
     }
 
     /**
-     * Load multiple extensions.
-     * @param  array  $extensions
+     * Load multiple extensions
+     *
+     * @param array $extensions
      * @return Engine
      */
-    public function loadExtensions(array $extensions = [])
+    public function loadExtensions(array $extensions = []) : self
     {
         foreach ($extensions as $extension) {
             $this->loadExtension($extension);
@@ -241,11 +236,12 @@ class Engine
     }
 
     /**
-     * Get a template path.
-     * @param  string $name
+     * Get a template path
+     *
+     * @param string $name
      * @return string
      */
-    public function path($name)
+    public function path(string $name) : string
     {
         $name = new Name($this, $name);
 
@@ -253,11 +249,12 @@ class Engine
     }
 
     /**
-     * Check if a template exists.
-     * @param  string  $name
+     * Check if a template exists
+     *
+     * @param string $name
      * @return bool
      */
-    public function exists($name)
+    public function exists(string $name) : bool
     {
         $name = new Name($this, $name);
 
@@ -265,22 +262,25 @@ class Engine
     }
 
     /**
-     * Create a new template.
-     * @param  string   $name
+     * Create a new template
+     *
+     * @param string $name
      * @return Template
      */
-    public function make($name)
+    public function make(string $name) : Template
     {
         return new Template($this, $name);
     }
 
     /**
-     * Create a new template and render it.
-     * @param  string $name
-     * @param  array  $data
+     * Create a new template and render it
+     *
+     * @param string $name
+     * @param array  $data
      * @return string
+     * @throws \Throwable
      */
-    public function render($name, array $data = [])
+    public function render(string $name, array $data = []) : string
     {
         return $this->make($name)->render($data);
     }

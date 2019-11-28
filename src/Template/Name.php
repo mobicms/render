@@ -15,51 +15,35 @@ use League\Plates\Engine;
 use LogicException;
 
 /**
- * A template name.
+ * A template name
  */
 class Name
 {
-    /**
-     * Instance of the template engine.
-     * @var Engine
-     */
+    /** @var Engine Instance of the template engine */
     protected $engine;
 
-    /**
-     * The original name.
-     * @var string
-     */
+    /** @var string The original name */
     protected $name;
 
-    /**
-     * The parsed template folder.
-     * @var Folder
-     */
+    /** @var Folder The parsed template folder */
     protected $folder;
 
-    /**
-     * The parsed template filename.
-     * @var string
-     */
+    /** @var string The parsed template filename */
     protected $file;
 
-    /**
-     * Create a new Name instance.
-     * @param Engine $engine
-     * @param string $name
-     */
-    public function __construct(Engine $engine, $name)
+    public function __construct(Engine $engine, string $name)
     {
         $this->setEngine($engine);
         $this->setName($name);
     }
 
     /**
-     * Set the engine.
-     * @param  Engine $engine
+     * Set the engine
+     *
+     * @param Engine $engine
      * @return Name
      */
-    public function setEngine(Engine $engine)
+    public function setEngine(Engine $engine) : self
     {
         $this->engine = $engine;
 
@@ -67,20 +51,22 @@ class Name
     }
 
     /**
-     * Get the engine.
+     * Get the engine
+     *
      * @return Engine
      */
-    public function getEngine()
+    public function getEngine() : Engine
     {
         return $this->engine;
     }
 
     /**
-     * Set the original name and parse it.
-     * @param  string $name
+     * Set the original name and parse it
+     *
+     * @param string $name
      * @return Name
      */
-    public function setName($name)
+    public function setName(string $name) : self
     {
         $this->name = $name;
 
@@ -102,20 +88,22 @@ class Name
     }
 
     /**
-     * Get the original name.
+     * Get the original name
+     *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
     /**
-     * Set the parsed template folder.
-     * @param  string $folder
+     * Set the parsed template folder
+     *
+     * @param string $folder
      * @return Name
      */
-    public function setFolder($folder)
+    public function setFolder(string $folder) : self
     {
         $this->folder = $this->engine->getFolders()->get($folder);
 
@@ -123,25 +111,27 @@ class Name
     }
 
     /**
-     * Get the parsed template folder.
-     * @return string
+     * Get the parsed template folder
+     *
+     * @return Folder|null
      */
-    public function getFolder()
+    public function getFolder() : ?Folder
     {
         return $this->folder;
     }
 
     /**
-     * Set the parsed template file.
-     * @param  string $file
+     * Set the parsed template file
+     *
+     * @param string $file
      * @return Name
      */
-    public function setFile($file)
+    public function setFile(string $file) : self
     {
         if ($file === '') {
             throw new LogicException(
-                'The template name "' . $this->name . '" is not valid. ' .
-                'The template name cannot be empty.'
+                'The template name "' . $this->name .
+                '" is not valid. The template name cannot be empty.'
             );
         }
 
@@ -155,19 +145,21 @@ class Name
     }
 
     /**
-     * Get the parsed template file.
+     * Get the parsed template file
+     *
      * @return string
      */
-    public function getFile()
+    public function getFile() : string
     {
         return $this->file;
     }
 
     /**
-     * Resolve template path.
+     * Resolve template path
+     *
      * @return string
      */
-    public function getPath()
+    public function getPath() : string
     {
         if (null === $this->folder) {
             return $this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file;
@@ -186,19 +178,21 @@ class Name
     }
 
     /**
-     * Check if template path exists.
+     * Check if template path exists
+     *
      * @return bool
      */
-    public function doesPathExist()
+    public function doesPathExist() : bool
     {
         return is_file($this->getPath());
     }
 
     /**
-     * Get the default templates directory.
+     * Get the default templates directory
+     *
      * @return string
      */
-    protected function getDefaultDirectory()
+    protected function getDefaultDirectory() : string
     {
         $directory = $this->engine->getDirectory();
 
