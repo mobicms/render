@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
 use LogicException;
@@ -23,7 +25,7 @@ class Folder
 
     /**
      * The folder fallback status.
-     * @var boolean
+     * @var bool
      */
     protected $fallback;
 
@@ -31,7 +33,7 @@ class Folder
      * Create a new Folder instance.
      * @param string  $name
      * @param string  $path
-     * @param boolean $fallback
+     * @param bool $fallback
      */
     public function __construct($name, $path, $fallback = false)
     {
@@ -68,7 +70,7 @@ class Folder
      */
     public function setPath($path)
     {
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             throw new LogicException('The specified directory path "' . $path . '" does not exist.');
         }
 
@@ -88,7 +90,7 @@ class Folder
 
     /**
      * Set the folder fallback status.
-     * @param  boolean $fallback
+     * @param  bool $fallback
      * @return Folder
      */
     public function setFallback($fallback)
@@ -100,7 +102,7 @@ class Folder
 
     /**
      * Get the folder fallback status.
-     * @return boolean
+     * @return bool
      */
     public function getFallback()
     {

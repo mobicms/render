@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
-use Exception;
 use League\Plates\Engine;
 use LogicException;
 use Throwable;
@@ -28,13 +29,13 @@ class Template
      * The data assigned to the template.
      * @var array
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * An array of section content.
      * @var array
      */
-    protected $sections = array();
+    protected $sections = [];
 
     /**
      * The name of the section currently being rendered.
@@ -44,7 +45,7 @@ class Template
 
     /**
      * Whether the section should be appended or not.
-     * @var boolean
+     * @var bool
      */
     protected $appendSection;
 
@@ -102,7 +103,7 @@ class Template
      */
     public function data(array $data = null)
     {
-        if (is_null($data)) {
+        if (null === $data) {
             return $this->data;
         }
 
@@ -111,7 +112,7 @@ class Template
 
     /**
      * Check if the template exists.
-     * @return boolean
+     * @return bool
      */
     public function exists()
     {
@@ -134,13 +135,13 @@ class Template
      * @throws \Exception
      * @return string
      */
-    public function render(array $data = array())
+    public function render(array $data = [])
     {
         $this->data($data);
         unset($data);
         extract($this->data);
 
-        if (!$this->exists()) {
+        if (! $this->exists()) {
             throw new LogicException(
                 'The template "' . $this->name->getName() . '" could not be found at "' . $this->path() . '".'
             );
@@ -156,7 +157,7 @@ class Template
 
             if (isset($this->layoutName)) {
                 $layout = $this->engine->make($this->layoutName);
-                $layout->sections = array_merge($this->sections, array('content' => $content));
+                $layout->sections = array_merge($this->sections, ['content' => $content]);
                 $content = $layout->render($this->layoutData);
             }
 
@@ -176,7 +177,7 @@ class Template
      * @param  array  $data
      * @return null
      */
-    public function layout($name, array $data = array())
+    public function layout($name, array $data = [])
     {
         $this->layoutName = $name;
         $this->layoutData = $data;
@@ -222,13 +223,13 @@ class Template
      */
     public function stop()
     {
-        if (is_null($this->sectionName)) {
+        if (null === $this->sectionName) {
             throw new LogicException(
                 'You must start a section before you can stop it.'
             );
         }
 
-        if (!isset($this->sections[$this->sectionName])) {
+        if (! isset($this->sections[$this->sectionName])) {
             $this->sections[$this->sectionName] = '';
         }
 
@@ -254,7 +255,7 @@ class Template
      */
     public function section($name, $default = null)
     {
-        if (!isset($this->sections[$name])) {
+        if (! isset($this->sections[$name])) {
             return $default;
         }
 
@@ -267,7 +268,7 @@ class Template
      * @param  array  $data
      * @return string
      */
-    public function fetch($name, array $data = array())
+    public function fetch($name, array $data = [])
     {
         return $this->engine->render($name, $data);
     }
@@ -278,7 +279,7 @@ class Template
      * @param  array  $data
      * @return null
      */
-    public function insert($name, array $data = array())
+    public function insert($name, array $data = [])
     {
         echo $this->engine->render($name, $data);
     }
@@ -293,7 +294,7 @@ class Template
     {
         foreach (explode('|', $functions) as $function) {
             if ($this->engine->doesFunctionExist($function)) {
-                $var = call_user_func(array($this, $function), $var);
+                $var = call_user_func([$this, $function], $var);
             } elseif (is_callable($function)) {
                 $var = call_user_func($function, $var);
             } else {
@@ -316,7 +317,7 @@ class Template
     {
         static $flags;
 
-        if (!isset($flags)) {
+        if (! isset($flags)) {
             $flags = ENT_QUOTES | (defined('ENT_SUBSTITUTE') ? ENT_SUBSTITUTE : 0);
         }
 

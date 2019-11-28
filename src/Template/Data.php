@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
 use LogicException;
@@ -13,13 +15,13 @@ class Data
      * Variables shared by all templates.
      * @var array
      */
-    protected $sharedVariables = array();
+    protected $sharedVariables = [];
 
     /**
      * Specific template variables.
      * @var array
      */
-    protected $templateVariables = array();
+    protected $templateVariables = [];
 
     /**
      * Add template data.
@@ -29,7 +31,7 @@ class Data
      */
     public function add(array $data, $templates = null)
     {
-        if (is_null($templates)) {
+        if (null === $templates) {
             return $this->shareWithAll($data);
         }
 
@@ -38,7 +40,7 @@ class Data
         }
 
         if (is_string($templates)) {
-            return $this->shareWithSome($data, array($templates));
+            return $this->shareWithSome($data, [$templates]);
         }
 
         throw new LogicException(

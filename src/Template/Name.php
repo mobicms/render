@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
 use League\Plates\Engine;
@@ -138,7 +140,7 @@ class Name
 
         $this->file = $file;
 
-        if (!is_null($this->engine->getFileExtension())) {
+        if (null !== $this->engine->getFileExtension()) {
             $this->file .= '.' . $this->engine->getFileExtension();
         }
 
@@ -160,13 +162,13 @@ class Name
      */
     public function getPath()
     {
-        if (is_null($this->folder)) {
+        if (null === $this->folder) {
             return $this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file;
         }
 
         $path = $this->folder->getPath() . DIRECTORY_SEPARATOR . $this->file;
 
-        if (!is_file($path) and $this->folder->getFallback() and is_file($this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file)) {
+        if (! is_file($path) && $this->folder->getFallback() && is_file($this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file)) {
             $path = $this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file;
         }
 
@@ -175,7 +177,7 @@ class Name
 
     /**
      * Check if template path exists.
-     * @return boolean
+     * @return bool
      */
     public function doesPathExist()
     {
@@ -190,9 +192,9 @@ class Name
     {
         $directory = $this->engine->getDirectory();
 
-        if (is_null($directory)) {
+        if (null === $directory) {
             throw new LogicException(
-                'The template name "' . $this->name . '" is not valid. '.
+                'The template name "' . $this->name . '" is not valid. ' .
                 'The default directory has not been defined.'
             );
         }

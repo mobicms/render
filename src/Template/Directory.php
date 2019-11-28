@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
 use LogicException;
@@ -31,7 +33,7 @@ class Directory
      */
     public function set($path)
     {
-        if (!is_null($path) and !is_dir($path)) {
+        if (null !== $path && ! is_dir($path)) {
             throw new LogicException(
                 'The specified path "' . $path . '" does not exist.'
             );

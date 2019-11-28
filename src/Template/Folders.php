@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
 use LogicException;
@@ -13,13 +15,13 @@ class Folders
      * Array of template folders.
      * @var array
      */
-    protected $folders = array();
+    protected $folders = [];
 
     /**
      * Add a template folder.
      * @param  string  $name
      * @param  string  $path
-     * @param  boolean $fallback
+     * @param  bool $fallback
      * @return Folders
      */
     public function add($name, $path, $fallback = false)
@@ -40,7 +42,7 @@ class Folders
      */
     public function remove($name)
     {
-        if (!$this->exists($name)) {
+        if (! $this->exists($name)) {
             throw new LogicException('The template folder "' . $name . '" was not found.');
         }
 
@@ -56,7 +58,7 @@ class Folders
      */
     public function get($name)
     {
-        if (!$this->exists($name)) {
+        if (! $this->exists($name)) {
             throw new LogicException('The template folder "' . $name . '" was not found.');
         }
 
@@ -66,7 +68,7 @@ class Folders
     /**
      * Check if a template folder exists.
      * @param  string  $name
-     * @return boolean
+     * @return bool
      */
     public function exists($name)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates;
 
 use League\Plates\Template\Data;
@@ -106,7 +108,7 @@ class Engine
      * Add a new template folder for grouping templates under different namespaces.
      * @param  string  $name
      * @param  string  $directory
-     * @param  boolean $fallback
+     * @param  bool $fallback
      * @return Engine
      */
     public function addFolder($name, $directory, $fallback = false)
@@ -198,7 +200,7 @@ class Engine
     /**
      * Check if a template function exists.
      * @param  string  $name
-     * @return boolean
+     * @return bool
      */
     public function doesFunctionExist($name)
     {
@@ -222,7 +224,7 @@ class Engine
      * @param  array  $extensions
      * @return Engine
      */
-    public function loadExtensions(array $extensions = array())
+    public function loadExtensions(array $extensions = [])
     {
         foreach ($extensions as $extension) {
             $this->loadExtension($extension);
@@ -246,7 +248,7 @@ class Engine
     /**
      * Check if a template exists.
      * @param  string  $name
-     * @return boolean
+     * @return bool
      */
     public function exists($name)
     {
@@ -271,7 +273,7 @@ class Engine
      * @param  array  $data
      * @return string
      */
-    public function render($name, array $data = array())
+    public function render($name, array $data = [])
     {
         return $this->make($name)->render($data);
     }

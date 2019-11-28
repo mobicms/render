@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
 use League\Plates\Extension\ExtensionInterface;
@@ -67,7 +69,7 @@ class Func
      */
     public function setCallback($callback)
     {
-        if (!is_callable($callback, true)) {
+        if (! is_callable($callback, true)) {
             throw new LogicException(
                 'Not a valid function callback.'
             );
@@ -93,10 +95,10 @@ class Func
      * @param  array    $arguments
      * @return mixed
      */
-    public function call(Template $template = null, $arguments = array())
+    public function call(Template $template = null, $arguments = [])
     {
-        if (is_array($this->callback) and
-            isset($this->callback[0]) and
+        if (is_array($this->callback) &&
+            isset($this->callback[0]) &&
             $this->callback[0] instanceof ExtensionInterface
         ) {
             $this->callback[0]->template = $template;

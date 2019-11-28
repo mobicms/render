@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace League\Plates\Template;
 
 use LogicException;
@@ -13,7 +15,7 @@ class Functions
      * Array of template functions.
      * @var array
      */
-    protected $functions = array();
+    protected $functions = [];
 
     /**
      * Add a new template function.
@@ -41,7 +43,7 @@ class Functions
      */
     public function remove($name)
     {
-        if (!$this->exists($name)) {
+        if (! $this->exists($name)) {
             throw new LogicException(
                 'The template function "' . $name . '" was not found.'
             );
@@ -59,7 +61,7 @@ class Functions
      */
     public function get($name)
     {
-        if (!$this->exists($name)) {
+        if (! $this->exists($name)) {
             throw new LogicException('The template function "' . $name . '" was not found.');
         }
 
@@ -69,7 +71,7 @@ class Functions
     /**
      * Check if a template function exists.
      * @param  string  $name
-     * @return boolean
+     * @return bool
      */
     public function exists($name)
     {
