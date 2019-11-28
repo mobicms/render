@@ -233,7 +233,9 @@ class Template
             $this->sections[$this->sectionName] = '';
         }
 
-        $this->sections[$this->sectionName] = $this->appendSection ? $this->sections[$this->sectionName] . ob_get_clean() : ob_get_clean();
+        $this->sections[$this->sectionName] = $this->appendSection
+            ? $this->sections[$this->sectionName] . ob_get_clean()
+            : ob_get_clean();
         $this->sectionName = null;
         $this->appendSection = false;
     }

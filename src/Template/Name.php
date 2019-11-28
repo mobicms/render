@@ -168,7 +168,10 @@ class Name
 
         $path = $this->folder->getPath() . DIRECTORY_SEPARATOR . $this->file;
 
-        if (! is_file($path) && $this->folder->getFallback() && is_file($this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file)) {
+        if (! is_file($path)
+            && $this->folder->getFallback()
+            && is_file($this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file)
+        ) {
             $path = $this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file;
         }
 
