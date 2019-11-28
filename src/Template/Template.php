@@ -121,7 +121,7 @@ class Template
     {
         $this->data($data);
         unset($data);
-        extract($this->data);
+        extract($this->data, EXTR_SKIP);
 
         if (! $this->exists()) {
             throw new LogicException(
