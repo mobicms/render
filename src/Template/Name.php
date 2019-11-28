@@ -162,16 +162,13 @@ class Name
     public function getPath() : string
     {
         if (null === $this->folder) {
-            return $this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file;
+            throw new LogicException('The template name "' . $this->name . '" is not valid.');
         }
 
         $path = $this->folder->getPath() . DIRECTORY_SEPARATOR . $this->file;
 
-        if (! is_file($path)
-            && $this->folder->getFallback()
-            && is_file($this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file)
-        ) {
-            $path = $this->getDefaultDirectory() . DIRECTORY_SEPARATOR . $this->file;
+        if (! is_file($path)) {
+            throw new LogicException('The template name "' . $this->name . '" is not valid.');
         }
 
         return $path;
@@ -185,24 +182,5 @@ class Name
     public function doesPathExist() : bool
     {
         return is_file($this->getPath());
-    }
-
-    /**
-     * Get the default templates directory
-     *
-     * @return string
-     */
-    protected function getDefaultDirectory() : string
-    {
-        $directory = $this->engine->getDirectory();
-
-        if (null === $directory) {
-            throw new LogicException(
-                'The template name "' . $this->name . '" is not valid. ' .
-                'The default directory has not been defined.'
-            );
-        }
-
-        return $directory;
     }
 }

@@ -23,12 +23,13 @@ use PHPUnit\Framework\TestCase;
 
 class EngineTest extends TestCase
 {
+    /** @var Engine */
     private $engine;
 
     public function setUp() : void
     {
         vfsStream::setup('templates');
-        $this->engine = new Engine(vfsStream::url('templates'));
+        $this->engine = new Engine();
     }
 
     public function testCanCreateInstance() : void
@@ -36,40 +37,10 @@ class EngineTest extends TestCase
         $this->assertInstanceOf(Engine::class, $this->engine);
     }
 
-    public function testSetDirectory() : void
-    {
-        $this->assertInstanceOf(Engine::class, $this->engine->setDirectory(vfsStream::url('templates')));
-        $this->assertEquals($this->engine->getDirectory(), vfsStream::url('templates'));
-    }
-
-    public function testSetNullDirectory() : void
-    {
-        $this->assertInstanceOf(Engine::class, $this->engine->setDirectory(null));
-        $this->assertNull($this->engine->getDirectory());
-    }
-
-    public function testSetInvalidDirectory() : void
-    {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The specified path "vfs://does/not/exist" does not exist.');
-        $this->engine->setDirectory(vfsStream::url('does/not/exist'));
-    }
-
-    public function testGetDirectory() : void
-    {
-        $this->assertEquals($this->engine->getDirectory(), vfsStream::url('templates'));
-    }
-
     public function testSetFileExtension() : void
     {
         $this->assertInstanceOf(Engine::class, $this->engine->setFileExtension('tpl'));
         $this->assertEquals($this->engine->getFileExtension(), 'tpl');
-    }
-
-    public function testSetNullFileExtension() : void
-    {
-        $this->assertInstanceOf(Engine::class, $this->engine->setFileExtension(null));
-        $this->assertNull($this->engine->getFileExtension());
     }
 
     public function testGetFileExtension() : void
@@ -97,15 +68,6 @@ class EngineTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The specified directory path "vfs://does/not/exist" does not exist.');
         $this->engine->addFolder('namespace', vfsStream::url('does/not/exist'));
-    }
-
-    public function testRemoveFolder() : void
-    {
-        vfsStream::create(['folder' => ['template.php' => '']]);
-        $this->engine->addFolder('folder', vfsStream::url('templates/folder'));
-        $this->assertTrue($this->engine->getFolders()->exists('folder'));
-        $this->assertInstanceOf(Engine::class, $this->engine->removeFolder('folder'));
-        $this->assertFalse($this->engine->getFolders()->exists('folder'));
     }
 
     public function testGetFolders() : void
@@ -142,21 +104,6 @@ class EngineTest extends TestCase
         $this->assertEquals($this->engine->getFunction('uppercase')->getCallback(), 'strtoupper');
     }
 
-    public function testDropFunction() : void
-    {
-        $this->engine->registerFunction('uppercase', 'strtoupper');
-        $this->assertTrue($this->engine->doesFunctionExist('uppercase'));
-        $this->engine->dropFunction('uppercase');
-        $this->assertFalse($this->engine->doesFunctionExist('uppercase'));
-    }
-
-    public function testDropInvalidFunction() : void
-    {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The template function "some_function_that_does_not_exist" was not found.');
-        $this->engine->dropFunction('some_function_that_does_not_exist');
-    }
-
     public function testGetFunction() : void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
@@ -191,33 +138,6 @@ class EngineTest extends TestCase
         $this->assertTrue($this->engine->doesFunctionExist('foo'));
     }
 
-    public function testLoadExtensions()
-    {
-        $this->assertFalse($this->engine->doesFunctionExist('foo'));
-        $this->assertFalse($this->engine->doesFunctionExist('bar'));
-        $this->engine->loadExtensions([
-            new DummyExtensionFoo(),
-            new DummyExtensionBar(),
-        ]);
-        $this->assertTrue($this->engine->doesFunctionExist('foo'));
-        $this->assertTrue($this->engine->doesFunctionExist('bar'));
-    }
-
-    public function testGetTemplatePath() : void
-    {
-        $this->assertEquals(
-            str_replace('\\', '/', $this->engine->path('template')),
-            'vfs://templates/template.php'
-        );
-    }
-
-    public function testTemplateExists() : void
-    {
-        $this->assertFalse($this->engine->exists('template'));
-        vfsStream::create(['template.php' => '']);
-        $this->assertTrue($this->engine->exists('template'));
-    }
-
     public function testMakeTemplate() : void
     {
         vfsStream::create(['template.php' => '']);
@@ -226,7 +146,8 @@ class EngineTest extends TestCase
 
     public function testRenderTemplate()
     {
+        $this->engine->addFolder('tmp', vfsStream::url('templates'));
         vfsStream::create(['template.php' => 'Hello!']);
-        $this->assertEquals($this->engine->render('template'), 'Hello!');
+        $this->assertEquals($this->engine->render('tmp::template'), 'Hello!');
     }
 }

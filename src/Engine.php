@@ -12,12 +12,9 @@ declare(strict_types=1);
 namespace Mobicms\Render;
 
 use Mobicms\Render\Template\Data;
-use Mobicms\Render\Template\Directory;
-use Mobicms\Render\Template\FileExtension;
 use Mobicms\Render\Template\Folders;
 use Mobicms\Render\Template\Func;
 use Mobicms\Render\Template\Functions;
-use Mobicms\Render\Template\Name;
 use Mobicms\Render\Template\Template;
 
 /**
@@ -25,11 +22,8 @@ use Mobicms\Render\Template\Template;
  */
 class Engine
 {
-    /** @var Directory Default template directory */
-    protected $directory;
-
-    /** @var FileExtension Template file extension */
-    protected $fileExtension;
+    /** @var string Template file extension */
+    protected $fileExtension = 'php';
 
     /** @var Folders Collection of template folders */
     protected $folders;
@@ -40,59 +34,33 @@ class Engine
     /** @var Data Collection of preassigned template data */
     protected $data;
 
-    public function __construct(string $directory = null, string $fileExtension = 'php')
+    public function __construct()
     {
-        $this->directory = new Directory($directory);
-        $this->fileExtension = new FileExtension($fileExtension);
         $this->folders = new Folders();
         $this->functions = new Functions();
         $this->data = new Data();
     }
 
     /**
-     * Set path to templates directory
-     *
-     * @param string|null $directory Pass null to disable the default directory
-     * @return Engine
-     */
-    public function setDirectory(?string $directory) : self
-    {
-        $this->directory->set($directory);
-
-        return $this;
-    }
-
-    /**
-     * Get path to templates directory
-     *
-     * @return string|null
-     */
-    public function getDirectory() : ?string
-    {
-        return $this->directory->get();
-    }
-
-    /**
      * Set the template file extension
      *
-     * @param string|null $fileExtension Pass null to manually set it
+     * @param string $fileExtension
      * @return Engine
      */
-    public function setFileExtension(?string $fileExtension) : self
+    public function setFileExtension(string $fileExtension) : self
     {
-        $this->fileExtension->set($fileExtension);
-
+        $this->fileExtension = $fileExtension;
         return $this;
     }
 
     /**
      * Get the template file extension.
      *
-     * @return string|null
+     * @return string
      */
-    public function getFileExtension() : ?string
+    public function getFileExtension() : string
     {
-        return $this->fileExtension->get();
+        return $this->fileExtension;
     }
 
     /**
@@ -106,20 +74,6 @@ class Engine
     public function addFolder(string $name, string $directory, bool $fallback = false) : self
     {
         $this->folders->add($name, $directory, $fallback);
-
-        return $this;
-    }
-
-    /**
-     * Remove a template folder
-     *
-     * @param string $name
-     * @return Engine
-     */
-    public function removeFolder(string $name) : self
-    {
-        $this->folders->remove($name);
-
         return $this;
     }
 
@@ -143,7 +97,6 @@ class Engine
     public function addData(array $data, $templates = null) : self
     {
         $this->data->add($data, $templates);
-
         return $this;
     }
 
@@ -168,20 +121,6 @@ class Engine
     public function registerFunction(string $name, callable $callback) : self
     {
         $this->functions->add($name, $callback);
-
-        return $this;
-    }
-
-    /**
-     * Remove a template function
-     *
-     * @param string $name
-     * @return Engine
-     */
-    public function dropFunction(string $name) : self
-    {
-        $this->functions->remove($name);
-
         return $this;
     }
 
@@ -216,49 +155,7 @@ class Engine
     public function loadExtension(ExtensionInterface $extension) : self
     {
         $extension->register($this);
-
         return $this;
-    }
-
-    /**
-     * Load multiple extensions
-     *
-     * @param array $extensions
-     * @return Engine
-     */
-    public function loadExtensions(array $extensions = []) : self
-    {
-        foreach ($extensions as $extension) {
-            $this->loadExtension($extension);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get a template path
-     *
-     * @param string $name
-     * @return string
-     */
-    public function path(string $name) : string
-    {
-        $name = new Name($this, $name);
-
-        return $name->getPath();
-    }
-
-    /**
-     * Check if a template exists
-     *
-     * @param string $name
-     * @return bool
-     */
-    public function exists(string $name) : bool
-    {
-        $name = new Name($this, $name);
-
-        return $name->doesPathExist();
     }
 
     /**
@@ -277,8 +174,8 @@ class Engine
      *
      * @param string $name
      * @param array  $data
-     * @throws \Throwable
      * @return string
+     * @throws \Throwable
      */
     public function render(string $name, array $data = []) : string
     {
