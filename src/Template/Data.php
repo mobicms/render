@@ -31,7 +31,7 @@ class Data
      * @param null|string|array $templates
      * @return Data
      */
-    public function add(array $data, $templates = null) : Data
+    public function add(array $data, $templates = null) : self
     {
         if (null === $templates) {
             return $this->shareWithAll($data);

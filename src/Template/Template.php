@@ -20,60 +20,28 @@ use Throwable;
  */
 class Template
 {
-    /**
-     * Instance of the template engine
-     *
-     * @var Engine
-     */
+    /** @var Engine Instance of the template engine */
     protected $engine;
 
-    /**
-     * The name of the template
-     *
-     * @var Name
-     */
+    /** @var Name The name of the template */
     protected $name;
 
-    /**
-     * The data assigned to the template
-     *
-     * @var array
-     */
+    /** @var array The data assigned to the template */
     protected $data = [];
 
-    /**
-     * An array of section content
-     *
-     * @var array
-     */
+    /** @var array An array of section content */
     protected $sections = [];
 
-    /**
-     * The name of the section currently being rendered
-     *
-     * @var string
-     */
+    /** @var string The name of the section currently being rendered */
     protected $sectionName;
 
-    /**
-     * Whether the section should be appended or not
-     *
-     * @var bool
-     */
+    /** @var bool Whether the section should be appended or not */
     protected $appendSection;
 
-    /**
-     * The name of the template layout
-     *
-     * @var string
-     */
+    /** @var string The name of the template layout */
     protected $layoutName;
 
-    /**
-     * The data assigned to the template layout
-     *
-     * @var array
-     */
+    /** @var array The data assigned to the template layout */
     protected $layoutData;
 
     public function __construct(Engine $engine, string $name)
@@ -99,9 +67,9 @@ class Template
     /**
      * Alias for render() method
      *
-     * @return string
-     * @throws \Exception
      * @throws \Throwable
+     * @throws \Exception
+     * @return string
      */
     public function __toString() : string
     {
@@ -145,9 +113,9 @@ class Template
      * Render the template and layout
      *
      * @param array $data
-     * @return string
-     * @throws \Exception
      * @throws \Throwable
+     * @throws \Exception
+     * @return string
      */
     public function render(array $data = []) : string
     {
@@ -281,8 +249,8 @@ class Template
      *
      * @param string $name
      * @param array  $data
-     * @return string
      * @throws Throwable
+     * @return string
      */
     public function fetch(string $name, array $data = []) : string
     {
@@ -328,11 +296,11 @@ class Template
     /**
      * Escape string
      *
-     * @param string      $string
-     * @param null|string $functions
+     * @param string $string
+     * @param string $functions
      * @return string
      */
-    public function escape(string $string, ?string $functions = null) : string
+    public function escape(string $string, string $functions = null) : string
     {
         static $flags;
 
@@ -340,7 +308,7 @@ class Template
             $flags = ENT_QUOTES | (defined('ENT_SUBSTITUTE') ? ENT_SUBSTITUTE : 0);
         }
 
-        if ($functions) {
+        if (null !== $functions) {
             $string = $this->batch($string, $functions);
         }
 
@@ -350,11 +318,11 @@ class Template
     /**
      * Alias to escape function
      *
-     * @param string      $string
-     * @param null|string $functions
+     * @param string $string
+     * @param string $functions
      * @return string
      */
-    public function e(string $string, ?string $functions = null) : string
+    public function e(string $string, string $functions = null) : string
     {
         return $this->escape($string, $functions);
     }

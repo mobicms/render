@@ -277,8 +277,8 @@ class Engine
      *
      * @param string $name
      * @param array  $data
-     * @return string
      * @throws \Throwable
+     * @return string
      */
     public function render(string $name, array $data = []) : string
     {
