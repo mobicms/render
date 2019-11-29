@@ -67,9 +67,9 @@ class Template
     /**
      * Alias for render() method
      *
-     * @return string
      * @throws \Exception
      * @throws \Throwable
+     * @return string
      */
     public function __toString(): string
     {
@@ -113,9 +113,9 @@ class Template
      * Render the template and layout
      *
      * @param array $data
-     * @return string
      * @throws \Exception
      * @throws \Throwable
+     * @return string
      */
     public function render(array $data = []): string
     {
@@ -247,8 +247,8 @@ class Template
      *
      * @param string $name
      * @param array $data
-     * @return string
      * @throws Throwable
+     * @return string
      */
     public function fetch(string $name, array $data = []): string
     {
