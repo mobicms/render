@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of mobicms/render library
  *
  * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
  * @link        http://mobicms.org mobiCMS Project
  */
+
+declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
@@ -37,7 +37,7 @@ class Func
      * @param string $name
      * @return Func
      */
-    public function setName(string $name) : self
+    public function setName(string $name): self
     {
         if (preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name) !== 1) {
             throw new LogicException(
@@ -55,7 +55,7 @@ class Func
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -66,7 +66,7 @@ class Func
      * @param callable|null $callback
      * @return $this
      */
-    public function setCallback(?callable $callback) : self
+    public function setCallback(?callable $callback): self
     {
         if (! is_callable($callback, true)) {
             throw new LogicException(
@@ -84,7 +84,7 @@ class Func
      *
      * @return callable
      */
-    public function getCallback() : callable
+    public function getCallback(): callable
     {
         return $this->callback;
     }
@@ -93,7 +93,7 @@ class Func
      * Call the function
      *
      * @param Template $template
-     * @param array    $arguments
+     * @param array $arguments
      * @return mixed
      */
     public function call(Template $template = null, array $arguments = [])

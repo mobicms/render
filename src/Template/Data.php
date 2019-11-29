@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of mobicms/render library
  *
  * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
  * @link        http://mobicms.org mobiCMS Project
  */
+
+declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
@@ -27,11 +27,11 @@ class Data
     /**
      * Add template data
      *
-     * @param array             $data
+     * @param array $data
      * @param null|string|array $templates
      * @return Data
      */
-    public function add(array $data, $templates = null) : self
+    public function add(array $data, $templates = null): self
     {
         if (null === $templates) {
             return $this->shareWithAll($data);
@@ -56,7 +56,7 @@ class Data
      * @param array $data
      * @return Data
      */
-    public function shareWithAll(array $data) : self
+    public function shareWithAll(array $data): self
     {
         $this->sharedVariables = array_merge($this->sharedVariables, $data);
 
@@ -70,7 +70,7 @@ class Data
      * @param array $templates
      * @return Data
      */
-    public function shareWithSome(array $data, array $templates) : self
+    public function shareWithSome(array $data, array $templates): self
     {
         foreach ($templates as $template) {
             if (isset($this->templateVariables[$template])) {
@@ -89,7 +89,7 @@ class Data
      * @param null|string $template
      * @return array
      */
-    public function get(?string $template = null) : array
+    public function get(?string $template = null): array
     {
         if (isset($template, $this->templateVariables[$template])) {
             return array_merge($this->sharedVariables, $this->templateVariables[$template]);

@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of mobicms/render library
  *
  * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
  * @link        http://mobicms.org mobiCMS Project
  */
+
+declare(strict_types=1);
 
 namespace Mobicms\Render;
 
@@ -47,7 +47,7 @@ class Engine
      * @param string $fileExtension
      * @return Engine
      */
-    public function setFileExtension(string $fileExtension) : self
+    public function setFileExtension(string $fileExtension): self
     {
         $this->fileExtension = $fileExtension;
         return $this;
@@ -58,7 +58,7 @@ class Engine
      *
      * @return string
      */
-    public function getFileExtension() : string
+    public function getFileExtension(): string
     {
         return $this->fileExtension;
     }
@@ -68,10 +68,10 @@ class Engine
      *
      * @param string $name
      * @param string $directory
-     * @param bool   $fallback
+     * @param bool $fallback
      * @return Engine
      */
-    public function addFolder(string $name, string $directory, bool $fallback = false) : self
+    public function addFolder(string $name, string $directory, bool $fallback = false): self
     {
         $this->folders->add($name, $directory, $fallback);
         return $this;
@@ -82,7 +82,7 @@ class Engine
      *
      * @return Folders
      */
-    public function getFolders() : Folders
+    public function getFolders(): Folders
     {
         return $this->folders;
     }
@@ -90,11 +90,11 @@ class Engine
     /**
      * Add preassigned template data
      *
-     * @param array             $data
+     * @param array $data
      * @param null|string|array $templates
      * @return Engine
      */
-    public function addData(array $data, $templates = null) : self
+    public function addData(array $data, $templates = null): self
     {
         $this->data->add($data, $templates);
         return $this;
@@ -106,7 +106,7 @@ class Engine
      * @param null|string $template
      * @return array
      */
-    public function getData(?string $template = null) : array
+    public function getData(?string $template = null): array
     {
         return $this->data->get($template);
     }
@@ -114,11 +114,11 @@ class Engine
     /**
      * Register a new template function
      *
-     * @param string   $name
+     * @param string $name
      * @param callable $callback
      * @return Engine
      */
-    public function registerFunction(string $name, callable $callback) : self
+    public function registerFunction(string $name, callable $callback): self
     {
         $this->functions->add($name, $callback);
         return $this;
@@ -130,7 +130,7 @@ class Engine
      * @param string $name
      * @return Func
      */
-    public function getFunction(string $name) : Func
+    public function getFunction(string $name): Func
     {
         return $this->functions->get($name);
     }
@@ -141,7 +141,7 @@ class Engine
      * @param string $name
      * @return bool
      */
-    public function doesFunctionExist(string $name) : bool
+    public function doesFunctionExist(string $name): bool
     {
         return $this->functions->exists($name);
     }
@@ -152,7 +152,7 @@ class Engine
      * @param ExtensionInterface $extension
      * @return Engine
      */
-    public function loadExtension(ExtensionInterface $extension) : self
+    public function loadExtension(ExtensionInterface $extension): self
     {
         $extension->register($this);
         return $this;
@@ -162,11 +162,11 @@ class Engine
      * Create a new template and render it
      *
      * @param string $name
-     * @param array  $data
+     * @param array $data
      * @return string
      * @throws \Throwable
      */
-    public function render(string $name, array $data = []) : string
+    public function render(string $name, array $data = []): string
     {
         return (new Template($this, $name))->render($data);
     }

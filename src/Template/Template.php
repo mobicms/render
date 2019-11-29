@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of mobicms/render library
  *
  * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
  * @link        http://mobicms.org mobiCMS Project
  */
+
+declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
@@ -56,7 +56,7 @@ class Template
      * Magic method used to call extension functions
      *
      * @param string $name
-     * @param array  $arguments
+     * @param array $arguments
      * @return mixed
      */
     public function __call(string $name, array $arguments)
@@ -67,11 +67,11 @@ class Template
     /**
      * Alias for render() method
      *
-     * @throws \Throwable
-     * @throws \Exception
      * @return string
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->render();
     }
@@ -82,7 +82,7 @@ class Template
      * @param array $data
      * @return array
      */
-    public function data(array $data = []) : array
+    public function data(array $data = []): array
     {
         $this->data = array_merge($this->data, $data);
 
@@ -94,7 +94,7 @@ class Template
      *
      * @return bool
      */
-    public function exists() : bool
+    public function exists(): bool
     {
         return $this->name->doesPathExist();
     }
@@ -104,7 +104,7 @@ class Template
      *
      * @return string
      */
-    public function path() : string
+    public function path(): string
     {
         return $this->name->getPath();
     }
@@ -113,11 +113,11 @@ class Template
      * Render the template and layout
      *
      * @param array $data
-     * @throws \Throwable
-     * @throws \Exception
      * @return string
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function render(array $data = []) : string
+    public function render(array $data = []): string
     {
         $this->data($data);
         unset($data);
@@ -155,9 +155,9 @@ class Template
      * Set the template's layout
      *
      * @param string $name
-     * @param array  $data
+     * @param array $data
      */
-    public function layout(string $name, array $data = []) : void
+    public function layout(string $name, array $data = []): void
     {
         $this->layoutName = $name;
         $this->layoutData = $data;
@@ -168,7 +168,7 @@ class Template
      *
      * @param string $name
      */
-    public function start(string $name) : void
+    public function start(string $name): void
     {
         if ($name === 'content') {
             throw new LogicException(
@@ -190,7 +190,7 @@ class Template
      *
      * @param string $name
      */
-    public function push(string $name) : void
+    public function push(string $name): void
     {
         $this->appendSection = true;
         $this->start($name);
@@ -199,7 +199,7 @@ class Template
     /**
      * Stop the current section block
      */
-    public function stop() : void
+    public function stop(): void
     {
         if (null === $this->sectionName) {
             throw new LogicException(
@@ -221,7 +221,7 @@ class Template
     /**
      * Alias of stop()
      */
-    public function end() : void
+    public function end(): void
     {
         $this->stop();
     }
@@ -229,11 +229,11 @@ class Template
     /**
      * Returns the content for a section block
      *
-     * @param string $name    Section name
+     * @param string $name Section name
      * @param string $default Default section content
      * @return string|null
      */
-    public function section(string $name, string $default = null) : ?string
+    public function section(string $name, string $default = null): ?string
     {
         if (! isset($this->sections[$name])) {
             return $default;
@@ -246,11 +246,11 @@ class Template
      * Fetch a rendered template
      *
      * @param string $name
-     * @param array  $data
-     * @throws Throwable
+     * @param array $data
      * @return string
+     * @throws Throwable
      */
-    public function fetch(string $name, array $data = []) : string
+    public function fetch(string $name, array $data = []): string
     {
         return $this->engine->render($name, $data);
     }
@@ -259,10 +259,10 @@ class Template
      * Output a rendered template
      *
      * @param string $name
-     * @param array  $data
+     * @param array $data
      * @throws Throwable
      */
-    public function insert(string $name, array $data = []) : void
+    public function insert(string $name, array $data = []): void
     {
         echo $this->engine->render($name, $data);
     }
@@ -270,7 +270,7 @@ class Template
     /**
      * Apply multiple functions to variable
      *
-     * @param mixed  $var
+     * @param mixed $var
      * @param string $functions
      * @return mixed
      */
@@ -298,7 +298,7 @@ class Template
      * @param string $functions
      * @return string
      */
-    public function escape(string $string, string $functions = null) : string
+    public function escape(string $string, string $functions = null): string
     {
         static $flags;
 
@@ -320,7 +320,7 @@ class Template
      * @param string $functions
      * @return string
      */
-    public function e(string $string, string $functions = null) : string
+    public function e(string $string, string $functions = null): string
     {
         return $this->escape($string, $functions);
     }

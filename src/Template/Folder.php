@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of mobicms/render library
  *
  * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
  * @link        http://mobicms.org mobiCMS Project
  */
+
+declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
@@ -32,7 +32,7 @@ class Folder
      *
      * @param string $name
      * @param string $path
-     * @param bool   $fallback
+     * @param bool $fallback
      */
     public function __construct(string $name, string $path, bool $fallback = false)
     {
@@ -47,7 +47,7 @@ class Folder
      * @param string $name
      * @return Folder
      */
-    public function setName(string $name) : self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -59,7 +59,7 @@ class Folder
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -70,7 +70,7 @@ class Folder
      * @param string $path
      * @return Folder
      */
-    public function setPath(string $path) : self
+    public function setPath(string $path): self
     {
         if (! is_dir($path)) {
             throw new LogicException('The specified directory path "' . $path . '" does not exist.');
@@ -86,7 +86,7 @@ class Folder
      *
      * @return string
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -97,7 +97,7 @@ class Folder
      * @param bool $fallback
      * @return Folder
      */
-    public function setFallback(bool $fallback) : self
+    public function setFallback(bool $fallback): self
     {
         $this->fallback = $fallback;
 
@@ -109,7 +109,7 @@ class Folder
      *
      * @return bool
      */
-    public function getFallback() : bool
+    public function getFallback(): bool
     {
         return $this->fallback;
     }

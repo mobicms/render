@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of mobicms/render library
  *
  * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
  * @link        http://mobicms.org mobiCMS Project
  */
+
+declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
@@ -43,7 +43,7 @@ class Name
      * @param Engine $engine
      * @return Name
      */
-    public function setEngine(Engine $engine) : self
+    public function setEngine(Engine $engine): self
     {
         $this->engine = $engine;
 
@@ -55,7 +55,7 @@ class Name
      *
      * @return Engine
      */
-    public function getEngine() : Engine
+    public function getEngine(): Engine
     {
         return $this->engine;
     }
@@ -66,7 +66,7 @@ class Name
      * @param string $name
      * @return Name
      */
-    public function setName(string $name) : self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -92,7 +92,7 @@ class Name
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -103,7 +103,7 @@ class Name
      * @param string $folder
      * @return Name
      */
-    public function setFolder(string $folder) : self
+    public function setFolder(string $folder): self
     {
         $this->folder = $this->engine->getFolders()->get($folder);
 
@@ -115,7 +115,7 @@ class Name
      *
      * @return Folder|null
      */
-    public function getFolder() : ?Folder
+    public function getFolder(): ?Folder
     {
         return $this->folder;
     }
@@ -126,7 +126,7 @@ class Name
      * @param string $file
      * @return Name
      */
-    public function setFile(string $file) : self
+    public function setFile(string $file): self
     {
         if ($file === '') {
             throw new LogicException(
@@ -149,7 +149,7 @@ class Name
      *
      * @return string
      */
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -159,7 +159,7 @@ class Name
      *
      * @return string
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         if (null === $this->folder) {
             throw new LogicException('The template name "' . $this->name . '" is not valid.');
@@ -179,7 +179,7 @@ class Name
      *
      * @return bool
      */
-    public function doesPathExist() : bool
+    public function doesPathExist(): bool
     {
         return is_file($this->getPath());
     }

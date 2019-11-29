@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of mobicms/render library
  *
  * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
  * @link        http://mobicms.org mobiCMS Project
  */
+
+declare(strict_types=1);
 
 namespace MobicmsTest;
 
@@ -26,36 +26,36 @@ class EngineTest extends TestCase
     /** @var Engine */
     private $engine;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         vfsStream::setup('templates');
         $this->engine = new Engine();
     }
 
-    public function testCanCreateInstance() : void
+    public function testCanCreateInstance(): void
     {
         $this->assertInstanceOf(Engine::class, $this->engine);
     }
 
-    public function testSetFileExtension() : void
+    public function testSetFileExtension(): void
     {
         $this->assertInstanceOf(Engine::class, $this->engine->setFileExtension('tpl'));
         $this->assertEquals($this->engine->getFileExtension(), 'tpl');
     }
 
-    public function testGetFileExtension() : void
+    public function testGetFileExtension(): void
     {
         $this->assertEquals($this->engine->getFileExtension(), 'php');
     }
 
-    public function testAddFolder() : void
+    public function testAddFolder(): void
     {
         vfsStream::create(['folder' => ['template.php' => '']]);
         $this->assertInstanceOf(Engine::class, $this->engine->addFolder('folder', vfsStream::url('templates/folder')));
         $this->assertEquals($this->engine->getFolders()->get('folder')->getPath(), 'vfs://templates/folder');
     }
 
-    public function testAddFolderWithNamespaceConflict() : void
+    public function testAddFolderWithNamespaceConflict(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The template folder "name" is already being used.');
@@ -63,40 +63,40 @@ class EngineTest extends TestCase
         $this->engine->addFolder('name', vfsStream::url('templates'));
     }
 
-    public function testAddFolderWithInvalidDirectory() : void
+    public function testAddFolderWithInvalidDirectory(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The specified directory path "vfs://does/not/exist" does not exist.');
         $this->engine->addFolder('namespace', vfsStream::url('does/not/exist'));
     }
 
-    public function testGetFolders() : void
+    public function testGetFolders(): void
     {
         $this->assertInstanceOf(Folders::class, $this->engine->getFolders());
     }
 
-    public function testAddData() : void
+    public function testAddData(): void
     {
         $this->engine->addData(['name' => 'Jonathan']);
         $data = $this->engine->getData();
         $this->assertEquals($data['name'], 'Jonathan');
     }
 
-    public function testAddDataWithTemplate() : void
+    public function testAddDataWithTemplate(): void
     {
         $this->engine->addData(['name' => 'Jonathan'], 'template');
         $data = $this->engine->getData('template');
         $this->assertEquals($data['name'], 'Jonathan');
     }
 
-    public function testAddDataWithTemplates() : void
+    public function testAddDataWithTemplates(): void
     {
         $this->engine->addData(['name' => 'Jonathan'], ['template1', 'template2']);
         $data = $this->engine->getData('template1');
         $this->assertEquals($data['name'], 'Jonathan');
     }
 
-    public function testRegisterFunction() : void
+    public function testRegisterFunction(): void
     {
         vfsStream::create(['template.php' => '<?=$this->uppercase($name)?>']);
         $this->engine->registerFunction('uppercase', 'strtoupper');
@@ -104,7 +104,7 @@ class EngineTest extends TestCase
         $this->assertEquals($this->engine->getFunction('uppercase')->getCallback(), 'strtoupper');
     }
 
-    public function testGetFunction() : void
+    public function testGetFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $function = $this->engine->getFunction('uppercase');
@@ -113,20 +113,20 @@ class EngineTest extends TestCase
         $this->assertEquals($function->getCallback(), 'strtoupper');
     }
 
-    public function testGetInvalidFunction() : void
+    public function testGetInvalidFunction(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The template function "some_function_that_does_not_exist" was not found.');
         $this->engine->getFunction('some_function_that_does_not_exist');
     }
 
-    public function testDoesFunctionExist() : void
+    public function testDoesFunctionExist(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $this->assertTrue($this->engine->doesFunctionExist('uppercase'));
     }
 
-    public function testDoesFunctionNotExist() : void
+    public function testDoesFunctionNotExist(): void
     {
         $this->assertFalse($this->engine->doesFunctionExist('some_function_that_does_not_exist'));
     }
