@@ -132,13 +132,11 @@ class Template
         try {
             $level = ob_get_level();
             ob_start();
-
             include $this->path();
-
             $content = ob_get_clean();
 
             if (isset($this->layoutName)) {
-                $layout = $this->engine->make($this->layoutName);
+                $layout = new self($this->engine, $this->layoutName);
                 $layout->sections = array_merge($this->sections, ['content' => $content]);
                 $content = $layout->render($this->layoutData);
             }

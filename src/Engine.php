@@ -159,17 +159,6 @@ class Engine
     }
 
     /**
-     * Create a new template
-     *
-     * @param string $name
-     * @return Template
-     */
-    public function make(string $name) : Template
-    {
-        return new Template($this, $name);
-    }
-
-    /**
      * Create a new template and render it
      *
      * @param string $name
@@ -179,6 +168,6 @@ class Engine
      */
     public function render(string $name, array $data = []) : string
     {
-        return $this->make($name)->render($data);
+        return (new Template($this, $name))->render($data);
     }
 }
