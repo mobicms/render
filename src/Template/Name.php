@@ -94,7 +94,7 @@ class Name
      */
     public function setFolder(string $folder): self
     {
-        $this->folder = $this->engine->getFolders()->get($folder);
+        $this->folder = $this->engine->getFolder($folder);
         return $this;
     }
 

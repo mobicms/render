@@ -11,11 +11,13 @@ declare(strict_types=1);
 
 namespace Mobicms\Render;
 
+use LogicException;
 use Mobicms\Render\Template\Data;
-use Mobicms\Render\Template\Folders;
+use Mobicms\Render\Template\Folder;
 use Mobicms\Render\Template\Func;
 use Mobicms\Render\Template\Functions;
 use Mobicms\Render\Template\Template;
+use SplObjectStorage;
 
 /**
  * Template API and environment settings storage
@@ -25,8 +27,8 @@ class Engine
     /** @var string Template file extension */
     protected $fileExtension = 'php';
 
-    /** @var Folders Collection of template folders */
-    protected $folders;
+    /** @var array Collection of template namespaces */
+    protected $nameSpaces;
 
     /** @var Functions Collection of template functions */
     protected $functions;
@@ -36,7 +38,6 @@ class Engine
 
     public function __construct()
     {
-        $this->folders = new Folders();
         $this->functions = new Functions();
         $this->data = new Data();
     }
@@ -72,18 +73,26 @@ class Engine
      */
     public function addFolder(string $name, string $directory): self
     {
-        $this->folders->add($name, $directory);
+        if (isset($this->nameSpaces[$name])) {
+            throw new LogicException('The template namespace "' . $name . '" is already being used.');
+        }
+
+        $this->nameSpaces[$name] = new Folder($name, $directory);
         return $this;
     }
 
     /**
-     * Get collection of all template folders
+     * Get a template folders
      *
-     * @return Folders
+     * @return Folder
      */
-    public function getFolders(): Folders
+    public function getFolder(string $name): Folder
     {
-        return $this->folders;
+        if (! isset($this->nameSpaces[$name])) {
+            throw new LogicException('The template namespace "' . $name . '" was not found.');
+        }
+
+        return $this->nameSpaces[$name];
     }
 
     /**
