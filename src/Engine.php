@@ -14,7 +14,6 @@ namespace Mobicms\Render;
 use LogicException;
 use Mobicms\Render\Template\{
     TemplateData,
-    Folder,
     Template,
     TemplateFunction
 };
@@ -76,16 +75,20 @@ class Engine
             throw new LogicException('The template namespace "' . $name . '" is already being used.');
         }
 
-        $this->nameSpaces[$name] = new Folder($name, $directory);
+        if (! is_dir($directory)) {
+            throw new LogicException('The specified directory path "' . $directory . '" does not exist.');
+        }
+
+        $this->nameSpaces[$name] = ['name' => $name, 'directory' => $directory];
         return $this;
     }
 
     /**
      * Get a template folder
      *
-     * @return Folder
+     * @return array
      */
-    public function getFolder(string $name): Folder
+    public function getFolder(string $name): array
     {
         if (! isset($this->nameSpaces[$name])) {
             throw new LogicException('The template namespace "' . $name . '" was not found.');

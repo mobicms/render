@@ -50,7 +50,7 @@ class EngineTest extends TestCase
     {
         vfsStream::create(['folder' => ['template.php' => '']]);
         $this->assertInstanceOf(Engine::class, $this->engine->addFolder('folder', vfsStream::url('templates/folder')));
-        $this->assertEquals($this->engine->getFolder('folder')->getPath(), 'vfs://templates/folder');
+        $this->assertEquals($this->engine->getFolder('folder')['directory'], 'vfs://templates/folder');
     }
 
     public function testAddFolderWithNamespaceConflict(): void
@@ -71,14 +71,17 @@ class EngineTest extends TestCase
     public function testGetFolder(): void
     {
         $this->engine->addFolder('name', vfsStream::url('templates'));
-        $this->assertInstanceOf(Folder::class, $this->engine->getFolder('name'));
+        $folder = $this->engine->getFolder('name');
+        $this->assertIsArray($folder);
+        $this->assertArrayHasKey('name', $folder);
+        $this->assertArrayHasKey('directory', $folder);
     }
 
     public function testGetNonexistentFolder(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The template namespace "name" was not found.');
-        $this->assertInstanceOf(Folder::class, $this->engine->getFolder('name'));
+        $this->engine->getFolder('name');
     }
 
     public function testAddData(): void

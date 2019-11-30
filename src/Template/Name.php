@@ -61,9 +61,7 @@ class Name
 
         $parts = explode('::', $this->name);
 
-        if (count($parts) === 1) {
-            $this->setFile($parts[0]);
-        } elseif (count($parts) === 2) {
+        if (count($parts) === 2) {
             $this->setFolder($parts[0]);
             $this->setFile($parts[1]);
         } else {
@@ -133,7 +131,7 @@ class Name
             throw new LogicException('The template name "' . $this->name . '" is not valid.');
         }
 
-        $path = $this->folder->getPath() . DIRECTORY_SEPARATOR . $this->file;
+        $path = $this->folder['directory'] . DIRECTORY_SEPARATOR . $this->file;
 
         if (! is_file($path)) {
             throw new LogicException('The template name "' . $this->name . '" is not valid.');
