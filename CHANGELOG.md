@@ -25,10 +25,13 @@ The purpose of the development was to simplify the source code as much as possib
 - Documentation (After editing will be added again).
 - Removed all extensions that were delivered with the package.
 - Due to replacement with a new algorithm, removed old fallback folder functionality.
-- Removed existing classes and methods that are not used `[D]`, replaced with simpler code `[S]`
-  or covered by new functionality `[C]`:
+- Removed existing classes and methods:  
+  `[D]` completely removed as unnecessary  
+  `[C]` covered by new functionality  
+  `[S]` replaced with simpler code
   - `[D] Directory::class`
   - `[S] FileExtension::class`
+  - `[S] Folder::class`
   - `[S] Folders::class`
   - `[S] Functions::class`
   - `[C] Engine::setDirectory()`

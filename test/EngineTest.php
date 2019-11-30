@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace MobicmsTest;
 
 use Mobicms\Render\Engine;
-use Mobicms\Render\Template\Folder;
 use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
 use MobicmsTest\Extension\DummyExtensionFoo;
