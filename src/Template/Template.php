@@ -23,7 +23,7 @@ class Template
     /** @var Engine Instance of the template engine */
     private $engine;
 
-    /** @var Name The name of the template */
+    /** @var TemplateName The name of the template */
     private $name;
 
     /** @var array The data assigned to the template */
@@ -47,7 +47,7 @@ class Template
     public function __construct(Engine $engine, string $name)
     {
         $this->engine = $engine;
-        $this->name = new Name($engine, $name);
+        $this->name = new TemplateName($engine, $name);
         $this->data($this->engine->getData($name));
     }
 

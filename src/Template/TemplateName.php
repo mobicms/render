@@ -17,7 +17,7 @@ use LogicException;
 /**
  * A template name
  */
-class Name
+class TemplateName
 {
     /** @var Engine Instance of the template engine */
     private $engine;
