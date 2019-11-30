@@ -90,16 +90,6 @@ class Template
     }
 
     /**
-     * Check if the template exists
-     *
-     * @return bool
-     */
-    public function exists(): bool
-    {
-        return $this->name->doesPathExist();
-    }
-
-    /**
      * Get the template path
      *
      * @return string
@@ -122,12 +112,6 @@ class Template
         $this->data($data);
         unset($data);
         extract($this->data, EXTR_SKIP);
-
-        if (! $this->exists()) {
-            throw new LogicException(
-                'The template "' . $this->name->getName() . '" could not be found at "' . $this->path() . '".'
-            );
-        }
 
         try {
             $level = ob_get_level();
@@ -298,7 +282,7 @@ class Template
      * @param string $functions
      * @return string
      */
-    public function escape(string $string, string $functions = null): string
+    public function e(string $string, string $functions = null): string
     {
         static $flags;
 
@@ -311,17 +295,5 @@ class Template
         }
 
         return htmlspecialchars($string, $flags, 'UTF-8');
-    }
-
-    /**
-     * Alias to escape function
-     *
-     * @param string $string
-     * @param string $functions
-     * @return string
-     */
-    public function e(string $string, string $functions = null): string
-    {
-        return $this->escape($string, $functions);
     }
 }

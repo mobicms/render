@@ -46,18 +46,7 @@ class Name
     public function setEngine(Engine $engine): self
     {
         $this->engine = $engine;
-
         return $this;
-    }
-
-    /**
-     * Get the engine
-     *
-     * @return Engine
-     */
-    public function getEngine(): Engine
-    {
-        return $this->engine;
     }
 
     /**
@@ -106,18 +95,7 @@ class Name
     public function setFolder(string $folder): self
     {
         $this->folder = $this->engine->getFolders()->get($folder);
-
         return $this;
-    }
-
-    /**
-     * Get the parsed template folder
-     *
-     * @return Folder|null
-     */
-    public function getFolder(): ?Folder
-    {
-        return $this->folder;
     }
 
     /**
@@ -145,16 +123,6 @@ class Name
     }
 
     /**
-     * Get the parsed template file
-     *
-     * @return string
-     */
-    public function getFile(): string
-    {
-        return $this->file;
-    }
-
-    /**
      * Resolve template path
      *
      * @return string
@@ -172,15 +140,5 @@ class Name
         }
 
         return $path;
-    }
-
-    /**
-     * Check if template path exists
-     *
-     * @return bool
-     */
-    public function doesPathExist(): bool
-    {
-        return is_file($this->getPath());
     }
 }
