@@ -21,9 +21,10 @@ The purpose of the development was to simplify the source code as much as possib
 - Nothing
 
 #### Removed
-- Folder with example
-- Documentation (After editing will be added again)
-- Removed all extensions that were delivered with the package
+- Folder with example.
+- Documentation (After editing will be added again).
+- Removed all extensions that were delivered with the package.
+- Due to replacement with a new algorithm, removed old fallback folder functionality.
 - Removed existing classes and methods that are not used `[D]`, replaced with simpler code `[S]`
   or covered by new functionality `[C]`:
   - `[D] Directory::class`
@@ -36,7 +37,7 @@ The purpose of the development was to simplify the source code as much as possib
   - `[D] Engine::path()`
   - `[D] Engine::exists()`
   - `[S] Engine::make()`
-- Some other code that is not used
+- Some other code that is not used.
 
 #### Fixed
 - Nothing
