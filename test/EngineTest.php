@@ -110,6 +110,14 @@ class EngineTest extends TestCase
         $this->assertEquals($this->engine->getFunction('uppercase')->getCallback(), 'strtoupper');
     }
 
+    public function testRegisterExistFunction(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The template function name "uppercase" is already registered.');
+        $this->engine->registerFunction('uppercase', 'strtoupper');
+        $this->engine->registerFunction('uppercase', 'strtoupper');
+    }
+
     public function testGetFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
