@@ -12,11 +12,12 @@ declare(strict_types=1);
 namespace Mobicms\Render;
 
 use LogicException;
-use Mobicms\Render\Template\Data;
-use Mobicms\Render\Template\Folder;
-use Mobicms\Render\Template\Func;
-use Mobicms\Render\Template\Functions;
-use Mobicms\Render\Template\Template;
+use Mobicms\Render\Template\{
+    Data,
+    Folder,
+    Template,
+    TemplateFunction
+};
 
 /**
  * Template API and environment settings storage
@@ -29,7 +30,7 @@ class Engine
     /** @var array Collection of template namespaces */
     protected $nameSpaces;
 
-    /** @var Functions Collection of template functions */
+    /** @var array Collection of template functions */
     protected $functions;
 
     /** @var Data Collection of preassigned template data */
@@ -37,7 +38,6 @@ class Engine
 
     public function __construct()
     {
-        $this->functions = new Functions();
         $this->data = new Data();
     }
 
@@ -127,7 +127,11 @@ class Engine
      */
     public function registerFunction(string $name, callable $callback): self
     {
-        $this->functions->add($name, $callback);
+        if (isset($this->functions[$name])) {
+            throw new LogicException('The template function name "' . $name . '" is already registered.');
+        }
+
+        $this->functions[$name] = new TemplateFunction($name, $callback);
         return $this;
     }
 
@@ -135,11 +139,15 @@ class Engine
      * Get a template function
      *
      * @param string $name
-     * @return Func
+     * @return TemplateFunction
      */
-    public function getFunction(string $name): Func
+    public function getFunction(string $name): TemplateFunction
     {
-        return $this->functions->get($name);
+        if (! isset($this->functions[$name])) {
+            throw new LogicException('The template function "' . $name . '" was not found.');
+        }
+
+        return $this->functions[$name];
     }
 
     /**
@@ -150,7 +158,7 @@ class Engine
      */
     public function doesFunctionExist(string $name): bool
     {
-        return $this->functions->exists($name);
+        return isset($this->functions[$name]);
     }
 
     /**
@@ -170,8 +178,8 @@ class Engine
      *
      * @param string $name
      * @param array $data
-     * @throws \Throwable
      * @return string
+     * @throws \Throwable
      */
     public function render(string $name, array $data = []): string
     {

@@ -13,7 +13,7 @@ namespace MobicmsTest;
 
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\Folder;
-use Mobicms\Render\Template\Func;
+use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
 use MobicmsTest\Extension\DummyExtensionFoo;
 use org\bovigo\vfs\vfsStream;
@@ -106,7 +106,7 @@ class EngineTest extends TestCase
     {
         vfsStream::create(['template.php' => '<?=$this->uppercase($name)?>']);
         $this->engine->registerFunction('uppercase', 'strtoupper');
-        $this->assertInstanceOf(Func::class, $this->engine->getFunction('uppercase'));
+        $this->assertInstanceOf(TemplateFunction::class, $this->engine->getFunction('uppercase'));
         $this->assertEquals($this->engine->getFunction('uppercase')->getCallback(), 'strtoupper');
     }
 
@@ -114,7 +114,7 @@ class EngineTest extends TestCase
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $function = $this->engine->getFunction('uppercase');
-        $this->assertInstanceOf(Func::class, $function);
+        $this->assertInstanceOf(TemplateFunction::class, $function);
         $this->assertEquals($function->getName(), 'uppercase');
         $this->assertEquals($function->getCallback(), 'strtoupper');
     }

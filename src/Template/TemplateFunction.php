@@ -17,7 +17,7 @@ use LogicException;
 /**
  * A template function
  */
-class Func
+class TemplateFunction
 {
     /** @var string The function name */
     protected $name;
@@ -35,7 +35,7 @@ class Func
      * Set the function name
      *
      * @param string $name
-     * @return Func
+     * @return TemplateFunction
      */
     public function setName(string $name): self
     {
