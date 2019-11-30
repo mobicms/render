@@ -13,7 +13,7 @@ namespace Mobicms\Render;
 
 use LogicException;
 use Mobicms\Render\Template\{
-    Data,
+    TemplateData,
     Folder,
     Template,
     TemplateFunction
@@ -33,12 +33,12 @@ class Engine
     /** @var array Collection of template functions */
     protected $functions;
 
-    /** @var Data Collection of preassigned template data */
+    /** @var TemplateData Collection of preassigned template data */
     protected $data;
 
     public function __construct()
     {
-        $this->data = new Data();
+        $this->data = new TemplateData();
     }
 
     /**

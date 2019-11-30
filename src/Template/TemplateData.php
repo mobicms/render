@@ -16,7 +16,7 @@ use LogicException;
 /**
  * Preassigned template data
  */
-class Data
+class TemplateData
 {
     /** @var array Variables shared by all templates */
     protected $sharedVariables = [];
@@ -29,7 +29,7 @@ class Data
      *
      * @param array $data
      * @param null|string|array $templates
-     * @return Data
+     * @return TemplateData
      */
     public function add(array $data, $templates = null): self
     {
@@ -54,7 +54,7 @@ class Data
      * Add data shared with all templates
      *
      * @param array $data
-     * @return Data
+     * @return TemplateData
      */
     public function shareWithAll(array $data): self
     {
@@ -68,7 +68,7 @@ class Data
      *
      * @param array $data
      * @param array $templates
-     * @return Data
+     * @return TemplateData
      */
     public function shareWithSome(array $data, array $templates): self
     {
