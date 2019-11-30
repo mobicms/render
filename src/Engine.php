@@ -17,7 +17,6 @@ use Mobicms\Render\Template\Folder;
 use Mobicms\Render\Template\Func;
 use Mobicms\Render\Template\Functions;
 use Mobicms\Render\Template\Template;
-use SplObjectStorage;
 
 /**
  * Template API and environment settings storage
@@ -82,7 +81,7 @@ class Engine
     }
 
     /**
-     * Get a template folders
+     * Get a template folder
      *
      * @return Folder
      */

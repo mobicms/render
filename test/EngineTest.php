@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace MobicmsTest;
 
 use Mobicms\Render\Engine;
-use Mobicms\Render\Template\Folders;
+use Mobicms\Render\Template\Folder;
 use Mobicms\Render\Template\Func;
 use LogicException;
 use MobicmsTest\Extension\DummyExtensionFoo;
@@ -50,13 +50,13 @@ class EngineTest extends TestCase
     {
         vfsStream::create(['folder' => ['template.php' => '']]);
         $this->assertInstanceOf(Engine::class, $this->engine->addFolder('folder', vfsStream::url('templates/folder')));
-        $this->assertEquals($this->engine->getFolders()->get('folder')->getPath(), 'vfs://templates/folder');
+        $this->assertEquals($this->engine->getFolder('folder')->getPath(), 'vfs://templates/folder');
     }
 
     public function testAddFolderWithNamespaceConflict(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The template folder "name" is already being used.');
+        $this->expectExceptionMessage('The template namespace "name" is already being used.');
         $this->engine->addFolder('name', vfsStream::url('templates'));
         $this->engine->addFolder('name', vfsStream::url('templates'));
     }
@@ -68,9 +68,17 @@ class EngineTest extends TestCase
         $this->engine->addFolder('namespace', vfsStream::url('does/not/exist'));
     }
 
-    public function testGetFolders(): void
+    public function testGetFolder(): void
     {
-        $this->assertInstanceOf(Folders::class, $this->engine->getFolders());
+        $this->engine->addFolder('name', vfsStream::url('templates'));
+        $this->assertInstanceOf(Folder::class, $this->engine->getFolder('name'));
+    }
+
+    public function testGetNonexistentFolder(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The template namespace "name" was not found.');
+        $this->assertInstanceOf(Folder::class, $this->engine->getFolder('name'));
     }
 
     public function testAddData(): void
