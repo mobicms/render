@@ -148,10 +148,10 @@ class EngineTest extends TestCase
         $this->assertTrue($this->engine->doesFunctionExist('foo'));
     }
 
-//    public function testRenderTemplate()
-//    {
-//        $this->engine->addFolder('tmp', vfsStream::url('templates'));
-//        vfsStream::create(['template.php' => 'Hello!']);
-//        $this->assertEquals($this->engine->render('tmp::template'), 'Hello!');
-//    }
+    public function testRenderTemplate()
+    {
+        $this->engine->addFolder('tmp', vfsStream::url('templates'));
+        vfsStream::create(['template.phtml' => 'Hello!']);
+        $this->assertEquals($this->engine->render('tmp::template'), 'Hello!');
+    }
 }
