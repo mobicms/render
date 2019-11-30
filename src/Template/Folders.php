@@ -26,34 +26,15 @@ class Folders
      *
      * @param string $name
      * @param string $path
-     * @param bool $fallback
      * @return Folders
      */
-    public function add(string $name, string $path, bool $fallback = false): self
+    public function add(string $name, string $path): self
     {
         if ($this->exists($name)) {
             throw new LogicException('The template folder "' . $name . '" is already being used.');
         }
 
-        $this->folders[$name] = new Folder($name, $path, $fallback);
-
-        return $this;
-    }
-
-    /**
-     * Remove a template folder
-     *
-     * @param string $name
-     * @return Folders
-     */
-    public function remove(string $name): self
-    {
-        if (! $this->exists($name)) {
-            throw new LogicException('The template folder "' . $name . '" was not found.');
-        }
-
-        unset($this->folders[$name]);
-
+        $this->folders[$name] = new Folder($name, $path);
         return $this;
     }
 

@@ -24,21 +24,16 @@ class Folder
     /** @var string The folder path */
     protected $path;
 
-    /** @var bool The folder fallback status */
-    protected $fallback;
-
     /**
      * Create a new Folder instance
      *
      * @param string $name
      * @param string $path
-     * @param bool $fallback
      */
-    public function __construct(string $name, string $path, bool $fallback = false)
+    public function __construct(string $name, string $path)
     {
         $this->setName($name);
         $this->setPath($path);
-        $this->setFallback($fallback);
     }
 
     /**
@@ -50,7 +45,6 @@ class Folder
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -77,7 +71,6 @@ class Folder
         }
 
         $this->path = $path;
-
         return $this;
     }
 
@@ -89,28 +82,5 @@ class Folder
     public function getPath(): string
     {
         return $this->path;
-    }
-
-    /**
-     * Set the folder fallback status
-     *
-     * @param bool $fallback
-     * @return Folder
-     */
-    public function setFallback(bool $fallback): self
-    {
-        $this->fallback = $fallback;
-
-        return $this;
-    }
-
-    /**
-     * Get the folder fallback status
-     *
-     * @return bool
-     */
-    public function getFallback(): bool
-    {
-        return $this->fallback;
     }
 }

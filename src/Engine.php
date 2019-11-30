@@ -68,12 +68,11 @@ class Engine
      *
      * @param string $name
      * @param string $directory
-     * @param bool $fallback
      * @return Engine
      */
-    public function addFolder(string $name, string $directory, bool $fallback = false): self
+    public function addFolder(string $name, string $directory): self
     {
-        $this->folders->add($name, $directory, $fallback);
+        $this->folders->add($name, $directory);
         return $this;
     }
 
