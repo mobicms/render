@@ -24,7 +24,7 @@ use Mobicms\Render\Template\{
 class Engine
 {
     /** @var string Template file extension */
-    protected $fileExtension = 'php';
+    protected $fileExtension;
 
     /** @var array Collection of template namespaces */
     protected $nameSpaces;
@@ -35,21 +35,10 @@ class Engine
     /** @var TemplateData Collection of preassigned template data */
     protected $data;
 
-    public function __construct()
-    {
-        $this->data = new TemplateData();
-    }
-
-    /**
-     * Set the template file extension
-     *
-     * @param string $fileExtension
-     * @return Engine
-     */
-    public function setFileExtension(string $fileExtension): self
+    public function __construct($fileExtension = 'phtml')
     {
         $this->fileExtension = $fileExtension;
-        return $this;
+        $this->data = new TemplateData();
     }
 
     /**

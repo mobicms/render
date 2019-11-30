@@ -21,34 +21,33 @@ use Throwable;
 class Template
 {
     /** @var Engine Instance of the template engine */
-    protected $engine;
+    private $engine;
 
     /** @var Name The name of the template */
-    protected $name;
+    private $name;
 
     /** @var array The data assigned to the template */
-    protected $data = [];
+    private $data = [];
 
     /** @var array An array of section content */
-    protected $sections = [];
+    private $sections = [];
 
     /** @var string The name of the section currently being rendered */
-    protected $sectionName;
+    private $sectionName;
 
     /** @var bool Whether the section should be appended or not */
-    protected $appendSection;
+    private $appendSection;
 
     /** @var string The name of the template layout */
-    protected $layoutName;
+    private $layoutName;
 
     /** @var array The data assigned to the template layout */
-    protected $layoutData;
+    private $layoutData;
 
     public function __construct(Engine $engine, string $name)
     {
         $this->engine = $engine;
         $this->name = new Name($engine, $name);
-
         $this->data($this->engine->getData($name));
     }
 
@@ -90,16 +89,6 @@ class Template
     }
 
     /**
-     * Get the template path
-     *
-     * @return string
-     */
-    public function path(): string
-    {
-        return $this->name->getPath();
-    }
-
-    /**
      * Render the template and layout
      *
      * @param array $data
@@ -116,7 +105,7 @@ class Template
         try {
             $level = ob_get_level();
             ob_start();
-            include $this->path();
+            include $this->name->getPath();
             $content = ob_get_clean();
 
             if (isset($this->layoutName)) {
