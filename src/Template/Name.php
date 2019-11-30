@@ -25,7 +25,7 @@ class Name
     /** @var string The original name */
     protected $name;
 
-    /** @var Folder The parsed template folder */
+    /** @var array The parsed template folder */
     protected $folder;
 
     /** @var string The parsed template filename */
