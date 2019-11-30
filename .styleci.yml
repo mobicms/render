@@ -67,7 +67,6 @@ enabled:
   - object_operator_without_whitespace
   - phpdoc_add_missing_param_annotation
   - phpdoc_indent
-  - phpdoc_order
   - phpdoc_scalar
   - phpdoc_types
   - property_separation
