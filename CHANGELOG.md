@@ -30,6 +30,7 @@ The purpose of the development was to simplify the source code as much as possib
   - `[D] Directory::class`
   - `[S] FileExtension::class`
   - `[S] Folders::class`
+  - `[S] Functions::class`
   - `[C] Engine::setDirectory()`
   - `[C] Engine::getDirectory()`
   - `[D] Engine::removeFolder()`
