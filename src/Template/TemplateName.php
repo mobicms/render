@@ -19,9 +19,6 @@ use LogicException;
  */
 class TemplateName
 {
-    /** @var Engine Instance of the template engine */
-    private $engine;
-
     /** @var string The original name */
     private $name;
 
@@ -33,9 +30,18 @@ class TemplateName
 
     public function __construct(Engine $engine, string $name)
     {
-        $this->engine = $engine;
         $this->name = $name;
-        $this->parseTemplateName();
+        $parts = explode('::', $this->name);
+
+        if (count($parts) === 2) {
+            $this->folder = $engine->getFolder($parts[0]);
+            $this->file = $parts[1] . '.' . $engine->getFileExtension();
+        } else {
+            throw new LogicException(
+                'The template name "' . $this->name . '" is not valid. ' .
+                'Do not use the folder namespace separator "::" more than once.'
+            );
+        }
     }
 
     /**
@@ -45,30 +51,16 @@ class TemplateName
      */
     public function getPath(): string
     {
-        $path = $this->folder['directory'] . DIRECTORY_SEPARATOR . $this->file;
+        $folderList = array_reverse($this->folder);
 
-        if (! is_file($path)) {
-            throw new LogicException('The template name "' . $this->name . '" is not valid.');
+        foreach ($folderList as $folder) {
+            $path = $folder . DIRECTORY_SEPARATOR . $this->file;
+
+            if (is_file($path)) {
+                return $path;
+            }
         }
 
-        return $path;
-    }
-
-    /**
-     * Set the original name and parse it
-     */
-    private function parseTemplateName(): void
-    {
-        $parts = explode('::', $this->name);
-
-        if (count($parts) === 2) {
-            $this->folder = $this->engine->getFolder($parts[0]);
-            $this->file = $parts[1] . '.' . $this->engine->getFileExtension();
-        } else {
-            throw new LogicException(
-                'The template name "' . $this->name . '" is not valid. ' .
-                'Do not use the folder namespace separator "::" more than once.'
-            );
-        }
+        throw new LogicException('The template name "' . $this->name . '" is not valid.');
     }
 }

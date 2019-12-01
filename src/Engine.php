@@ -54,11 +54,12 @@ class Engine
     /**
      * Add a new template folder for grouping templates under different namespaces
      *
-     * @param string $name
-     * @param string $directory
+     * @param string $name Namespace
+     * @param string $directory Default (fallback) directory
+     * @param array $search Array with a list of folders where templates will be searched
      * @return Engine
      */
-    public function addFolder(string $name, string $directory): self
+    public function addFolder(string $name, string $directory, array $search = []): self
     {
         if (isset($this->nameSpaces[$name])) {
             throw new LogicException('The template namespace "' . $name . '" is already being used.');
@@ -68,13 +69,14 @@ class Engine
             throw new LogicException('The specified directory path "' . $directory . '" does not exist.');
         }
 
-        $this->nameSpaces[$name] = ['name' => $name, 'directory' => $directory];
+        $this->nameSpaces[$name] = array_merge([$directory], $search);
         return $this;
     }
 
     /**
      * Get a template folder
      *
+     * @param string $name
      * @return array
      */
     public function getFolder(string $name): array

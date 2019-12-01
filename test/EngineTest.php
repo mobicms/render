@@ -42,8 +42,20 @@ class EngineTest extends TestCase
     public function testAddFolder(): void
     {
         vfsStream::create(['folder' => ['template.php' => '']]);
-        $this->assertInstanceOf(Engine::class, $this->engine->addFolder('folder', vfsStream::url('templates/folder')));
-        $this->assertEquals($this->engine->getFolder('folder')['directory'], 'vfs://templates/folder');
+        $this->engine->addFolder('folder', vfsStream::url('templates/folder'));
+        $this->assertEquals($this->engine->getFolder('folder')[0], 'vfs://templates/folder');
+    }
+
+    public function testAddFolderWithSearchFolders(): void
+    {
+        vfsStream::create(['folder' => ['template.php' => '']]);
+        $this->engine->addFolder('folder', vfsStream::url('templates/folder'), [
+            vfsStream::url('templates/search1'),
+            vfsStream::url('templates/search2'),
+        ]);
+        $this->assertEquals($this->engine->getFolder('folder')[0], 'vfs://templates/folder');
+        $this->assertEquals($this->engine->getFolder('folder')[1], 'vfs://templates/search1');
+        $this->assertEquals($this->engine->getFolder('folder')[2], 'vfs://templates/search2');
     }
 
     public function testAddFolderWithNamespaceConflict(): void
@@ -66,8 +78,7 @@ class EngineTest extends TestCase
         $this->engine->addFolder('name', vfsStream::url('templates'));
         $folder = $this->engine->getFolder('name');
         $this->assertIsArray($folder);
-        $this->assertArrayHasKey('name', $folder);
-        $this->assertArrayHasKey('directory', $folder);
+        $this->assertSame('vfs://templates', $folder[0]);
     }
 
     public function testGetNonexistentFolder(): void
