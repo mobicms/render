@@ -10,7 +10,7 @@ The purpose of the development was to simplify the source code as much as possib
 **Here are the most significant changes compared to the [original package](https://github.com/thephpleague/plates/releases/tag/3.3.0).**
 
 #### Added
-- Nothing
+- Added fallback folder functionality per each namespace
 
 #### Changed
 - All code rewritten to use PHP 7.2 or newer
