@@ -39,7 +39,7 @@ class TemplateName
         } else {
             throw new LogicException(
                 'The template name "' . $this->name . '" is not valid. ' .
-                'Do not use the folder namespace separator "::" more than once.'
+                'You must use the folder namespace separator "::" once.'
             );
         }
     }
@@ -61,6 +61,6 @@ class TemplateName
             }
         }
 
-        throw new LogicException('The template name "' . $this->name . '" is not valid.');
+        throw new LogicException('The template "' . $this->name . '" does not exist.');
     }
 }
