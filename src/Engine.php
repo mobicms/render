@@ -92,10 +92,10 @@ class Engine
      * Add preassigned template data
      *
      * @param array $data
-     * @param null|string|array $templates
+     * @param array $templates
      * @return Engine
      */
-    public function addData(array $data, $templates = null): self
+    public function addData(array $data, array $templates = []): self
     {
         $this->data->add($data, $templates);
         return $this;

@@ -95,13 +95,6 @@ class EngineTest extends TestCase
         $this->assertEquals($data['name'], 'Jonathan');
     }
 
-    public function testAddDataWithTemplate(): void
-    {
-        $this->engine->addData(['name' => 'Jonathan'], 'template');
-        $data = $this->engine->getData('template');
-        $this->assertEquals($data['name'], 'Jonathan');
-    }
-
     public function testAddDataWithTemplates(): void
     {
         $this->engine->addData(['name' => 'Jonathan'], ['template1', 'template2']);

@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
-use LogicException;
-
 /**
  * Preassigned template data
  */
@@ -28,26 +26,14 @@ class TemplateData
      * Add template data
      *
      * @param array $data
-     * @param null|string|array $templates
+     * @param array $templates
      * @return TemplateData
      */
-    public function add(array $data, $templates = null): self
+    public function add(array $data, array $templates = []): self
     {
-        if (null === $templates) {
-            return $this->shareWithAll($data);
-        }
-
-        if (is_array($templates)) {
-            return $this->shareWithSome($data, $templates);
-        }
-
-        if (is_string($templates)) {
-            return $this->shareWithSome($data, [$templates]);
-        }
-
-        throw new LogicException(
-            'The templates variable must be null, an array or a string, ' . gettype($templates) . ' given.'
-        );
+        return empty($templates)
+            ? $this->shareWithAll($data)
+            : $this->shareWithSome($data, $templates);
     }
 
     /**

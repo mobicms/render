@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace MobicmsTest;
 
 use Mobicms\Render\Template\TemplateData;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 
 class TemplateDataTest extends TestCase
@@ -38,15 +37,15 @@ class TemplateDataTest extends TestCase
 
     public function testAddDataToOneTemplate(): void
     {
-        $this->template_data->add(['name' => 'Jonathan'], 'template');
+        $this->template_data->add(['name' => 'Jonathan'], ['template']);
         $data = $this->template_data->get('template');
         $this->assertEquals($data['name'], 'Jonathan');
     }
 
     public function testAddDataToOneTemplateAgain(): void
     {
-        $this->template_data->add(['firstname' => 'Jonathan'], 'template');
-        $this->template_data->add(['lastname' => 'Reinink'], 'template');
+        $this->template_data->add(['firstname' => 'Jonathan'], ['template']);
+        $this->template_data->add(['lastname' => 'Reinink'], ['template']);
         $data = $this->template_data->get('template');
         $this->assertEquals($data['lastname'], 'Reinink');
     }
@@ -56,12 +55,5 @@ class TemplateDataTest extends TestCase
         $this->template_data->add(['name' => 'Jonathan'], ['template1', 'template2']);
         $data = $this->template_data->get('template1');
         $this->assertEquals($data['name'], 'Jonathan');
-    }
-
-    public function testAddDataWithInvalidTemplateFileType(): void
-    {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The templates variable must be null, an array or a string, integer given.');
-        $this->template_data->add(['name' => 'Jonathan'], 123);
     }
 }
