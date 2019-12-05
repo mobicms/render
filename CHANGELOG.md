@@ -3,22 +3,23 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/mobicms/render/commits/).
 
-## 1.0.0 - Unreleased
+## 1.0.0 - 2019-12-05
 The development of this package started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).  
 The purpose of the development was to simplify the source code as much as possible, get rid of the unnecessary and add the missing functionality.
-
-**Here are the most significant changes compared to the [original package](https://github.com/thephpleague/plates/releases/tag/3.3.0).**
+Here are the most significant changes compared to the [original package](https://github.com/thephpleague/plates/releases/tag/3.3.0).
 
 #### Added
-- Added fallback folder functionality per each namespace
+- Each namespace can have one default (fallback) folder and optional several search folders.
+  The template is searched sequentially across all of these folders, from the last to the first.
+  The first template found will be used.
+  If not found (or not specified), it will use the template specified by default.
 
 #### Changed
 - All code rewritten to use PHP 7.2 or newer
 - All tests rewritten to use new PhpUnit 8.x
+- Specify a namespace and its path is mandatory.  
+  Now you cannot call template without specifying a namespace.
 - Namespace refactoring
-
-#### Deprecated
-- Nothing
 
 #### Removed
 - Folder with example.
@@ -29,7 +30,7 @@ The purpose of the development was to simplify the source code as much as possib
   `[D]` completely removed as unnecessary  
   `[C]` covered by new functionality  
   `[S]` replaced with simpler code
-  - `[D] Directory::class`
+  - `[S] Directory::class`
   - `[S] FileExtension::class`
   - `[S] Folder::class`
   - `[S] Folders::class`
@@ -43,9 +44,3 @@ The purpose of the development was to simplify the source code as much as possib
   - `[D] Engine::exists()`
   - `[S] Engine::make()`
 - Some other code that is not used.
-
-#### Fixed
-- Nothing
-
-#### Security
-- Nothing
