@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
-use Mobicms\Render\ExtensionInterface;
 use LogicException;
 
 /**
