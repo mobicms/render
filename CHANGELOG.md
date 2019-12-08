@@ -3,6 +3,12 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/mobicms/render/commits/).
 
+## 1.0.1 - 2019-12-08
+
+#### Changed
+- Small internal improvements
+
+
 ## 1.0.0 - 2019-12-05
 The development of this package started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).  
 The purpose of the development was to simplify the source code as much as possible, get rid of the unnecessary and add the missing functionality.
