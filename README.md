@@ -9,6 +9,7 @@ but can be used freely in other projects.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/?branch=develop)
 
 [![Packagist](https://img.shields.io/packagist/l/mobicms/render.svg)](https://packagist.org/packages/mobicms/render)
+[![Packagist](https://img.shields.io/packagist/dt/mobicms/render)](https://packagist.org/packages/mobicms/render)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/mobicms/render.svg?label=stable)](https://github.com/mobicms/render/releases)
 
 This package started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).
