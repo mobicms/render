@@ -38,8 +38,8 @@ class Template
     /** @var bool Whether the section should be appended or not */
     private $appendSection = false;
 
-    /** @var null|string The name of the template layout */
-    private $layoutName;
+    /** @var string The name of the template layout */
+    private $layoutName = '';
 
     /** @var array The data assigned to the template layout */
     private $layoutData = [];
@@ -109,7 +109,7 @@ class Template
             include $this->name->getPath();
             $content = ob_get_clean();
 
-            if (isset($this->layoutName)) {
+            if ($this->layoutName !== '') {
                 $layout = new self($this->engine, $this->layoutName);
                 $layout->sections = array_merge($this->sections, ['content' => $content]);
                 $content = $layout->render($this->layoutData);
