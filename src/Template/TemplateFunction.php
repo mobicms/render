@@ -92,20 +92,11 @@ class TemplateFunction
     /**
      * Call the function
      *
-     * @param Template $template
      * @param array $arguments
      * @return mixed
      */
-    public function call(Template $template = null, array $arguments = [])
+    public function call(array $arguments = [])
     {
-        if (
-            is_array($this->callback)
-            && isset($this->callback[0])
-            && $this->callback[0] instanceof ExtensionInterface
-        ) {
-            $this->callback[0]->template = $template;
-        }
-
         return call_user_func_array($this->callback, $arguments);
     }
 }

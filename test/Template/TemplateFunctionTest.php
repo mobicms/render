@@ -63,7 +63,7 @@ class TemplateFunctionTest extends TestCase
 
     public function testFunctionCall(): void
     {
-        $this->assertEquals($this->function->call(null, ['Jonathan']), 'JONATHAN');
+        $this->assertEquals($this->function->call(['Jonathan']), 'JONATHAN');
     }
 
     public function testExtensionFunctionCall(): void
@@ -71,6 +71,6 @@ class TemplateFunctionTest extends TestCase
         $extension = $this->createPartialMock(DummyExtensionInterface::class, ['register', 'foo']);
         $extension->method('foo')->willReturn('bar');
         $this->function->setCallback([$extension, 'foo']);
-        $this->assertEquals($this->function->call(null), 'bar');
+        $this->assertEquals($this->function->call(), 'bar');
     }
 }

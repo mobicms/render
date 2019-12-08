@@ -27,15 +27,18 @@ class Engine
     protected $fileExtension;
 
     /** @var array Collection of template namespaces */
-    protected $nameSpaces;
+    private $nameSpaces = [];
 
     /** @var array Collection of template functions */
-    protected $functions;
+    protected $functions = [];
 
     /** @var TemplateData Collection of preassigned template data */
     protected $data;
 
-    public function __construct($fileExtension = 'phtml')
+    /**
+     * @param string $fileExtension
+     */
+    public function __construct(string $fileExtension = 'phtml')
     {
         $this->fileExtension = $fileExtension;
         $this->data = new TemplateData();

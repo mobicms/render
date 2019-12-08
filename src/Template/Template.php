@@ -32,17 +32,17 @@ class Template
     /** @var array An array of section content */
     private $sections = [];
 
-    /** @var string The name of the section currently being rendered */
+    /** @var null|string The name of the section currently being rendered */
     private $sectionName;
 
     /** @var bool Whether the section should be appended or not */
-    private $appendSection;
+    private $appendSection = false;
 
-    /** @var string The name of the template layout */
+    /** @var null|string The name of the template layout */
     private $layoutName;
 
     /** @var array The data assigned to the template layout */
-    private $layoutData;
+    private $layoutData = [];
 
     public function __construct(Engine $engine, string $name)
     {
@@ -60,15 +60,15 @@ class Template
      */
     public function __call(string $name, array $arguments)
     {
-        return $this->engine->getFunction($name)->call($this, $arguments);
+        return $this->engine->getFunction($name)->call($arguments);
     }
 
     /**
      * Alias for render() method
      *
-     * @throws \Exception
-     * @throws \Throwable
      * @return string
+     * @throws \Throwable
+     * @throws \Exception
      */
     public function __toString(): string
     {
@@ -91,10 +91,11 @@ class Template
     /**
      * Render the template and layout
      *
+     * @psalm-suppress UnresolvableInclude
      * @param array $data
-     * @throws \Exception
-     * @throws \Throwable
      * @return string
+     * @throws \Throwable
+     * @throws \Exception
      */
     public function render(array $data = []): string
     {
@@ -220,8 +221,8 @@ class Template
      *
      * @param string $name
      * @param array $data
-     * @throws Throwable
      * @return string
+     * @throws Throwable
      */
     public function fetch(string $name, array $data = []): string
     {
