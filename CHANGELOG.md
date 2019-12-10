@@ -1,18 +1,53 @@
 # Changelog
-This project follows [semantic versioning](https://semver.org/).  
-All notable changes to this project will be documented in this file.  
-Detailed change can see in the [repository log](https://github.com/mobicms/render/commits/).
 
-## 1.0.1 - 2019-12-08
+All notable changes to this project will be documented in this file.  
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+
+## [Unreleased]
+
+#### Added
+- Nothing
+  
+#### Changed
+- Nothing
+
+#### Deprecated
+- Nothing
+  
+#### Removed
+- Nothing
+
+#### Fixed
+- Nothing
+
+#### Security
+- Nothing
+
+
+## [1.1.0] - 2019-12-11
+
+#### Added
+- Template::sectionAppend()
+- Template::sectionReplace()
+  
+#### Deprecated
+- Template::end()
+- Template::insert()
+
+
+## [1.0.1] - 2019-12-08
 
 #### Changed
 - Small internal improvements
 
 
-## 1.0.0 - 2019-12-05
+## [1.0.0] - 2019-12-05
 The development of this package started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).  
 The purpose of the development was to simplify the source code as much as possible, get rid of the unnecessary and add the missing functionality.
-Here are the most significant changes compared to the [original package](https://github.com/thephpleague/plates/releases/tag/3.3.0).
+
+Here are the most significant changes compared to the original packag.
 
 #### Added
 - Each namespace can have one default (fallback) folder and optional several search folders.
@@ -50,3 +85,8 @@ Here are the most significant changes compared to the [original package](https:/
   - `[D] Engine::exists()`
   - `[S] Engine::make()`
 - Some other code that is not used.
+
+[Unreleased]: (https://github.com/mobicms/render/compare/1.1.0...HEAD)
+[1.1.0]: (https://github.com/mobicms/render/compare/1.0.1...1.1.0)
+[1.0.1]: https://github.com/mobicms/render/compare/1.0.0...1.0.1
+[1.0.0]: https://github.com/mobicms/render/compare/segregation...1.0.0
