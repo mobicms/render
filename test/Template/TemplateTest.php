@@ -124,6 +124,37 @@ class TemplateTest extends TestCase
     /**
      * @throws \Throwable
      */
+    public function testSectionReplace(): void
+    {
+        vfsStream::create(
+            [
+                'template.phtml' => '<?php $this->layout("folder::layout")?><?php $this->sectionReplace("test", "Hello World") ?>',
+                'layout.phtml'   => '<?php echo $this->section("test") ?>',
+            ]
+        );
+        $this->assertEquals($this->template->render(), 'Hello World');
+    }
+
+    public function testSectionAppend(): void
+    {
+        vfsStream::create(
+            [
+                'template.phtml' => implode(
+                    '\n',
+                    [
+                        '<?php $this->layout("folder::layout")?><?php $this->sectionAppend("test", "Hello World") ?>',
+                        '<?php $this->layout("folder::layout")?><?php $this->sectionAppend("test", "!!!") ?>',
+                    ]
+                ),
+                'layout.phtml'   => '<?php echo $this->section("test") ?>',
+            ]
+        );
+        $this->assertEquals($this->template->render(), 'Hello World!!!');
+    }
+
+    /**
+     * @throws \Throwable
+     */
     public function testSection(): void
     {
         vfsStream::create(
