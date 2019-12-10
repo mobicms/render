@@ -138,6 +138,28 @@ class Template
     }
 
     /**
+     * @param string $name
+     * @param string $content
+     */
+    public function sectionReplace(string $name, string $content): void
+    {
+        $this->sections[$name] = $content;
+    }
+
+    /**
+     * @param string $name
+     * @param string $content
+     */
+    public function sectionAppend(string $name, string $content): void
+    {
+        if (! isset($this->sections[$name])) {
+            $this->sections[$name] = '';
+        }
+
+        $this->sections[$name] = $this->sections[$name] . $content;
+    }
+
+    /**
      * Start a new section block
      *
      * @param string $name
@@ -193,7 +215,7 @@ class Template
     }
 
     /**
-     * Alias of stop()
+     * @deprecated
      */
     public function end(): void
     {
@@ -235,6 +257,7 @@ class Template
      * @param string $name
      * @param array $data
      * @throws Throwable
+     * @deprecated
      */
     public function insert(string $name, array $data = []): void
     {
