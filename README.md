@@ -1,7 +1,7 @@
 # `mobicms/render`
 
 This package is part of [mobiCMS](https://github.com/mobicms/mobicms) and [JohnCMS](https://github.com/simba77/johncms),
-but can be used freely in other projects.
+but can be used freely in any other projects.
 
 [![Build Status](https://travis-ci.org/mobicms/render.svg?branch=develop)](https://travis-ci.org/mobicms/render)
 [![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/?branch=develop)
@@ -50,6 +50,6 @@ Please see [LICENSE](https://github.com/mobicms/render/blob/master/LICENSE) for 
 
 
 ## Our links
-- [**Project Website**](https://mobicms.org) and support forum
+- [**mobiCMS Project**](https://mobicms.org) website and support forum
 - [**Facebook**](https://www.facebook.com/mobicms)
 - [**Twitter**](https://twitter.com/mobicms)
