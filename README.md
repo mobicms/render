@@ -3,7 +3,7 @@
 This package is part of [mobiCMS](https://github.com/mobicms/mobicms) and [JohnCMS](https://github.com/simba77/johncms),
 but can be used freely in any other projects.
 
-[![Build Status](https://travis-ci.org/mobicms/render.svg?branch=develop)](https://travis-ci.org/mobicms/render)
+[![GitHub Workflow Status](https://github.com/mobicms/render/workflows/tests/badge.svg)](https://github.com/mobicms/render/actions)
 [![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/?branch=develop)
 [![StyleCI](https://github.styleci.io/repos/224705037/shield?branch=develop)](https://github.styleci.io/repos/224705037)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/?branch=develop)
