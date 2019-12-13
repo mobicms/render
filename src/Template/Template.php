@@ -215,14 +215,6 @@ class Template
     }
 
     /**
-     * @deprecated
-     */
-    public function end(): void
-    {
-        $this->stop();
-    }
-
-    /**
      * Returns the content for a section block
      *
      * @param string $name Section name
@@ -249,19 +241,6 @@ class Template
     public function fetch(string $name, array $data = []): string
     {
         return $this->engine->render($name, $data);
-    }
-
-    /**
-     * Output a rendered template
-     *
-     * @param string $name
-     * @param array $data
-     * @throws Throwable
-     * @deprecated
-     */
-    public function insert(string $name, array $data = []): void
-    {
-        echo $this->engine->render($name, $data);
     }
 
     /**
