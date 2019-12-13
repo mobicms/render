@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Nothing
   
 #### Removed
-- Nothing
+- Template::end()
+- Template::insert()
 
 #### Fixed
 - Nothing
