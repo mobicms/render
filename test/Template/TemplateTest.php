@@ -253,8 +253,8 @@ class TemplateTest extends TestCase
                     '\n',
                     [
                         '<?php $this->layout("folder::layout")?>',
-                        '<?php $this->push("scripts") ?><script src="example1.js"></script><?php $this->end() ?>',
-                        '<?php $this->push("scripts") ?><script src="example2.js"></script><?php $this->end() ?>',
+                        '<?php $this->push("scripts") ?><script src="example1.js"></script><?php $this->stop() ?>',
+                        '<?php $this->push("scripts") ?><script src="example2.js"></script><?php $this->stop() ?>',
                     ]
                 ),
                 'layout.phtml'   => '<?php echo $this->section("scripts") ?>',
@@ -277,9 +277,9 @@ class TemplateTest extends TestCase
                     '\n',
                     [
                         '<?php $this->layout("folder::layout")?>',
-                        '<?php $this->push("scripts") ?><script src="example1.js"></script><?php $this->end() ?>',
+                        '<?php $this->push("scripts") ?><script src="example1.js"></script><?php $this->stop() ?>',
                         '<?php $this->start("test") ?>test<?php $this->stop() ?>',
-                        '<?php $this->push("scripts") ?><script src="example2.js"></script><?php $this->end() ?>',
+                        '<?php $this->push("scripts") ?><script src="example2.js"></script><?php $this->stop() ?>',
                     ]
                 ),
                 'layout.phtml'   => implode(
@@ -306,20 +306,6 @@ class TemplateTest extends TestCase
             [
                 'template.phtml' => '<?php echo $this->fetch("folder::fetched") ?>',
                 'fetched.phtml'  => 'Hello World',
-            ]
-        );
-        $this->assertEquals($this->template->render(), 'Hello World');
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public function testInsertFunction(): void
-    {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php $this->insert("folder::inserted") ?>',
-                'inserted.phtml' => 'Hello World',
             ]
         );
         $this->assertEquals($this->template->render(), 'Hello World');
