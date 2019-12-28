@@ -4,10 +4,15 @@ cache:
   directories:
     - $HOME/.composer/cache
 
+env:
+  global:
+    - COMPOSER_ARGS="--no-interaction --no-progress --no-suggest --no-scripts"
+
 matrix:
   include:
     - php: 7.2
     - php: 7.3
+    - php: 7.4
       env:
         - CS_CHECK=true
         - TEST_COVERAGE=true
@@ -17,8 +22,7 @@ before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0; fi
 
 install:
-  - travis_retry composer install --no-interaction --ignore-platform-reqs
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev --no-interaction php-coveralls/php-coveralls; fi
+  - travis_retry composer install --ignore-platform-reqs $COMPOSER_ARGS
   - stty cols 120 && composer show
 
 script:
@@ -28,7 +32,6 @@ script:
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then
-    travis_retry php vendor/bin/php-coveralls -v;
     wget https://scrutinizer-ci.com/ocular.phar;
     php ocular.phar code-coverage:upload --format=php-clover clover.xml;
     fi
