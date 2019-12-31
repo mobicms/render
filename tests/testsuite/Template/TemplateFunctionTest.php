@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace MobicmsTest;
+namespace Test\Suite\Template;
 
 use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
-use MobicmsTest\Extension\DummyExtensionInterface;
+use Test\Support\FakeExtension;
 use PHPUnit\Framework\TestCase;
 
 class TemplateFunctionTest extends TestCase
@@ -68,7 +68,7 @@ class TemplateFunctionTest extends TestCase
 
     public function testExtensionFunctionCall(): void
     {
-        $extension = $this->createPartialMock(DummyExtensionInterface::class, ['register', 'foo']);
+        $extension = $this->createPartialMock(FakeExtension::class, ['register', 'foo']);
         $extension->method('foo')->willReturn('bar');
         $this->function->setCallback([$extension, 'foo']);
         $this->assertEquals($this->function->call(), 'bar');

@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace MobicmsTest;
+namespace Test\Suite;
 
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
-use MobicmsTest\Extension\DummyExtensionFoo;
+use Test\Support\FakeExtension;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
@@ -148,7 +148,7 @@ class EngineTest extends TestCase
     public function testLoadExtension()
     {
         $this->assertFalse($this->engine->doesFunctionExist('foo'));
-        $this->engine->loadExtension(new DummyExtensionFoo());
+        $this->engine->loadExtension(new FakeExtension());
         $this->assertTrue($this->engine->doesFunctionExist('foo'));
     }
 
