@@ -17,14 +17,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Nothing
   
 #### Removed
-- Template::end()
-- Template::insert()
+- Nothing
 
 #### Fixed
 - Nothing
 
 #### Security
 - Nothing
+
+
+## [2.0.0] - 2019-12-31
+
+#### Removed
+- Template::end()
+- Template::insert()
 
 
 ## [1.1.0] - 2019-12-11
@@ -87,7 +93,8 @@ Here are the most significant changes compared to the original packag.
   - `[S] Engine::make()`
 - Some other code that is not used.
 
-[Unreleased]: (https://github.com/mobicms/render/compare/1.1.0...HEAD)
-[1.1.0]: (https://github.com/mobicms/render/compare/1.0.1...1.1.0)
+[Unreleased]: https://github.com/mobicms/render/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/mobicms/render/compare/1.1.0...2.0.0
+[1.1.0]: https://github.com/mobicms/render/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/mobicms/render/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/mobicms/render/compare/segregation...1.0.0
