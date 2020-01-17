@@ -8,8 +8,8 @@ but can be used freely in any other projects.
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/mobicms/render.svg?label=stable)](https://github.com/mobicms/render/releases)
 [![Packagist](https://img.shields.io/packagist/dt/mobicms/render)](https://packagist.org/packages/mobicms/render)
 
-[![Build Status](https://travis-ci.org/mobicms/render.svg?branch=develop)](https://travis-ci.org/mobicms/render)
-[![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/?branch=develop)
+[![GitHub Workflow Status](https://github.com/mobicms/render/workflows/CI/badge.svg)](https://github.com/mobicms/render/actions)
+[![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/code-structure/develop/code-coverage)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/?branch=develop)
 
 This package started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).
