@@ -8,14 +8,18 @@ but can be used freely in any other projects.
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/mobicms/render.svg?label=stable)](https://github.com/mobicms/render/releases)
 [![Packagist](https://img.shields.io/packagist/dt/mobicms/render)](https://packagist.org/packages/mobicms/render)
 
-[![CI](https://github.com/mobicms/render/workflows/PHP-CI/badge.svg?branch=develop)](https://github.com/mobicms/render/actions)
-[![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/code-structure/develop/code-coverage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/mobicms/render/?branch=develop)
+[![CI](https://github.com/mobicms/render/workflows/PHP-CI/badge.svg)](https://github.com/mobicms/render/actions)
+[![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png)](https://scrutinizer-ci.com/g/mobicms/render/code-structure/master/code-coverage)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png)](https://scrutinizer-ci.com/g/mobicms/render)
 
-This package started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).
-The development of the original package went in a direction that was not suitable for our projects where Plates was used, so it was decided to develop our own separate library.  
+**mobicms/render is a native PHP template system** that started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).
+The development of the original package went in a direction that was not suitable for our projects where Plates was used, so it was decided to develop our own separate library.
+Our goal was to simplify the source code as much as possible, get rid of the unnecessary and add the missing functionality.
 
-The purpose of the development was to **simplify the source code as much as possible**, get rid of the unnecessary and **add the missing functionality**.
+[![YAGNI](https://img.shields.io/badge/principle-YAGNI-blue.svg)](https://en.wikipedia.org/wiki/YAGNI)
+[![KISS](https://img.shields.io/badge/principle-KISS-blue.svg)](https://en.wikipedia.org/wiki/KISS_principle)  
+In our development, we follow the principles of [YAGNI](https://en.wikipedia.org/wiki/YAGNI) and [KISS](https://en.wikipedia.org/wiki/KISS_principle).  
+The source code should not have extra unnecessary functionality and should be as simple and efficient as possible.
 
 ## Installation
 
