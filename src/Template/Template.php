@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
-use Mobicms\Render\Engine;
 use LogicException;
+use Mobicms\Render\Engine;
 use Throwable;
 
 /**
@@ -172,7 +172,7 @@ class Template
             );
         }
 
-        if ($this->sectionName) {
+        if ($this->sectionName !== null) {
             throw new LogicException('You cannot nest sections within other sections.');
         }
 
