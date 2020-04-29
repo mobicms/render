@@ -12,11 +12,9 @@ declare(strict_types=1);
 namespace Mobicms\Render;
 
 use LogicException;
-use Mobicms\Render\Template\{
-    TemplateData,
-    Template,
-    TemplateFunction
-};
+use Mobicms\Render\Template\Template;
+use Mobicms\Render\Template\TemplateData;
+use Mobicms\Render\Template\TemplateFunction;
 
 /**
  * Template API and environment settings storage
