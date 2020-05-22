@@ -16,17 +16,25 @@ namespace Mobicms\Render\Template;
  */
 class TemplateData
 {
-    /** @var array Variables shared by all templates */
-    protected $sharedVariables = [];
+    /**
+     * Variables shared by all templates
+     *
+     * @var array<mixed>
+     */
+    protected array $sharedVariables = [];
 
-    /** @var array Specific template variables */
-    protected $templateVariables = [];
+    /**
+     * Specific template variables
+     *
+     * @var array<mixed>
+     */
+    protected array $templateVariables = [];
 
     /**
      * Add template data
      *
-     * @param array $data
-     * @param array $templates
+     * @param array<mixed> $data
+     * @param array<string> $templates
      * @return TemplateData
      */
     public function add(array $data, array $templates = []): self
@@ -39,7 +47,7 @@ class TemplateData
     /**
      * Add data shared with all templates
      *
-     * @param array $data
+     * @param array<mixed> $data
      * @return TemplateData
      */
     public function shareWithAll(array $data): self
@@ -52,8 +60,8 @@ class TemplateData
     /**
      * Add data shared with some templates
      *
-     * @param array $data
-     * @param array $templates
+     * @param array<mixed> $data
+     * @param array<string> $templates
      * @return TemplateData
      */
     public function shareWithSome(array $data, array $templates): self
@@ -72,8 +80,7 @@ class TemplateData
     /**
      * Get template data
      *
-     * @param null|string $template
-     * @return array
+     * @return array<mixed>
      */
     public function get(?string $template = null): array
     {
