@@ -3,8 +3,8 @@
 /**
  * This file is part of mobicms/render library
  *
- * @license     https://opensource.org/licenses/MIT MIT (see the LICENSE file)
- * @link        http://mobicms.org mobiCMS Project
+ * @see     https://github.com/mobicms/render For the canonical source repository
+ * @license https://opensource.org/licenses/MIT MIT
  */
 
 declare(strict_types=1);
