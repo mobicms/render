@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="mobiCMS coding standard">
     <description>mobiCMS coding standard</description>
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
 
     <!-- display progress -->
     <arg value="p"/>
@@ -9,7 +10,7 @@
     <!-- Paths to check -->
     <file>src</file>
 
-    <!-- inherit rules from: -->
+    <!-- Generic rules -->
     <rule ref="PSR12"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
@@ -17,6 +18,20 @@
             <property name="ignoreBlankLines" value="false"/>
         </properties>
     </rule>
+
+    <!-- Slevomat Coding Standard rules -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <properties>
+            <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
+            <property name="newlinesCountAfterDeclare" value="2"/>
+            <property name="spacesCountAroundEqualsSign" value="0"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
 
     <!-- Ban some functions -->
     <rule ref="Generic.PHP.ForbiddenFunctions">
