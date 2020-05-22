@@ -18,10 +18,16 @@ use LogicException;
  */
 class TemplateFunction
 {
-    /** @var string The function name */
-    protected $name;
+    /**
+     * The function name
+     */
+    protected string $name;
 
-    /** @var callable The function callback */
+    /**
+     * The function callback
+     *
+     * @var callable
+     */
     protected $callback;
 
     public function __construct(string $name, callable $callback)
@@ -33,7 +39,6 @@ class TemplateFunction
     /**
      * Set the function name
      *
-     * @param string $name
      * @return TemplateFunction
      */
     public function setName(string $name): self
@@ -51,8 +56,6 @@ class TemplateFunction
 
     /**
      * Get the function name
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -62,7 +65,6 @@ class TemplateFunction
     /**
      * Set the function callback
      *
-     * @param callable|null $callback
      * @return $this
      */
     public function setCallback(?callable $callback): self
@@ -80,8 +82,6 @@ class TemplateFunction
 
     /**
      * Get the function callback
-     *
-     * @return callable
      */
     public function getCallback(): callable
     {
@@ -91,7 +91,7 @@ class TemplateFunction
     /**
      * Call the function
      *
-     * @param array $arguments
+     * @param array<mixed> $arguments
      * @return mixed
      */
     public function call(array $arguments = [])
