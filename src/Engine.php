@@ -21,17 +21,29 @@ use Mobicms\Render\Template\TemplateFunction;
  */
 class Engine
 {
-    /** @var string Template file extension */
-    protected $fileExtension;
+    /**
+     * Template file extension
+     */
+    protected string $fileExtension;
 
-    /** @var array Collection of template namespaces */
-    private $nameSpaces = [];
+    /**
+     * Collection of template namespaces
+     *
+     * @var array<array<string>>
+     */
+    private array $nameSpaces = [];
 
-    /** @var array Collection of template functions */
-    protected $functions = [];
+    /**
+     * Collection of template functions
+     *
+     * @var array<TemplateFunction>
+     */
+    protected array $functions = [];
 
-    /** @var TemplateData Collection of preassigned template data */
-    protected $data;
+    /**
+     * Collection of preassigned template data
+     */
+    protected TemplateData $data;
 
     public function __construct(string $fileExtension = 'phtml')
     {

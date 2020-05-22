@@ -20,29 +20,51 @@ use Throwable;
  */
 class Template
 {
-    /** @var Engine Instance of the template engine */
-    private $engine;
+    /**
+     * Instance of the template engine
+     */
+    private Engine $engine;
 
-    /** @var TemplateName The name of the template */
-    private $name;
+    /**
+     * The name of the template
+     */
+    private TemplateName $name;
 
-    /** @var array The data assigned to the template */
-    private $data = [];
+    /**
+     * The data assigned to the template
+     *
+     * @var array<mixed>
+     */
+    private array $data = [];
 
-    /** @var array An array of section content */
-    private $sections = [];
+    /**
+     * An array of section content
+     *
+     * @var array<string>
+     */
+    private array $sections = [];
 
-    /** @var null|string The name of the section currently being rendered */
-    private $sectionName;
+    /**
+     * The name of the section currently being rendered
+     */
+    private string $sectionName = '';
 
-    /** @var bool Whether the section should be appended or not */
-    private $appendSection = false;
+    /**
+     * Whether the section should be appended or not
+     */
+    private bool $appendSection = false;
 
-    /** @var string The name of the template layout */
-    private $layoutName = '';
+    /**
+     * The name of the template layout
+     */
+    private string $layoutName = '';
 
-    /** @var array The data assigned to the template layout */
-    private $layoutData = [];
+    /**
+     * The data assigned to the template layout
+     *
+     * @var array<mixed>
+     */
+    private array $layoutData = [];
 
     public function __construct(Engine $engine, string $name)
     {
@@ -104,7 +126,7 @@ class Template
             $level = ob_get_level();
             ob_start();
             include $this->name->getPath();
-            $content = ob_get_clean();
+            $content = (string) ob_get_clean();
 
             if ($this->layoutName !== '') {
                 $layout = new self($this->engine, $this->layoutName);
@@ -158,7 +180,7 @@ class Template
             );
         }
 
-        if ($this->sectionName !== null) {
+        if ($this->sectionName !== '') {
             throw new LogicException('You cannot nest sections within other sections.');
         }
 
@@ -181,7 +203,7 @@ class Template
      */
     public function stop(): void
     {
-        if (null === $this->sectionName) {
+        if ($this->sectionName === '') {
             throw new LogicException(
                 'You must start a section before you can stop it.'
             );
@@ -194,7 +216,7 @@ class Template
         $this->sections[$this->sectionName] = $this->appendSection
             ? $this->sections[$this->sectionName] . ob_get_clean()
             : ob_get_clean();
-        $this->sectionName = null;
+        $this->sectionName = '';
         $this->appendSection = false;
     }
 
