@@ -33,9 +33,6 @@ class Engine
     /** @var TemplateData Collection of preassigned template data */
     protected $data;
 
-    /**
-     * @param string $fileExtension
-     */
     public function __construct(string $fileExtension = 'phtml')
     {
         $this->fileExtension = $fileExtension;
@@ -55,7 +52,7 @@ class Engine
      *
      * @param string $name Namespace
      * @param string $directory Default (fallback) directory
-     * @param array $search Array with a list of folders where templates will be searched
+     * @param array<string> $search Array with a list of folders where templates will be searched
      * @return Engine
      */
     public function addFolder(string $name, string $directory, array $search = []): self
@@ -75,7 +72,6 @@ class Engine
     /**
      * Get a template folder
      *
-     * @param string $name
      * @return array<string>
      */
     public function getFolder(string $name): array
@@ -90,8 +86,8 @@ class Engine
     /**
      * Add preassigned template data
      *
-     * @param array $data
-     * @param array $templates
+     * @param array<mixed> $data
+     * @param array<string> $templates
      * @return Engine
      */
     public function addData(array $data, array $templates = []): self
@@ -103,7 +99,6 @@ class Engine
     /**
      * Get all preassigned template data
      *
-     * @param null|string $template
      * @return array<mixed>
      */
     public function getData(?string $template = null): array
@@ -114,8 +109,6 @@ class Engine
     /**
      * Register a new template function
      *
-     * @param string $name
-     * @param callable $callback
      * @return Engine
      */
     public function registerFunction(string $name, callable $callback): self
@@ -131,7 +124,6 @@ class Engine
     /**
      * Get a template function
      *
-     * @param string $name
      */
     public function getFunction(string $name): TemplateFunction
     {
@@ -145,7 +137,6 @@ class Engine
     /**
      * Check if a template function exists
      *
-     * @param string $name
      */
     public function doesFunctionExist(string $name): bool
     {
@@ -155,7 +146,6 @@ class Engine
     /**
      * Load an extension
      *
-     * @param ExtensionInterface $extension
      * @return Engine
      */
     public function loadExtension(ExtensionInterface $extension): self
@@ -167,8 +157,7 @@ class Engine
     /**
      * Create a new template and render it
      *
-     * @param string $name
-     * @param array $data
+     * @param array<mixed> $data
      * @throws \Throwable
      */
     public function render(string $name, array $data = []): string

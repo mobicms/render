@@ -54,8 +54,7 @@ class Template
     /**
      * Magic method used to call extension functions
      *
-     * @param string $name
-     * @param array $arguments
+     * @param array<mixed> $arguments
      * @return mixed
      */
     public function __call(string $name, array $arguments)
@@ -91,7 +90,7 @@ class Template
      * Render the template and layout
      *
      * @psalm-suppress UnresolvableInclude
-     * @param array $data
+     * @param array<mixed> $data
      * @throws \Throwable
      * @throws \Exception
      */
@@ -126,8 +125,7 @@ class Template
     /**
      * Set the template's layout
      *
-     * @param string $name
-     * @param array $data
+     * @param array<mixed> $data
      */
     public function layout(string $name, array $data = []): void
     {
@@ -135,19 +133,11 @@ class Template
         $this->layoutData = $data;
     }
 
-    /**
-     * @param string $name
-     * @param string $content
-     */
     public function sectionReplace(string $name, string $content): void
     {
         $this->sections[$name] = $content;
     }
 
-    /**
-     * @param string $name
-     * @param string $content
-     */
     public function sectionAppend(string $name, string $content): void
     {
         if (! isset($this->sections[$name])) {
@@ -159,8 +149,6 @@ class Template
 
     /**
      * Start a new section block
-     *
-     * @param string $name
      */
     public function start(string $name): void
     {
@@ -181,8 +169,6 @@ class Template
 
     /**
      * Start a new append section block
-     *
-     * @param string $name
      */
     public function push(string $name): void
     {
@@ -230,8 +216,7 @@ class Template
     /**
      * Fetch a rendered template
      *
-     * @param string $name
-     * @param array $data
+     * @param array<mixed> $data
      * @throws Throwable
      */
     public function fetch(string $name, array $data = []): string
@@ -243,7 +228,6 @@ class Template
      * Apply multiple functions to variable
      *
      * @param mixed $var
-     * @param string $functions
      * @return mixed
      */
     public function batch($var, string $functions)
@@ -265,9 +249,6 @@ class Template
 
     /**
      * Escape string
-     *
-     * @param string $string
-     * @param string $functions
      */
     public function e(string $string, string $functions = null): string
     {
