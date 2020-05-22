@@ -19,14 +19,22 @@ use LogicException;
  */
 class TemplateName
 {
-    /** @var string The original name */
-    private $name;
+    /**
+     * The original name
+     */
+    private string $name;
 
-    /** @var array The parsed template folder */
-    private $folder;
+    /**
+     * The parsed template folder
+     *
+     * @var array<string>
+     */
+    private array $folder;
 
-    /** @var string The parsed template filename */
-    private $file;
+    /**
+     * The parsed template filename
+     */
+    private string $file;
 
     public function __construct(Engine $engine, string $name)
     {
@@ -46,8 +54,6 @@ class TemplateName
 
     /**
      * Resolve template path
-     *
-     * @return string
      */
     public function getPath(): string
     {
