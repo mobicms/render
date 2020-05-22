@@ -66,7 +66,6 @@ class Template
     /**
      * Alias for render() method
      *
-     * @return string
      * @throws \Throwable
      * @throws \Exception
      */
@@ -78,8 +77,8 @@ class Template
     /**
      * Assign or get template data
      *
-     * @param array $data
-     * @return array
+     * @param array<mixed> $data
+     * @return array<mixed>
      */
     public function data(array $data = []): array
     {
@@ -93,7 +92,6 @@ class Template
      *
      * @psalm-suppress UnresolvableInclude
      * @param array $data
-     * @return string
      * @throws \Throwable
      * @throws \Exception
      */
@@ -219,7 +217,6 @@ class Template
      *
      * @param string $name Section name
      * @param string $default Default section content
-     * @return string|null
      */
     public function section(string $name, string $default = null): ?string
     {
@@ -235,7 +232,6 @@ class Template
      *
      * @param string $name
      * @param array $data
-     * @return string
      * @throws Throwable
      */
     public function fetch(string $name, array $data = []): string
@@ -272,7 +268,6 @@ class Template
      *
      * @param string $string
      * @param string $functions
-     * @return string
      */
     public function e(string $string, string $functions = null): string
     {

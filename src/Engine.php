@@ -43,9 +43,7 @@ class Engine
     }
 
     /**
-     * Get the template file extension.
-     *
-     * @return string
+     * Get the template file extension
      */
     public function getFileExtension(): string
     {
@@ -78,7 +76,7 @@ class Engine
      * Get a template folder
      *
      * @param string $name
-     * @return array
+     * @return array<string>
      */
     public function getFolder(string $name): array
     {
@@ -106,7 +104,7 @@ class Engine
      * Get all preassigned template data
      *
      * @param null|string $template
-     * @return array
+     * @return array<mixed>
      */
     public function getData(?string $template = null): array
     {
@@ -134,7 +132,6 @@ class Engine
      * Get a template function
      *
      * @param string $name
-     * @return TemplateFunction
      */
     public function getFunction(string $name): TemplateFunction
     {
@@ -149,7 +146,6 @@ class Engine
      * Check if a template function exists
      *
      * @param string $name
-     * @return bool
      */
     public function doesFunctionExist(string $name): bool
     {
@@ -173,7 +169,6 @@ class Engine
      *
      * @param string $name
      * @param array $data
-     * @return string
      * @throws \Throwable
      */
     public function render(string $name, array $data = []): string
