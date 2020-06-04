@@ -12,13 +12,13 @@ Detailed changes can see in the [repository log].
 - Nothing
   
 #### Changed
-- Nothing
+- Refactoring for PHP 7.4
 
 #### Deprecated
 - Nothing
   
 #### Removed
-- Drop support for PHP 7.2
+- Drop support for PHP older than 7.4
 
 #### Fixed
 - Nothing
