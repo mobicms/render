@@ -16,6 +16,7 @@ use Mobicms\Render\Template\Template;
 use LogicException;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 class TemplateTest extends TestCase
 {
@@ -31,22 +32,22 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testCanCallFunction(): void
     {
         vfsStream::create(['template.phtml' => '<?php echo $this->uppercase("jonathan") ?>']);
-        $this->assertEquals($this->template->render(), 'JONATHAN');
+        $this->assertEquals('JONATHAN', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testAssignData(): void
     {
         vfsStream::create(['template.phtml' => '<?php echo $name ?>']);
         $this->template->data(['name' => 'Jonathan']);
-        $this->assertEquals($this->template->render(), 'Jonathan');
+        $this->assertEquals('Jonathan', $this->template->render());
     }
 
     public function testGetData(): void
@@ -57,32 +58,32 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testRender(): void
     {
         vfsStream::create(['template.phtml' => 'Hello World']);
-        $this->assertEquals($this->template->render(), 'Hello World');
+        $this->assertEquals('Hello World', $this->template->render());
     }
 
     public function testRenderViaToStringMagicMethod(): void
     {
         vfsStream::create(['template.phtml' => 'Hello World']);
         $actual = (string) $this->template;
-        $this->assertEquals($actual, 'Hello World');
+        $this->assertEquals('Hello World', $actual);
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testRenderWithData(): void
     {
         vfsStream::create(['template.phtml' => '<?php echo $name ?>']);
-        $this->assertEquals($this->template->render(['name' => 'Jonathan']), 'Jonathan');
+        $this->assertEquals('Jonathan', $this->template->render(['name' => 'Jonathan']));
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testRenderDoesNotExist(): void
     {
@@ -91,18 +92,18 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testRenderException(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Throwable::class);
         $this->expectExceptionMessage('error');
         vfsStream::create(['template.phtml' => '<?php throw new Exception("error"); ?>']);
         $this->template->render();
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testLayout(): void
     {
@@ -113,11 +114,11 @@ class TemplateTest extends TestCase
             ]
         );
 
-        $this->assertEquals($this->template->render(), 'Hello World');
+        $this->assertEquals('Hello World', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testSectionReplace(): void
     {
@@ -127,9 +128,12 @@ class TemplateTest extends TestCase
                 'layout.phtml'   => '<?php echo $this->section("test") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), 'Hello World');
+        $this->assertEquals('Hello World', $this->template->render());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testSectionAppend(): void
     {
         vfsStream::create(
@@ -144,11 +148,11 @@ class TemplateTest extends TestCase
                 'layout.phtml'   => '<?php echo $this->section("test") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), 'Hello World!!!');
+        $this->assertEquals('Hello World!!!', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testSection(): void
     {
@@ -158,11 +162,11 @@ class TemplateTest extends TestCase
                 'layout.phtml'   => '<?php echo $this->section("test") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), 'Hello World');
+        $this->assertEquals('Hello World', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testReplaceSection(): void
     {
@@ -178,11 +182,11 @@ class TemplateTest extends TestCase
                 'layout.phtml'   => '<?php echo $this->section("test") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), 'See this instead!');
+        $this->assertEquals('See this instead!', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testStartSectionWithInvalidName(): void
     {
@@ -193,7 +197,7 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testNestSectionWithinAnotherSection(): void
     {
@@ -204,7 +208,7 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testStopSectionBeforeStarting(): void
     {
@@ -215,16 +219,16 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testSectionDefaultValue(): void
     {
         vfsStream::create(['template.phtml' => '<?php echo $this->section("test", "Default value") ?>']);
-        $this->assertEquals($this->template->render(), 'Default value');
+        $this->assertEquals('Default value', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testNullSection(): void
     {
@@ -234,11 +238,11 @@ class TemplateTest extends TestCase
                 'layout.phtml'   => '<?php if (is_null($this->section("test"))) echo "NULL" ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), 'NULL');
+        $this->assertEquals('NULL', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testPushSection(): void
     {
@@ -256,13 +260,13 @@ class TemplateTest extends TestCase
             ]
         );
         $this->assertEquals(
-            $this->template->render(),
-            '<script src="example1.js"></script><script src="example2.js"></script>'
+            '<script src="example1.js"></script><script src="example2.js"></script>',
+            $this->template->render()
         );
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testPushWithMultipleSections(): void
     {
@@ -287,13 +291,13 @@ class TemplateTest extends TestCase
             ]
         );
         $this->assertEquals(
-            $this->template->render(),
-            'test\n<script src="example1.js"></script><script src="example2.js"></script>'
+            'test\n<script src="example1.js"></script><script src="example2.js"></script>',
+            $this->template->render()
         );
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testFetchFunction(): void
     {
@@ -303,11 +307,11 @@ class TemplateTest extends TestCase
                 'fetched.phtml'  => 'Hello World',
             ]
         );
-        $this->assertEquals($this->template->render(), 'Hello World');
+        $this->assertEquals('Hello World', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testBatchFunction(): void
     {
@@ -316,11 +320,11 @@ class TemplateTest extends TestCase
                 'template.phtml' => '<?php echo $this->batch("Jonathan", "uppercase|strtolower") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), 'jonathan');
+        $this->assertEquals('jonathan', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testBatchFunctionWithInvalidFunction(): void
     {
@@ -335,7 +339,7 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testEscapeFunction(): void
     {
@@ -344,11 +348,11 @@ class TemplateTest extends TestCase
                 'template.phtml' => '<?php echo $this->e("<strong>Jonathan</strong>") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), '&lt;strong&gt;Jonathan&lt;/strong&gt;');
+        $this->assertEquals('&lt;strong&gt;Jonathan&lt;/strong&gt;', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testEscapeFunctionBatch(): void
     {
@@ -357,11 +361,11 @@ class TemplateTest extends TestCase
                 'template.phtml' => '<?php echo $this->e("<strong>Jonathan</strong>", "strtoupper|strrev") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), '&gt;GNORTS/&lt;NAHTANOJ&gt;GNORTS&lt;');
+        $this->assertEquals('&gt;GNORTS/&lt;NAHTANOJ&gt;GNORTS&lt;', $this->template->render());
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testEscapeShortcutFunction(): void
     {
@@ -370,6 +374,6 @@ class TemplateTest extends TestCase
                 'template.phtml' => '<?php echo $this->e("<strong>Jonathan</strong>") ?>',
             ]
         );
-        $this->assertEquals($this->template->render(), '&lt;strong&gt;Jonathan&lt;/strong&gt;');
+        $this->assertEquals('&lt;strong&gt;Jonathan&lt;/strong&gt;', $this->template->render());
     }
 }

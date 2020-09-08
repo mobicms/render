@@ -16,11 +16,11 @@ use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 class EngineTest extends TestCase
 {
-    /** @var Engine */
-    private $engine;
+    private Engine $engine;
 
     public function setUp(): void
     {
@@ -30,14 +30,14 @@ class EngineTest extends TestCase
 
     public function testGetFileExtension(): void
     {
-        $this->assertEquals($this->engine->getFileExtension(), 'phtml');
+        $this->assertEquals('phtml', $this->engine->getFileExtension());
     }
 
     public function testAddFolder(): void
     {
         vfsStream::create(['folder' => ['template.php' => '']]);
         $this->engine->addFolder('folder', vfsStream::url('templates/folder'));
-        $this->assertEquals($this->engine->getFolder('folder')[0], 'vfs://templates/folder');
+        $this->assertEquals('vfs://templates/folder', $this->engine->getFolder('folder')[0]);
     }
 
     public function testAddFolderWithSearchFolders(): void
@@ -47,9 +47,9 @@ class EngineTest extends TestCase
             vfsStream::url('templates/search1'),
             vfsStream::url('templates/search2'),
         ]);
-        $this->assertEquals($this->engine->getFolder('folder')[0], 'vfs://templates/folder');
-        $this->assertEquals($this->engine->getFolder('folder')[1], 'vfs://templates/search1');
-        $this->assertEquals($this->engine->getFolder('folder')[2], 'vfs://templates/search2');
+        $this->assertEquals('vfs://templates/folder', $this->engine->getFolder('folder')[0]);
+        $this->assertEquals('vfs://templates/search1', $this->engine->getFolder('folder')[1]);
+        $this->assertEquals('vfs://templates/search2', $this->engine->getFolder('folder')[2]);
     }
 
     public function testAddFolderWithNamespaceConflict(): void
@@ -85,14 +85,14 @@ class EngineTest extends TestCase
     {
         $this->engine->addData(['name' => 'Jonathan']);
         $data = $this->engine->getData();
-        $this->assertEquals($data['name'], 'Jonathan');
+        $this->assertEquals('Jonathan', $data['name']);
     }
 
     public function testAddDataWithTemplates(): void
     {
         $this->engine->addData(['name' => 'Jonathan'], ['template1', 'template2']);
         $data = $this->engine->getData('template1');
-        $this->assertEquals($data['name'], 'Jonathan');
+        $this->assertEquals('Jonathan', $data['name']);
     }
 
     public function testRegisterFunction(): void
@@ -100,7 +100,7 @@ class EngineTest extends TestCase
         vfsStream::create(['template.php' => '<?=$this->uppercase($name)?>']);
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $this->assertInstanceOf(TemplateFunction::class, $this->engine->getFunction('uppercase'));
-        $this->assertEquals($this->engine->getFunction('uppercase')->getCallback(), 'strtoupper');
+        $this->assertEquals('strtoupper', $this->engine->getFunction('uppercase')->getCallback());
     }
 
     public function testRegisterExistFunction(): void
@@ -115,8 +115,8 @@ class EngineTest extends TestCase
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $function = $this->engine->getFunction('uppercase');
-        $this->assertEquals($function->getName(), 'uppercase');
-        $this->assertEquals($function->getCallback(), 'strtoupper');
+        $this->assertEquals('uppercase', $function->getName());
+        $this->assertEquals('strtoupper', $function->getCallback());
     }
 
     public function testGetInvalidFunction(): void
@@ -144,10 +144,13 @@ class EngineTest extends TestCase
         $this->assertTrue($this->engine->doesFunctionExist('foo'));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRenderTemplate(): void
     {
         $this->engine->addFolder('tmp', vfsStream::url('templates'));
         vfsStream::create(['template.phtml' => 'Hello!']);
-        $this->assertEquals($this->engine->render('tmp::template'), 'Hello!');
+        $this->assertEquals('Hello!', $this->engine->render('tmp::template'));
     }
 }

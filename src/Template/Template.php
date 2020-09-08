@@ -87,7 +87,7 @@ class Template
     /**
      * Alias for render() method
      *
-     * @throws \Throwable
+     * @throws Throwable
      * @throws \Exception
      */
     public function __toString(): string
@@ -113,8 +113,7 @@ class Template
      *
      * @psalm-suppress UnresolvableInclude
      * @param array<mixed> $data
-     * @throws \Throwable
-     * @throws \Exception
+     * @throws Throwable
      */
     public function render(array $data = []): string
     {

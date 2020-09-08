@@ -27,14 +27,14 @@ class TemplateDataTest extends TestCase
     {
         $this->templateData->add(['name' => 'Jonathan']);
         $data = $this->templateData->get();
-        $this->assertEquals($data['name'], 'Jonathan');
+        $this->assertEquals('Jonathan', $data['name']);
     }
 
     public function testAddDataToOneTemplate(): void
     {
         $this->templateData->add(['name' => 'Jonathan'], ['template']);
         $data = $this->templateData->get('template');
-        $this->assertEquals($data['name'], 'Jonathan');
+        $this->assertEquals('Jonathan', $data['name']);
     }
 
     public function testAddDataToOneTemplateAgain(): void
@@ -42,13 +42,13 @@ class TemplateDataTest extends TestCase
         $this->templateData->add(['firstname' => 'Jonathan'], ['template']);
         $this->templateData->add(['lastname' => 'Reinink'], ['template']);
         $data = $this->templateData->get('template');
-        $this->assertEquals($data['lastname'], 'Reinink');
+        $this->assertEquals('Reinink', $data['lastname']);
     }
 
     public function testAddDataToSomeTemplates(): void
     {
         $this->templateData->add(['name' => 'Jonathan'], ['template1', 'template2']);
         $data = $this->templateData->get('template1');
-        $this->assertEquals($data['name'], 'Jonathan');
+        $this->assertEquals('Jonathan', $data['name']);
     }
 }

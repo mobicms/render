@@ -32,7 +32,7 @@ class TemplateFunctionTest extends TestCase
     public function testSetAndGetName(): void
     {
         $this->assertInstanceOf(TemplateFunction::class, $this->function->setName('test'));
-        $this->assertEquals($this->function->getName(), 'test');
+        $this->assertEquals('test', $this->function->getName());
     }
 
     public function testSetInvalidName(): void
@@ -45,7 +45,7 @@ class TemplateFunctionTest extends TestCase
     public function testSetAndGetCallback(): void
     {
         $this->assertInstanceOf(TemplateFunction::class, $this->function->setCallback('strtolower'));
-        $this->assertEquals($this->function->getCallback(), 'strtolower');
+        $this->assertEquals('strtolower', $this->function->getCallback());
     }
 
     public function testSetInvalidCallback(): void
@@ -57,7 +57,7 @@ class TemplateFunctionTest extends TestCase
 
     public function testFunctionCall(): void
     {
-        $this->assertEquals($this->function->call(['Jonathan']), 'JONATHAN');
+        $this->assertEquals('JONATHAN', $this->function->call(['Jonathan']));
     }
 
     public function testExtensionFunctionCall(): void
@@ -67,6 +67,6 @@ class TemplateFunctionTest extends TestCase
                 return 'bar';
             }
         );
-        $this->assertEquals($this->function->call(), 'bar');
+        $this->assertEquals('bar', $this->function->call());
     }
 }
