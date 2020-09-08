@@ -9,11 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Test\Suite\Template;
+namespace MobicmsTest\Render\Template;
 
 use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
-use Test\Support\FakeExtension;
 use PHPUnit\Framework\TestCase;
 
 class TemplateFunctionTest extends TestCase

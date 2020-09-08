@@ -40,8 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\Suite\\": "tests/testsuite",
-            "Test\\Support\\": "tests/support/"
+            "MobicmsTest\\Render\\": "tests/unit"
         }
     },
     "scripts": {

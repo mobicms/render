@@ -9,12 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Test\Suite;
+namespace MobicmsTest\Render;
 
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
-use Test\Support\FakeExtension;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Support;
+namespace MobicmsTest\Render;
 
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;

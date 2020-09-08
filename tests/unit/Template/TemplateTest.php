@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Suite\Template;
+namespace MobicmsTest\Render\Template;
 
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\Template;
