@@ -52,7 +52,7 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "psalm": "psalm --output-format=github",
+        "psalm": "psalm --show-info=true",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
