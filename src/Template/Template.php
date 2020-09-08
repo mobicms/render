@@ -131,7 +131,7 @@ class Template
             if ($this->layoutName !== '') {
                 $layout = new self($this->engine, $this->layoutName);
                 $layout->sections = array_merge($this->sections, ['content' => $content]);
-                $content = $layout->render($this->layoutData);
+                $content = (string) $layout->render($this->layoutData);
             }
 
             return $content;
@@ -249,6 +249,7 @@ class Template
     /**
      * Apply multiple functions to variable
      *
+     * @psalm-suppress MixedAssignment
      * @param mixed $var
      * @return mixed
      */
@@ -258,7 +259,7 @@ class Template
             if ($this->engine->doesFunctionExist($function)) {
                 $var = call_user_func([$this, $function], $var);
             } elseif (is_callable($function)) {
-                $var = call_user_func($function, $var);
+                $var = $function($var);
             } else {
                 throw new LogicException(
                     'The batch function could not find the "' . $function . '" function.'
@@ -281,9 +282,9 @@ class Template
         }
 
         if (null !== $functions) {
-            $string = $this->batch($string, $functions);
+            $string = (string) $this->batch($string, $functions);
         }
 
-        return htmlspecialchars($string, $flags, 'UTF-8');
+        return htmlspecialchars($string, (int) $flags, 'UTF-8');
     }
 }

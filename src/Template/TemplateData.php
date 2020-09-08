@@ -60,6 +60,7 @@ class TemplateData
     /**
      * Add data shared with some templates
      *
+     * @psalm-suppress MixedArgument
      * @param array<mixed> $data
      * @param array<string> $templates
      * @return TemplateData
@@ -80,6 +81,7 @@ class TemplateData
     /**
      * Get template data
      *
+     * @psalm-suppress MixedArgument
      * @return array<mixed>
      */
     public function get(?string $template = null): array
