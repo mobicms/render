@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class TemplateTest extends TestCase
 {
-    private $template;
+    private Template $template;
 
     public function setUp(): void
     {
@@ -28,11 +28,6 @@ class TemplateTest extends TestCase
         $engine->addFolder('folder', vfsStream::url('templates'));
         $engine->registerFunction('uppercase', 'strtoupper');
         $this->template = new Template($engine, 'folder::template');
-    }
-
-    public function testCanCreateInstance(): void
-    {
-        $this->assertInstanceOf(Template::class, $this->template);
     }
 
     /**

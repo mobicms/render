@@ -29,11 +29,6 @@ class EngineTest extends TestCase
         $this->engine = new Engine();
     }
 
-    public function testCanCreateInstance(): void
-    {
-        $this->assertInstanceOf(Engine::class, $this->engine);
-    }
-
     public function testGetFileExtension(): void
     {
         $this->assertEquals($this->engine->getFileExtension(), 'phtml');
@@ -77,7 +72,6 @@ class EngineTest extends TestCase
     {
         $this->engine->addFolder('name', vfsStream::url('templates'));
         $folder = $this->engine->getFolder('name');
-        $this->assertIsArray($folder);
         $this->assertSame('vfs://templates', $folder[0]);
     }
 
@@ -122,7 +116,6 @@ class EngineTest extends TestCase
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $function = $this->engine->getFunction('uppercase');
-        $this->assertInstanceOf(TemplateFunction::class, $function);
         $this->assertEquals($function->getName(), 'uppercase');
         $this->assertEquals($function->getCallback(), 'strtoupper');
     }
@@ -145,14 +138,14 @@ class EngineTest extends TestCase
         $this->assertFalse($this->engine->doesFunctionExist('some_function_that_does_not_exist'));
     }
 
-    public function testLoadExtension()
+    public function testLoadExtension(): void
     {
         $this->assertFalse($this->engine->doesFunctionExist('foo'));
         $this->engine->loadExtension(new FakeExtension());
         $this->assertTrue($this->engine->doesFunctionExist('foo'));
     }
 
-    public function testRenderTemplate()
+    public function testRenderTemplate(): void
     {
         $this->engine->addFolder('tmp', vfsStream::url('templates'));
         vfsStream::create(['template.phtml' => 'Hello!']);

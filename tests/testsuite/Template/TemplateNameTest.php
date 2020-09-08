@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class TemplateNameTest extends TestCase
 {
-    private $engine;
+    private Engine $engine;
 
     public function setUp(): void
     {
@@ -33,12 +33,6 @@ class TemplateNameTest extends TestCase
 
         $this->engine = new Engine();
         $this->engine->addFolder('folder', vfsStream::url('templates/folder'));
-    }
-
-    public function testCanCreateInstance(): void
-    {
-        $name = new TemplateName($this->engine, 'folder::template');
-        $this->assertInstanceOf(TemplateName::class, $name);
     }
 
     public function testCanCreateInstanceWithInvalidTemplateName(): void

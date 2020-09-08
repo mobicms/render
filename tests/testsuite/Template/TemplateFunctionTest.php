@@ -18,21 +18,16 @@ use PHPUnit\Framework\TestCase;
 
 class TemplateFunctionTest extends TestCase
 {
-    private $function;
+    private TemplateFunction $function;
 
     public function setUp(): void
     {
         $this->function = new TemplateFunction(
             'uppercase',
-            function ($string) {
+            function (string $string) {
                 return strtoupper($string);
             }
         );
-    }
-
-    public function testCanCreateInstance(): void
-    {
-        $this->assertInstanceOf(TemplateFunction::class, $this->function);
     }
 
     public function testSetAndGetName(): void
@@ -68,9 +63,11 @@ class TemplateFunctionTest extends TestCase
 
     public function testExtensionFunctionCall(): void
     {
-        $extension = $this->createPartialMock(FakeExtension::class, ['register', 'foo']);
-        $extension->method('foo')->willReturn('bar');
-        $this->function->setCallback([$extension, 'foo']);
+        $this->function->setCallback(
+            function () {
+                return 'bar';
+            }
+        );
         $this->assertEquals($this->function->call(), 'bar');
     }
 }

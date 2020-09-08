@@ -16,44 +16,39 @@ use PHPUnit\Framework\TestCase;
 
 class TemplateDataTest extends TestCase
 {
-    private $template_data;
+    private TemplateData $templateData;
 
     public function setUp(): void
     {
-        $this->template_data = new TemplateData();
-    }
-
-    public function testCanCreateInstance()
-    {
-        $this->assertInstanceOf(TemplateData::class, $this->template_data);
+        $this->templateData = new TemplateData();
     }
 
     public function testAddDataToAllTemplates(): void
     {
-        $this->template_data->add(['name' => 'Jonathan']);
-        $data = $this->template_data->get();
+        $this->templateData->add(['name' => 'Jonathan']);
+        $data = $this->templateData->get();
         $this->assertEquals($data['name'], 'Jonathan');
     }
 
     public function testAddDataToOneTemplate(): void
     {
-        $this->template_data->add(['name' => 'Jonathan'], ['template']);
-        $data = $this->template_data->get('template');
+        $this->templateData->add(['name' => 'Jonathan'], ['template']);
+        $data = $this->templateData->get('template');
         $this->assertEquals($data['name'], 'Jonathan');
     }
 
     public function testAddDataToOneTemplateAgain(): void
     {
-        $this->template_data->add(['firstname' => 'Jonathan'], ['template']);
-        $this->template_data->add(['lastname' => 'Reinink'], ['template']);
-        $data = $this->template_data->get('template');
+        $this->templateData->add(['firstname' => 'Jonathan'], ['template']);
+        $this->templateData->add(['lastname' => 'Reinink'], ['template']);
+        $data = $this->templateData->get('template');
         $this->assertEquals($data['lastname'], 'Reinink');
     }
 
     public function testAddDataToSomeTemplates(): void
     {
-        $this->template_data->add(['name' => 'Jonathan'], ['template1', 'template2']);
-        $data = $this->template_data->get('template1');
+        $this->templateData->add(['name' => 'Jonathan'], ['template1', 'template2']);
+        $data = $this->templateData->get('template1');
         $this->assertEquals($data['name'], 'Jonathan');
     }
 }
