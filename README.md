@@ -8,8 +8,8 @@ but can be used freely in any other projects.
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/mobicms/render.svg?label=stable)](https://github.com/mobicms/render/releases)
 [![Packagist](https://img.shields.io/packagist/dt/mobicms/render)](https://packagist.org/packages/mobicms/render)
 
-[![CI](https://github.com/mobicms/render/workflows/Tests/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3ATests)
 [![CI](https://github.com/mobicms/render/workflows/Analysis/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3AAnalysis)
+[![CI](https://github.com/mobicms/render/workflows/Tests/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3ATests)
 [![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png)](https://scrutinizer-ci.com/g/mobicms/render/code-structure/master/code-coverage)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png)](https://scrutinizer-ci.com/g/mobicms/render)
 
