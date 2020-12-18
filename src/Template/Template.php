@@ -130,7 +130,7 @@ class Template
             if ($this->layoutName !== '') {
                 $layout = new self($this->engine, $this->layoutName);
                 $layout->sections = array_merge($this->sections, ['content' => $content]);
-                $content = (string) $layout->render($this->layoutData);
+                $content = $layout->render($this->layoutData);
             }
 
             return $content;
