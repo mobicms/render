@@ -3,8 +3,7 @@
 This package is part of [mobiCMS](https://github.com/mobicms/mobicms) and [JohnCMS](https://github.com/simba77/johncms),
 but can be used freely in any other projects.
 
-[![Packagist](https://img.shields.io/packagist/l/mobicms/render.svg)](https://packagist.org/packages/mobicms/render)
-[![Source Code](http://img.shields.io/badge/source-mobicms/render-blue.svg)](https://github.com/mobicms/render)
+[![Packagist](https://img.shields.io/packagist/l/mobicms/render.svg)](https://github.com/mobicms/render/blob/develop/LICENSE)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/mobicms/render.svg?label=stable)](https://github.com/mobicms/render/releases)
 [![Packagist](https://img.shields.io/packagist/dt/mobicms/render)](https://packagist.org/packages/mobicms/render)
 
