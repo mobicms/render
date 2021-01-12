@@ -3,12 +3,12 @@
 This package is part of [mobiCMS](https://github.com/mobicms/mobicms) and [JohnCMS](https://github.com/simba77/johncms),
 but can be used freely in any other projects.
 
-[![Packagist](https://img.shields.io/packagist/l/mobicms/render.svg)](https://github.com/mobicms/render/blob/develop/LICENSE)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/mobicms/render.svg?label=stable)](https://github.com/mobicms/render/releases)
+[![GitHub](https://img.shields.io/github/license/mobicms/render?color=green)](https://github.com/mobicms/render/blob/develop/LICENSE)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/mobicms/render)](https://github.com/mobicms/render/releases)
 [![Packagist](https://img.shields.io/packagist/dt/mobicms/render)](https://packagist.org/packages/mobicms/render)
 
-[![CI](https://github.com/mobicms/render/workflows/Analysis/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3AAnalysis)
-[![CI](https://github.com/mobicms/render/workflows/Tests/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3ATests)
+[![CI-Analysis](https://github.com/mobicms/render/workflows/Analysis/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3AAnalysis)
+[![CI-Tests](https://github.com/mobicms/render/workflows/Tests/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3ATests)
 [![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png)](https://scrutinizer-ci.com/g/mobicms/render/code-structure/develop/code-coverage)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png)](https://scrutinizer-ci.com/g/mobicms/render)
 
