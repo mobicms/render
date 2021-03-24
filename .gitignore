@@ -1,6 +1,5 @@
 .idea
 /*.cache
 /clover.xml
-/composer.lock
 /phpunit.xml
 /vendor
