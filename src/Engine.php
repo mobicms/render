@@ -11,17 +11,19 @@ declare(strict_types=1);
 
 namespace Mobicms\Render;
 
-use LogicException;
+use InvalidArgumentException;
 use Mobicms\Render\Template\Template;
 use Mobicms\Render\Template\TemplateData;
 use Mobicms\Render\Template\TemplateFunction;
+use Throwable;
+use Traversable;
 
 /**
  * Template API and environment settings storage
  */
 class Engine
 {
-    /**
+    /*
      * Template file extension
      */
     protected string $fileExtension;
@@ -29,14 +31,14 @@ class Engine
     /**
      * Collection of template namespaces
      *
-     * @var array<array<string>>
+     * @var array<array-key, array<array-key, string>>
      */
     private array $nameSpaces = [];
 
     /**
      * Collection of template functions
      *
-     * @var array<TemplateFunction>
+     * @var array<array-key, TemplateFunction>
      */
     protected array $functions = [];
 
@@ -70,11 +72,12 @@ class Engine
     public function addFolder(string $name, string $directory, array $search = []): self
     {
         if (isset($this->nameSpaces[$name])) {
-            throw new LogicException('The template namespace "' . $name . '" is already being used.');
+            throw new InvalidArgumentException('The template namespace "' . $name . '" is already being used.');
         }
 
+        //TODO: Убрать. Проверку существования папки делать при рендеринге конкретного шаблона.
         if (! is_dir($directory)) {
-            throw new LogicException('The specified directory path "' . $directory . '" does not exist.');
+            throw new InvalidArgumentException('The specified directory path "' . $directory . '" does not exist.');
         }
 
         $this->nameSpaces[$name] = array_merge([$directory], $search);
@@ -84,12 +87,13 @@ class Engine
     /**
      * Get a template folder
      *
-     * @return array<string>
+     * @param string $name
+     * @return array<array-key, string>
      */
     public function getFolder(string $name): array
     {
         if (! isset($this->nameSpaces[$name])) {
-            throw new LogicException('The template namespace "' . $name . '" was not found.');
+            throw new InvalidArgumentException('The template namespace "' . $name . '" was not found.');
         }
 
         return $this->nameSpaces[$name];
@@ -111,6 +115,7 @@ class Engine
     /**
      * Get all preassigned template data
      *
+     * @param string|null $template
      * @return array<mixed>
      */
     public function getData(?string $template = null): array
@@ -121,12 +126,14 @@ class Engine
     /**
      * Register a new template function
      *
+     * @param string $name
+     * @param callable $callback
      * @return Engine
      */
     public function registerFunction(string $name, callable $callback): self
     {
         if (isset($this->functions[$name])) {
-            throw new LogicException('The template function name "' . $name . '" is already registered.');
+            throw new InvalidArgumentException('The template function name "' . $name . '" is already registered.');
         }
 
         $this->functions[$name] = new TemplateFunction($name, $callback);
@@ -136,11 +143,13 @@ class Engine
     /**
      * Get a template function
      *
+     * @param string $name
+     * @return TemplateFunction
      */
     public function getFunction(string $name): TemplateFunction
     {
         if (! isset($this->functions[$name])) {
-            throw new LogicException('The template function "' . $name . '" was not found.');
+            throw new InvalidArgumentException('The template function "' . $name . '" was not found.');
         }
 
         return $this->functions[$name];
@@ -149,6 +158,8 @@ class Engine
     /**
      * Check if a template function exists
      *
+     * @param string $name
+     * @return bool
      */
     public function doesFunctionExist(string $name): bool
     {
@@ -158,6 +169,7 @@ class Engine
     /**
      * Load an extension
      *
+     * @param ExtensionInterface $extension
      * @return Engine
      */
     public function loadExtension(ExtensionInterface $extension): self
@@ -169,11 +181,46 @@ class Engine
     /**
      * Create a new template and render it
      *
-     * @param array<mixed> $data
-     * @throws \Throwable
+     * @param string $name
+     * @param array|object $params
+     * @return string
+     * @throws Throwable
      */
-    public function render(string $name, array $data = []): string
+    public function render(string $name, $params = []): string
     {
-        return (new Template($this, $name))->render($data);
+        $template = new Template($this, $name);
+        return $template->render($this->normalizeParams($params));
+    }
+
+    /**
+     * @param mixed $params
+     * @return array<array-key, mixed>
+     */
+    private function normalizeParams($params): array
+    {
+        if (null === $params) {
+            return [];
+        }
+
+        if (is_array($params)) {
+            return $params;
+        }
+
+        if ($params instanceof Traversable) {
+            return iterator_to_array($params);
+        }
+
+        if (is_object($params)) {
+            return (array) $params;
+        }
+
+        throw new InvalidArgumentException(
+            sprintf(
+                '%s template adapter can only handle arrays, Traversables, and objects '
+                . 'when rendering; received %s',
+                static::class,
+                gettype($params)
+            )
+        );
     }
 }
