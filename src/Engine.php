@@ -70,6 +70,8 @@ class Engine
      */
     public function addFolder(string $name, string $directory, array $search = []): self
     {
+        $directory = rtrim($directory, '/\\');
+        //TODO: После переделки, проверять только совпадение namespace/folder
         if (isset($this->nameSpaces[$name])) {
             throw new InvalidArgumentException('The template namespace "' . $name . '" is already being used.');
         }

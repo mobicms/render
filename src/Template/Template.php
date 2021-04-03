@@ -165,7 +165,7 @@ class Template
             $this->sections[$name] = '';
         }
 
-        $this->sections[$name] = $this->sections[$name] . $content;
+        $this->sections[$name] .= $content;
     }
 
     /**
