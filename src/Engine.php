@@ -16,7 +16,6 @@ use Mobicms\Render\Template\Template;
 use Mobicms\Render\Template\TemplateData;
 use Mobicms\Render\Template\TemplateFunction;
 use Throwable;
-use Traversable;
 
 /**
  * Template API and environment settings storage
@@ -182,45 +181,13 @@ class Engine
      * Create a new template and render it
      *
      * @param string $name
-     * @param array|object $params
+     * @param array $params
      * @return string
      * @throws Throwable
      */
-    public function render(string $name, $params = []): string
+    public function render(string $name, array $params = []): string
     {
         $template = new Template($this, $name);
-        return $template->render($this->normalizeParams($params));
-    }
-
-    /**
-     * @param mixed $params
-     * @return array<array-key, mixed>
-     */
-    private function normalizeParams($params): array
-    {
-        if (null === $params) {
-            return [];
-        }
-
-        if (is_array($params)) {
-            return $params;
-        }
-
-        if ($params instanceof Traversable) {
-            return iterator_to_array($params);
-        }
-
-        if (is_object($params)) {
-            return (array) $params;
-        }
-
-        throw new InvalidArgumentException(
-            sprintf(
-                '%s template adapter can only handle arrays, Traversables, and objects '
-                . 'when rendering; received %s',
-                static::class,
-                gettype($params)
-            )
-        );
+        return $template->render($params);
     }
 }
