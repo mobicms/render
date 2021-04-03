@@ -274,16 +274,10 @@ class Template
      */
     public function e(string $string, string $functions = null): string
     {
-        static $flags;
-
-        if (! isset($flags)) {
-            $flags = ENT_QUOTES | (defined('ENT_SUBSTITUTE') ? ENT_SUBSTITUTE : 0);
-        }
-
         if (null !== $functions) {
             $string = (string) $this->batch($string, $functions);
         }
 
-        return htmlspecialchars($string, (int) $flags, 'UTF-8');
+        return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 }
