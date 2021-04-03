@@ -14,7 +14,6 @@ namespace MobicmsTest\Render;
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
-use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -24,7 +23,6 @@ class EngineTest extends TestCase
 
     public function setUp(): void
     {
-        vfsStream::setup('templates');
         $this->engine = new Engine();
     }
 
