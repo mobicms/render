@@ -13,6 +13,7 @@ Detailed changes can see in the [repository log].
   
 #### Changed
 - Refactoring for PHP 7.4
+- Various code improvements
 
 #### Deprecated
 - Nothing
