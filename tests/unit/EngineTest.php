@@ -35,43 +35,38 @@ class EngineTest extends TestCase
 
     public function testAddFolder(): void
     {
-        vfsStream::create(['folder' => ['template.php' => '']]);
-        $this->engine->addFolder('folder', vfsStream::url('templates/folder'));
-        $this->assertEquals('vfs://templates/folder', $this->engine->getFolder('folder')[0]);
+        $this->engine->addFolder('folder', M_PATH_ROOT);
+        $this->assertEquals(M_PATH_ROOT, $this->engine->getFolder('folder')[0] . DIRECTORY_SEPARATOR);
     }
 
     public function testAddFolderWithSearchFolders(): void
     {
-        vfsStream::create(['folder' => ['template.php' => '']]);
-        $this->engine->addFolder('folder', vfsStream::url('templates/folder'), [
-            vfsStream::url('templates/search1'),
-            vfsStream::url('templates/search2'),
-        ]);
-        $this->assertEquals('vfs://templates/folder', $this->engine->getFolder('folder')[0]);
-        $this->assertEquals('vfs://templates/search1', $this->engine->getFolder('folder')[1]);
-        $this->assertEquals('vfs://templates/search2', $this->engine->getFolder('folder')[2]);
+        $this->engine->addFolder('folder', M_PATH_ROOT, ['test1', 'test2',]);
+        $this->assertEquals(M_PATH_ROOT, $this->engine->getFolder('folder')[0] . DIRECTORY_SEPARATOR);
+        $this->assertEquals('test1', $this->engine->getFolder('folder')[1]);
+        $this->assertEquals('test2', $this->engine->getFolder('folder')[2]);
     }
 
     public function testAddFolderWithNamespaceConflict(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The template namespace "name" is already being used.');
-        $this->engine->addFolder('name', vfsStream::url('templates'));
-        $this->engine->addFolder('name', vfsStream::url('templates'));
+        $this->engine->addFolder('name', M_PATH_ROOT);
+        $this->engine->addFolder('name', M_PATH_ROOT);
     }
 
     public function testAddFolderWithInvalidDirectory(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The specified directory path "vfs://does/not/exist" does not exist.');
-        $this->engine->addFolder('namespace', vfsStream::url('does/not/exist'));
+        $this->expectExceptionMessage('The specified directory path "does_not_exist" does not exist.');
+        $this->engine->addFolder('namespace', 'does_not_exist');
     }
 
     public function testGetFolder(): void
     {
-        $this->engine->addFolder('name', vfsStream::url('templates'));
+        $this->engine->addFolder('name', M_PATH_ROOT);
         $folder = $this->engine->getFolder('name');
-        $this->assertSame('vfs://templates', $folder[0]);
+        $this->assertEquals(M_PATH_ROOT, $folder[0] . DIRECTORY_SEPARATOR);
     }
 
     public function testGetNonexistentFolder(): void
@@ -83,24 +78,42 @@ class EngineTest extends TestCase
 
     public function testAddData(): void
     {
-        $this->engine->addData(['name' => 'Jonathan']);
+        $this->engine->addData(['name' => 'TestData']);
         $data = $this->engine->getData();
-        $this->assertEquals('Jonathan', $data['name']);
+        $this->assertEquals('TestData', $data['name']);
     }
 
     public function testAddDataWithTemplates(): void
     {
-        $this->engine->addData(['name' => 'Jonathan'], ['template1', 'template2']);
-        $data = $this->engine->getData('template1');
-        $this->assertEquals('Jonathan', $data['name']);
+        $this->engine->addData(['name' => 'TestData'], ['template1', 'template2']);
+        $data1 = $this->engine->getData('template1');
+        $this->assertEquals('TestData', $data1['name']);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testRenderTemplate(): void
+    {
+        $this->engine->addFolder('test', M_PATH_ROOT);
+        $this->assertEquals(
+            'Hello!',
+            $this->engine->render('test::tpl-data', ['var' => 'Hello!'])
+        );
     }
 
     public function testRegisterFunction(): void
     {
-        vfsStream::create(['template.php' => '<?=$this->uppercase($name)?>']);
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $this->assertInstanceOf(TemplateFunction::class, $this->engine->getFunction('uppercase'));
         $this->assertEquals('strtoupper', $this->engine->getFunction('uppercase')->getCallback());
+
+        $this->engine->addFolder('test', M_PATH_ROOT);
+        $result = $this->engine->render(
+            'test::tpl-func-uppercase',
+            ['var' => 'abcdefgh']
+        );
+        $this->assertEquals('ABCDEFGH', $result);
     }
 
     public function testRegisterExistFunction(): void
@@ -130,10 +143,6 @@ class EngineTest extends TestCase
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $this->assertTrue($this->engine->doesFunctionExist('uppercase'));
-    }
-
-    public function testDoesFunctionNotExist(): void
-    {
         $this->assertFalse($this->engine->doesFunctionExist('some_function_that_does_not_exist'));
     }
 
@@ -142,15 +151,5 @@ class EngineTest extends TestCase
         $this->assertFalse($this->engine->doesFunctionExist('foo'));
         $this->engine->loadExtension(new FakeExtension());
         $this->assertTrue($this->engine->doesFunctionExist('foo'));
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testRenderTemplate(): void
-    {
-        $this->engine->addFolder('tmp', vfsStream::url('templates'));
-        vfsStream::create(['template.phtml' => 'Hello!']);
-        $this->assertEquals('Hello!', $this->engine->render('tmp::template'));
     }
 }

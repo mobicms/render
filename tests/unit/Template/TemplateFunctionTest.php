@@ -57,7 +57,7 @@ class TemplateFunctionTest extends TestCase
 
     public function testFunctionCall(): void
     {
-        $this->assertEquals('JONATHAN', $this->function->call(['Jonathan']));
+        $this->assertEquals('TESTDATA', $this->function->call(['TestData']));
     }
 
     public function testExtensionFunctionCall(): void

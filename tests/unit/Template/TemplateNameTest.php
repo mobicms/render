@@ -14,7 +14,6 @@ namespace MobicmsTest\Render\Template;
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\TemplateName;
 use LogicException;
-use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
 class TemplateNameTest extends TestCase
@@ -23,16 +22,8 @@ class TemplateNameTest extends TestCase
 
     public function setUp(): void
     {
-        vfsStream::setup('templates');
-        vfsStream::create(
-            [
-                'folder' => ['template.phtml' => ''],
-                'theme'  => ['index.phtml' => ''],
-            ]
-        );
-
         $this->engine = new Engine();
-        $this->engine->addFolder('folder', vfsStream::url('templates/folder'));
+        $this->engine->addFolder('test', M_PATH_ROOT);
     }
 
     public function testCanCreateInstanceWithInvalidTemplateName(): void
@@ -44,10 +35,10 @@ class TemplateNameTest extends TestCase
 
     public function testGetPath(): void
     {
-        $name = new TemplateName($this->engine, 'folder::template');
+        $name = new TemplateName($this->engine, 'test::tpl-data');
         $this->assertEquals(
-            str_replace('\\', '/', $name->getPath()),
-            vfsStream::url('templates/folder/template.phtml')
+            M_PATH_ROOT . 'tpl-data.phtml',
+            $name->getPath()
         );
     }
 
@@ -55,23 +46,23 @@ class TemplateNameTest extends TestCase
     {
         $engine = new Engine();
         $engine->addFolder(
-            'folder',
-            vfsStream::url('templates/folder'),
-            [vfsStream::url('templates/theme')]
+            'test',
+            M_PATH_ROOT,
+            ['somefolder', 'anotherfolder']
         );
 
-        $name = new TemplateName($engine, 'folder::index');
+        $name = new TemplateName($engine, 'test::tpl-data');
         $this->assertEquals(
-            str_replace('\\', '/', $name->getPath()),
-            vfsStream::url('templates/theme/index.phtml')
+            M_PATH_ROOT . 'tpl-data.phtml',
+            $name->getPath()
         );
     }
 
     public function testGetPathWithNonexistentTemplate(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The template "folder::nonexistent" does not exist.');
-        $name = new TemplateName($this->engine, 'folder::nonexistent');
+        $this->expectExceptionMessage('The template "test::nonexistent" does not exist.');
+        $name = new TemplateName($this->engine, 'test::nonexistent');
         $name->getPath();
     }
 }

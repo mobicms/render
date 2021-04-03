@@ -14,30 +14,29 @@ namespace MobicmsTest\Render\Template;
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\Template;
 use LogicException;
-use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
 class TemplateTest extends TestCase
 {
-    private Template $template;
+    private Engine $engine;
 
     public function setUp(): void
     {
-        vfsStream::setup('templates');
-        $engine = new Engine();
-        $engine->addFolder('folder', vfsStream::url('templates'));
-        $engine->registerFunction('uppercase', 'strtoupper');
-        $this->template = new Template($engine, 'folder::template');
+        $this->engine = new Engine();
+        $this->engine->addFolder('test', M_PATH_ROOT);
     }
 
-    /**
-     * @throws Throwable
-     */
-    public function testCanCallFunction(): void
+    public function testRender(): void
     {
-        vfsStream::create(['template.phtml' => '<?php echo $this->uppercase("jonathan") ?>']);
-        $this->assertEquals('JONATHAN', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-empty');
+        $this->assertEquals('Empty', $template->render());
+    }
+
+    public function testRenderViaToStringMagicMethod(): void
+    {
+        $template = new Template($this->engine, 'test::tpl-empty');
+        $this->assertEquals('Empty', (string) $template);
     }
 
     /**
@@ -45,42 +44,24 @@ class TemplateTest extends TestCase
      */
     public function testAssignData(): void
     {
-        vfsStream::create(['template.phtml' => '<?php echo $name ?>']);
-        $this->template->data(['name' => 'Jonathan']);
-        $this->assertEquals('Jonathan', $this->template->render());
-    }
-
-    public function testGetData(): void
-    {
-        $data = ['name' => 'Jonathan'];
-        $this->template->data($data);
-        $this->assertEquals($this->template->data(), $data);
+        $data = ['var' => 'TestData'];
+        $template = new Template($this->engine, 'test::tpl-data');
+        $template->data($data);
+        $this->assertEquals($template->data(), $data);
+        $this->assertEquals('TestData', $template->render());
+        $this->assertEquals('Test', $template->render(['var' => 'Test']));
     }
 
     /**
      * @throws Throwable
      */
-    public function testRender(): void
+    public function testCanCallFunction(): void
     {
-        vfsStream::create(['template.phtml' => 'Hello World']);
-        $this->assertEquals('Hello World', $this->template->render());
+        $this->engine->registerFunction('uppercase', 'strtoupper');
+        $template = new Template($this->engine, 'test::tpl-func-uppercase');
+        $this->assertEquals('TESTDATA', $template->render(['var' => 'TestData']));
     }
 
-    public function testRenderViaToStringMagicMethod(): void
-    {
-        vfsStream::create(['template.phtml' => 'Hello World']);
-        $actual = (string) $this->template;
-        $this->assertEquals('Hello World', $actual);
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testRenderWithData(): void
-    {
-        vfsStream::create(['template.phtml' => '<?php echo $name ?>']);
-        $this->assertEquals('Jonathan', $this->template->render(['name' => 'Jonathan']));
-    }
 
     /**
      * @throws Throwable
@@ -88,7 +69,9 @@ class TemplateTest extends TestCase
     public function testRenderDoesNotExist(): void
     {
         $this->expectException(LogicException::class);
-        $this->template->render();
+        $this->expectExceptionMessage('The template "test::missing" does not exist.');
+        $template = new Template($this->engine, 'test::missing');
+        $template->render();
     }
 
     /**
@@ -98,8 +81,8 @@ class TemplateTest extends TestCase
     {
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('error');
-        vfsStream::create(['template.phtml' => '<?php throw new Exception("error"); ?>']);
-        $this->template->render();
+        $template = new Template($this->engine, 'test::tpl-exception');
+        $template->render();
     }
 
     /**
@@ -107,14 +90,8 @@ class TemplateTest extends TestCase
      */
     public function testLayout(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php $this->layout("folder::layout") ?>',
-                'layout.phtml'   => 'Hello World',
-            ]
-        );
-
-        $this->assertEquals('Hello World', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-layout');
+        $this->assertEquals('Hello User!', $template->render());
     }
 
     /**
@@ -122,13 +99,8 @@ class TemplateTest extends TestCase
      */
     public function testSectionReplace(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php $this->layout("folder::layout")?><?php $this->sectionReplace("test", "Hello World") ?>',
-                'layout.phtml'   => '<?php echo $this->section("test") ?>',
-            ]
-        );
-        $this->assertEquals('Hello World', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-section-replace');
+        $this->assertEquals('Hello World!', $template->render());
     }
 
     /**
@@ -136,19 +108,8 @@ class TemplateTest extends TestCase
      */
     public function testSectionAppend(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => implode(
-                    '\n',
-                    [
-                        '<?php $this->layout("folder::layout")?><?php $this->sectionAppend("test", "Hello World") ?>',
-                        '<?php $this->layout("folder::layout")?><?php $this->sectionAppend("test", "!!!") ?>',
-                    ]
-                ),
-                'layout.phtml'   => '<?php echo $this->section("test") ?>',
-            ]
-        );
-        $this->assertEquals('Hello World!!!', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-section-append');
+        $this->assertEquals('Hello Beautiful World!', $template->render());
     }
 
     /**
@@ -156,44 +117,19 @@ class TemplateTest extends TestCase
      */
     public function testSection(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php $this->layout("folder::layout")?><?php $this->start("test") ?>Hello World<?php $this->stop() ?>',
-                'layout.phtml'   => '<?php echo $this->section("test") ?>',
-            ]
-        );
-        $this->assertEquals('Hello World', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-section');
+        $this->assertEquals('Hello All!' . "\n", $template->render());
     }
 
     /**
      * @throws Throwable
      */
-    public function testReplaceSection(): void
-    {
-        vfsStream::create(
-            [
-                'template.phtml' => implode(
-                    '\n',
-                    [
-                        '<?php $this->layout("folder::layout")?><?php $this->start("test") ?>Hello World<?php $this->stop() ?>',
-                        '<?php $this->layout("folder::layout")?><?php $this->start("test") ?>See this instead!<?php $this->stop() ?>',
-                    ]
-                ),
-                'layout.phtml'   => '<?php echo $this->section("test") ?>',
-            ]
-        );
-        $this->assertEquals('See this instead!', $this->template->render());
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testStartSectionWithInvalidName(): void
+    public function testStartSectionWithReservedName(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The section name "content" is reserved.');
-        vfsStream::create(['template.phtml' => '<?php $this->start("content") ?>']);
-        $this->template->render();
+        $template = new Template($this->engine, 'test::tpl-section-reserved');
+        $template->render();
     }
 
     /**
@@ -203,8 +139,8 @@ class TemplateTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('You cannot nest sections within other sections.');
-        vfsStream::create(['template.phtml' => '<?php $this->start("section1") ?><?php $this->start("section2") ?>']);
-        $this->template->render();
+        $template = new Template($this->engine, 'test::tpl-section-nested');
+        $template->render();
     }
 
     /**
@@ -214,31 +150,8 @@ class TemplateTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('You must start a section before you can stop it.');
-        vfsStream::create(['template.phtml' => '<?php $this->stop() ?>']);
-        $this->template->render();
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testSectionDefaultValue(): void
-    {
-        vfsStream::create(['template.phtml' => '<?php echo $this->section("test", "Default value") ?>']);
-        $this->assertEquals('Default value', $this->template->render());
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testNullSection(): void
-    {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php $this->layout("folder::layout") ?>',
-                'layout.phtml'   => '<?php if (is_null($this->section("test"))) echo "NULL" ?>',
-            ]
-        );
-        $this->assertEquals('NULL', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-section-stop');
+        $template->render();
     }
 
     /**
@@ -246,54 +159,8 @@ class TemplateTest extends TestCase
      */
     public function testPushSection(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => implode(
-                    '\n',
-                    [
-                        '<?php $this->layout("folder::layout")?>',
-                        '<?php $this->push("scripts") ?><script src="example1.js"></script><?php $this->stop() ?>',
-                        '<?php $this->push("scripts") ?><script src="example2.js"></script><?php $this->stop() ?>',
-                    ]
-                ),
-                'layout.phtml'   => '<?php echo $this->section("scripts") ?>',
-            ]
-        );
-        $this->assertEquals(
-            '<script src="example1.js"></script><script src="example2.js"></script>',
-            $this->template->render()
-        );
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testPushWithMultipleSections(): void
-    {
-        vfsStream::create(
-            [
-                'template.phtml' => implode(
-                    '\n',
-                    [
-                        '<?php $this->layout("folder::layout")?>',
-                        '<?php $this->push("scripts") ?><script src="example1.js"></script><?php $this->stop() ?>',
-                        '<?php $this->start("test") ?>test<?php $this->stop() ?>',
-                        '<?php $this->push("scripts") ?><script src="example2.js"></script><?php $this->stop() ?>',
-                    ]
-                ),
-                'layout.phtml'   => implode(
-                    '\n',
-                    [
-                        '<?php echo $this->section("test") ?>',
-                        '<?php echo $this->section("scripts") ?>',
-                    ]
-                ),
-            ]
-        );
-        $this->assertEquals(
-            'test\n<script src="example1.js"></script><script src="example2.js"></script>',
-            $this->template->render()
-        );
+        $template = new Template($this->engine, 'test::tpl-section-push');
+        $this->assertEquals('Hello Beautiful World!', $template->render());
     }
 
     /**
@@ -301,13 +168,8 @@ class TemplateTest extends TestCase
      */
     public function testFetchFunction(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php echo $this->fetch("folder::fetched") ?>',
-                'fetched.phtml'  => 'Hello World',
-            ]
-        );
-        $this->assertEquals('Hello World', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-fetch');
+        $this->assertEquals('Empty', $template->render());
     }
 
     /**
@@ -315,12 +177,9 @@ class TemplateTest extends TestCase
      */
     public function testBatchFunction(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php echo $this->batch("Jonathan", "uppercase|strtolower") ?>',
-            ]
-        );
-        $this->assertEquals('jonathan', $this->template->render());
+        $this->engine->registerFunction('uppercase', 'strtoupper');
+        $template = new Template($this->engine, 'test::tpl-batch');
+        $this->assertEquals('testdata', $template->render());
     }
 
     /**
@@ -329,13 +188,9 @@ class TemplateTest extends TestCase
     public function testBatchFunctionWithInvalidFunction(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The batch function could not find the "function_that_does_not_exist" function.');
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php echo $this->batch("Jonathan", "function_that_does_not_exist") ?>',
-            ]
-        );
-        $this->template->render();
+        $this->expectExceptionMessage('The batch function could not find the "uppercase" function.');
+        $template = new Template($this->engine, 'test::tpl-batch');
+        $this->assertEquals('testdata', $template->render());
     }
 
     /**
@@ -343,12 +198,9 @@ class TemplateTest extends TestCase
      */
     public function testEscapeFunction(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php echo $this->e("<strong>Jonathan</strong>") ?>',
-            ]
-        );
-        $this->assertEquals('&lt;strong&gt;Jonathan&lt;/strong&gt;', $this->template->render());
+        $data = ['var' => '&"\'<>'];
+        $template = new Template($this->engine, 'test::tpl-data');
+        $this->assertEquals('&amp;&quot;&#039;&lt;&gt;', $template->render($data));
     }
 
     /**
@@ -356,24 +208,7 @@ class TemplateTest extends TestCase
      */
     public function testEscapeFunctionBatch(): void
     {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php echo $this->e("<strong>Jonathan</strong>", "strtoupper|strrev") ?>',
-            ]
-        );
-        $this->assertEquals('&gt;GNORTS/&lt;NAHTANOJ&gt;GNORTS&lt;', $this->template->render());
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function testEscapeShortcutFunction(): void
-    {
-        vfsStream::create(
-            [
-                'template.phtml' => '<?php echo $this->e("<strong>Jonathan</strong>") ?>',
-            ]
-        );
-        $this->assertEquals('&lt;strong&gt;Jonathan&lt;/strong&gt;', $this->template->render());
+        $template = new Template($this->engine, 'test::tpl-escape-batch');
+        $this->assertEquals('&gt;GNORTS/&lt;ATADTSET&gt;GNORTS&lt;', $template->render());
     }
 }

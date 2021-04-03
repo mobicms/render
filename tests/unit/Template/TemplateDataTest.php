@@ -25,30 +25,30 @@ class TemplateDataTest extends TestCase
 
     public function testAddDataToAllTemplates(): void
     {
-        $this->templateData->add(['name' => 'Jonathan']);
+        $this->templateData->add(['name' => 'TestData']);
         $data = $this->templateData->get();
-        $this->assertEquals('Jonathan', $data['name']);
+        $this->assertEquals('TestData', $data['name']);
     }
 
     public function testAddDataToOneTemplate(): void
     {
-        $this->templateData->add(['name' => 'Jonathan'], ['template']);
+        $this->templateData->add(['name' => 'TestData'], ['template']);
         $data = $this->templateData->get('template');
-        $this->assertEquals('Jonathan', $data['name']);
+        $this->assertEquals('TestData', $data['name']);
     }
 
     public function testAddDataToOneTemplateAgain(): void
     {
-        $this->templateData->add(['firstname' => 'Jonathan'], ['template']);
-        $this->templateData->add(['lastname' => 'Reinink'], ['template']);
+        $this->templateData->add(['first' => 'Test'], ['template']);
+        $this->templateData->add(['last' => 'Data'], ['template']);
         $data = $this->templateData->get('template');
-        $this->assertEquals('Reinink', $data['lastname']);
+        $this->assertEquals('Data', $data['last']);
     }
 
     public function testAddDataToSomeTemplates(): void
     {
-        $this->templateData->add(['name' => 'Jonathan'], ['template1', 'template2']);
+        $this->templateData->add(['name' => 'TestData'], ['template1', 'template2']);
         $data = $this->templateData->get('template1');
-        $this->assertEquals('Jonathan', $data['name']);
+        $this->assertEquals('TestData', $data['name']);
     }
 }

@@ -31,7 +31,7 @@
         "psalm/plugin-phpunit": "^0.15",
         "slevomat/coding-standard": "^6.4",
         "squizlabs/php_codesniffer": "^3.5",
-        "vimeo/psalm": "^4.6"
+        "vimeo/psalm": "^4.7"
     },
     "autoload": {
         "psr-4": {
@@ -39,6 +39,9 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "tests/stubs/constants.php"
+        ],
         "psr-4": {
             "MobicmsTest\\Render\\": "tests/unit"
         }
