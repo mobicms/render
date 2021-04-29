@@ -9,10 +9,14 @@ Detailed changes can see in the [repository log].
 ## [Unreleased]
 
 #### Added
-- Nothing
+- Source code static analysis using Psalm
+- Checking coding standards using PHP_CodeSniffer
+- Test coverage report and code quality rating using Scrutinizer-CI
+- CI services using GitHub Actions
   
 #### Changed
 - Refactoring for PHP 7.4
+- Used latest version of PhpUnit
 - Various code improvements
 
 #### Deprecated
