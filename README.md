@@ -12,15 +12,14 @@ but can be used freely in any other projects.
 [![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png)](https://scrutinizer-ci.com/g/mobicms/render/code-structure/develop/code-coverage)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png)](https://scrutinizer-ci.com/g/mobicms/render)
 
+[![YAGNI](https://img.shields.io/badge/principle-YAGNI-blueviolet.svg)](https://en.wikipedia.org/wiki/YAGNI)
+[![KISS](https://img.shields.io/badge/principle-KISS-blueviolet.svg)](https://en.wikipedia.org/wiki/KISS_principle)
+
 **mobicms/render is a native PHP template system** that started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).
-The development of the original package went in a direction that was not suitable for our projects where Plates was used, so it was decided to develop our own separate library.
+The development of the original package went in a direction that was not suitable for our projects where Plates was used, so it was decided to continue development as an independent package.
 Our goal was to simplify the source code as much as possible, get rid of the unnecessary and add the missing functionality.
 
-[![YAGNI](https://img.shields.io/badge/principle-YAGNI-blue.svg)](https://en.wikipedia.org/wiki/YAGNI)
-[![KISS](https://img.shields.io/badge/principle-KISS-blue.svg)](https://en.wikipedia.org/wiki/KISS_principle)  
-In our development, we follow the principles of [YAGNI](https://en.wikipedia.org/wiki/YAGNI) and [KISS](https://en.wikipedia.org/wiki/KISS_principle).  
-The source code should not have extra unnecessary functionality and should be as simple and efficient as possible.
-
+  
 ## Installation
 
 The preferred method of installation is via [Composer](http://getcomposer.org). Run the following
@@ -44,6 +43,9 @@ Contributions are welcome! Please read [CONTRIBUTING](https://github.com/mobicms
 
 This project adheres to a [Contributor Code of Conduct](https://github.com/mobicms/render/blob/develop/.github/CODE_OF_CONDUCT.md).
 By participating in this project and its community, you are expected to uphold this code.
+
+In our development, we follow the principles of [YAGNI](https://en.wikipedia.org/wiki/YAGNI) and [KISS](https://en.wikipedia.org/wiki/KISS_principle).  
+The source code should not have extra unnecessary functionality and should be as simple and efficient as possible.
 
 
 ## License
