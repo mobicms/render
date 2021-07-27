@@ -38,11 +38,9 @@ class TemplateNameTest extends TestCase
     public function testGetPathWithMultipleFolders(): void
     {
         $engine = new Engine();
-        $engine->addFolder(
-            'test',
-            M_PATH_ROOT,
-            ['somefolder', 'anotherfolder']
-        );
+        $engine->addFolder('test', 'somefolder');
+        $engine->addFolder('test', M_PATH_ROOT);
+        $engine->addFolder('test', 'anotherfolder');
 
         $name = new TemplateName($engine, 'test::tpl-data');
         $this->assertEquals(

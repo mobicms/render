@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MobicmsTest\Render;
 
+use InvalidArgumentException;
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\TemplateFunction;
 use LogicException;
@@ -24,33 +25,36 @@ class EngineTest extends TestCase
         $this->assertEquals('phtml', $this->engine->getFileExtension());
     }
 
-    public function testAddFolder(): void
+    public function testAddAndGetSeveralFolders(): void
     {
-        $this->engine->addFolder('folder', M_PATH_ROOT);
-        $this->assertEquals(M_PATH_ROOT, $this->engine->getFolder('folder')[0] . DIRECTORY_SEPARATOR);
+        $this->engine->addFolder('ns1', 'folder1');
+        $this->engine->addFolder('ns1', 'folder2');
+        $this->engine->addFolder('ns2', 'folder3');
+        $this->assertContains('folder1', $this->engine->getFolder('ns1'));
+        $this->assertContains('folder2', $this->engine->getFolder('ns1'));
+        $this->assertContains('folder3', $this->engine->getFolder('ns2'));
     }
 
-    public function testAddFolderWithSearchFolders(): void
+    public function testAddFolderWithEmptyNamespace(): void
     {
-        $this->engine->addFolder('folder', M_PATH_ROOT, ['test1', 'test2',]);
-        $this->assertEquals(M_PATH_ROOT, $this->engine->getFolder('folder')[0] . DIRECTORY_SEPARATOR);
-        $this->assertEquals('test1', $this->engine->getFolder('folder')[1]);
-        $this->assertEquals('test2', $this->engine->getFolder('folder')[2]);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You must specify namespace.');
+        $this->engine->addFolder('', 'folder');
     }
 
-    public function testAddFolderWithNamespaceConflict(): void
+    public function testAddFolderWithEmptyFolder(): void
     {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The template namespace "name" is already being used.');
-        $this->engine->addFolder('name', M_PATH_ROOT);
-        $this->engine->addFolder('name', M_PATH_ROOT);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You must specify folder.');
+        $this->engine->addFolder('ns', '');
     }
 
-    public function testAddFolderWithInvalidDirectory(): void
+    public function testAddFolderWithFoldersConflict(): void
     {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The specified directory path "does_not_exist" does not exist.');
-        $this->engine->addFolder('namespace', 'does_not_exist');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "test" folder in the "ns" namespace already exists.');
+        $this->engine->addFolder('ns', 'test');
+        $this->engine->addFolder('ns', 'test');
     }
 
     public function testGetFolder(): void
@@ -93,6 +97,9 @@ class EngineTest extends TestCase
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRegisterFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
