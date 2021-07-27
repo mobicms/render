@@ -20,7 +20,7 @@ class TemplateName
     /**
      * The parsed template folder
      *
-     * @var array<array-key, string>
+     * @var array<string>
      */
     private array $folder;
 

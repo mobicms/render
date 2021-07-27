@@ -23,14 +23,14 @@ class Engine
     /**
      * Collection of template namespaces
      *
-     * @var array<array-key, array<array-key, string>>
+     * @var array<array<string>>
      */
     private array $nameSpaces = [];
 
     /**
      * Collection of template functions
      *
-     * @var array<array-key, TemplateFunction>
+     * @var array<TemplateFunction>
      */
     protected array $functions = [];
 
@@ -82,7 +82,7 @@ class Engine
      * Get a template folder
      *
      * @param string $name
-     * @return array<array-key, string>
+     * @return array<string>
      */
     public function getFolder(string $name): array
     {
