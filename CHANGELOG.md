@@ -9,27 +9,39 @@ Detailed changes can see in the [repository log].
 ## [Unreleased]
 
 #### Added
-- Source code static analysis using Psalm
-- Checking coding standards using PHP_CodeSniffer
-- Test coverage report and code quality rating using Scrutinizer-CI
-- CI services using GitHub Actions
-  
+- Nothing
+
 #### Changed
-- Refactoring for PHP 7.4
-- Used latest version of PhpUnit
-- Various code improvements
+- Nothing
 
 #### Deprecated
 - Nothing
-  
+
 #### Removed
-- Drop support for PHP older than 7.4
+- Nothing
 
 #### Fixed
 - Nothing
 
 #### Security
 - Nothing
+
+
+## [2.1.0] - 2021-07-28
+
+#### Added
+- PHP 8.x support
+- Source code static analysis using Psalm
+- Checking coding standards using PHP_CodeSniffer
+- Test coverage report and code quality rating using Scrutinizer-CI
+- CI services using GitHub Actions
+  
+#### Changed
+- Used latest version of PhpUnit
+- Various code improvements
+
+#### Removed
+- Drop support for PHP older than 7.4
 
 
 ## [2.0.0] - 2019-12-31
@@ -99,7 +111,8 @@ Here are the most significant changes compared to the original packag.
   - `[S] Engine::make()`
 - Some other code that is not used.
 
-[Unreleased]: https://github.com/mobicms/render/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/mobicms/render/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/mobicms/render/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/mobicms/render/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/mobicms/render/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/mobicms/render/compare/1.0.0...1.0.1
