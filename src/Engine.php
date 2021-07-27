@@ -10,6 +10,8 @@ use Mobicms\Render\Template\TemplateData;
 use Mobicms\Render\Template\TemplateFunction;
 use Throwable;
 
+use function in_array;
+
 /**
  * Template API and environment settings storage
  */
@@ -55,26 +57,29 @@ class Engine
 
     /**
      * Add a new template folder for grouping templates under different namespaces
-     *
-     * @param string $name Namespace
-     * @param string $directory Default (fallback) directory
-     * @param array<string> $search Array with a list of folders where templates will be searched
-     * @return Engine
      */
-    public function addFolder(string $name, string $directory, array $search = []): self
+    public function addFolder(string $nameSpace, string $folder): self
     {
-        $directory = rtrim($directory, '/\\');
-        //TODO: После переделки, проверять только совпадение namespace/folder
-        if (isset($this->nameSpaces[$name])) {
-            throw new InvalidArgumentException('The template namespace "' . $name . '" is already being used.');
+        if (empty($nameSpace)) {
+            throw new InvalidArgumentException('You must specify namespace.');
         }
 
-        //TODO: Убрать. Проверку существования папки делать при рендеринге конкретного шаблона.
-        if (! is_dir($directory)) {
-            throw new InvalidArgumentException('The specified directory path "' . $directory . '" does not exist.');
+        if (empty($folder)) {
+            throw new InvalidArgumentException('You must specify folder.');
         }
 
-        $this->nameSpaces[$name] = array_merge([$directory], $search);
+        $folder = rtrim($folder, '/\\');
+
+        if (
+            isset($this->nameSpaces[$nameSpace])
+            && in_array($folder, $this->nameSpaces[$nameSpace])
+        ) {
+            throw new InvalidArgumentException(
+                'The "' . $folder . '" folder in the "' . $nameSpace . '" namespace already exists.'
+            );
+        }
+
+        $this->nameSpaces[$nameSpace][] = $folder;
         return $this;
     }
 
