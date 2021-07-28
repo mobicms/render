@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace MobicmsTest\Render\Template;
 
+use InvalidArgumentException;
 use Mobicms\Render\Engine;
 use Mobicms\Render\Template\TemplateName;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 
 class TemplateNameTest extends TestCase
@@ -19,13 +19,6 @@ class TemplateNameTest extends TestCase
         $this->engine->addPath(M_PATH_ROOT);
     }
 
-    public function testCanCreateInstanceWithInvalidTemplateName(): void
-    {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessageMatches('/You must use the folder namespace separator "::" once.$/');
-        new TemplateName($this->engine, 'template');
-    }
-
     public function testGetPath(): void
     {
         $name = new TemplateName($this->engine, 'main::tpl-data');
@@ -35,6 +28,22 @@ class TemplateNameTest extends TestCase
         );
     }
 
+    public function testGetPathWithoutNamespace(): void
+    {
+        $name = new TemplateName($this->engine, 'tpl-data');
+        $this->assertEquals(
+            M_PATH_ROOT . 'tpl-data.phtml',
+            $name->getPath()
+        );
+    }
+
+    public function testWithInvalidTemplateName(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/You must use the folder namespace separator "::" once.$/');
+        new TemplateName($this->engine, 'template::tmp::test');
+    }
+
     public function testGetPathWithMultipleFolders(): void
     {
         $engine = new Engine();
@@ -42,7 +51,7 @@ class TemplateNameTest extends TestCase
         $engine->addPath(M_PATH_ROOT);
         $engine->addPath('anotherfolder');
 
-        $name = new TemplateName($engine, 'main::tpl-data');
+        $name = new TemplateName($engine, 'tpl-data');
         $this->assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
             $name->getPath()
@@ -51,7 +60,7 @@ class TemplateNameTest extends TestCase
 
     public function testGetPathWithNonexistentTemplate(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The template "main::nonexistent" does not exist.');
         $name = new TemplateName($this->engine, 'main::nonexistent');
         $name->getPath();

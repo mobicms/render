@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Mobicms\Render\Template;
 
+use InvalidArgumentException;
 use Mobicms\Render\Engine;
-use LogicException;
 
 /**
  * A template name
@@ -33,16 +33,21 @@ class TemplateName
     {
         $this->name = $name;
         $parts = explode('::', $this->name);
+        $count = count($parts);
 
-        if (count($parts) === 2) {
-            $this->folder = $engine->getFolder($parts[0]);
-            $this->file = $parts[1] . '.' . $engine->getFileExtension();
-        } else {
-            throw new LogicException(
+        if ($count > 2) {
+            throw new InvalidArgumentException(
                 'The template name "' . $this->name . '" is not valid. ' .
                 'You must use the folder namespace separator "::" once.'
             );
         }
+
+        if ($count === 1) {
+            array_unshift($parts, 'main');
+        }
+
+        $this->folder = $engine->getPath($parts[0]);
+        $this->file = $parts[1] . '.' . $engine->getFileExtension();
     }
 
     /**
@@ -60,6 +65,6 @@ class TemplateName
             }
         }
 
-        throw new LogicException('The template "' . $this->name . '" does not exist.');
+        throw new InvalidArgumentException('The template "' . $this->name . '" does not exist.');
     }
 }
