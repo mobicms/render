@@ -65,7 +65,7 @@ class Engine
         }
 
         if (empty($nameSpace)) {
-            throw new InvalidArgumentException('You must specify namespace.');
+            throw new InvalidArgumentException('Namespace cannot be empty.');
         }
 
         $folder = rtrim($folder, '/\\');
@@ -86,10 +86,9 @@ class Engine
     /**
      * Get a template folder
      *
-     * @param string $name
      * @return array<string>
      */
-    public function getFolder(string $name): array
+    public function getPath(string $name): array
     {
         if (! isset($this->nameSpaces[$name])) {
             throw new InvalidArgumentException('The template namespace "' . $name . '" was not found.');
@@ -101,9 +100,7 @@ class Engine
     /**
      * Add preassigned template data
      *
-     * @param array<mixed> $data
      * @param array<string> $templates
-     * @return Engine
      */
     public function addData(array $data, array $templates = []): self
     {
@@ -180,9 +177,6 @@ class Engine
     /**
      * Create a new template and render it
      *
-     * @param string $name
-     * @param array $params
-     * @return string
      * @throws Throwable
      */
     public function render(string $name, array $params = []): string

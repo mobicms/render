@@ -68,9 +68,6 @@ class Template
 
     /**
      * Magic method used to call extension functions
-     *
-     * @param array<mixed> $arguments
-     * @return mixed
      */
     public function __call(string $name, array $arguments)
     {
@@ -90,9 +87,6 @@ class Template
 
     /**
      * Assign or get template data
-     *
-     * @param array<mixed> $data
-     * @return array<mixed>
      */
     public function data(array $data = []): array
     {
@@ -105,7 +99,6 @@ class Template
      * Render the template and layout
      *
      * @psalm-suppress UnresolvableInclude
-     * @param array<mixed> $data
      * @throws Throwable
      */
     public function render(array $data = []): string
@@ -138,8 +131,6 @@ class Template
 
     /**
      * Set the template's layout
-     *
-     * @param array<mixed> $data
      */
     public function layout(string $name, array $data = []): void
     {
@@ -214,9 +205,6 @@ class Template
 
     /**
      * Returns the content for a section block
-     *
-     * @param string $name Section name
-     * @param string $default Default section content
      */
     public function section(string $name, string $default = null): ?string
     {
@@ -230,7 +218,6 @@ class Template
     /**
      * Fetch a rendered template
      *
-     * @param array<mixed> $data
      * @throws Throwable
      */
     public function fetch(string $name, array $data = []): string

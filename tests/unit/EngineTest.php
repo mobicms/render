@@ -30,15 +30,15 @@ class EngineTest extends TestCase
         $this->engine->addPath('folder1', 'ns1');
         $this->engine->addPath('folder2', 'ns1');
         $this->engine->addPath(M_PATH_ROOT);
-        $this->assertContains('folder1', $this->engine->getFolder('ns1'));
-        $this->assertContains('folder2', $this->engine->getFolder('ns1'));
-        $this->assertContains(rtrim(M_PATH_ROOT, '/\\'), $this->engine->getFolder('main'));
+        $this->assertContains('folder1', $this->engine->getPath('ns1'));
+        $this->assertContains('folder2', $this->engine->getPath('ns1'));
+        $this->assertContains(rtrim(M_PATH_ROOT, '/\\'), $this->engine->getPath('main'));
     }
 
     public function testAddFolderWithEmptyNamespace(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('You must specify namespace.');
+        $this->expectExceptionMessage('Namespace cannot be empty.');
         $this->engine->addPath('folder', '');
     }
 
@@ -61,7 +61,7 @@ class EngineTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The template namespace "name" was not found.');
-        $this->engine->getFolder('name');
+        $this->engine->getPath('name');
     }
 
     public function testAddData(): void
