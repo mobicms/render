@@ -11,9 +11,12 @@ Detailed changes can see in the [repository log].
 #### Added
 - `Engine::addPath()`  
   Instead of three arguments of the old addFolder() method (namespace, default folder and search array),
-  two arguments with a namespace and a folder name are used.
+  two arguments with a folder and optional namespace are used.
 
 #### Changed
+- Specifying a namespace now is not mandatory.  
+  If it is not specified, it will be used main:: as default.
+- `Engine::getFolder()` renamed to `Engine::getPath()`
 - Various code improvements
 
 #### Deprecated
