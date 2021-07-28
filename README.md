@@ -1,6 +1,6 @@
 # `mobicms/render`
 
-This package is part of [mobiCMS](https://github.com/mobicms/mobicms) and [JohnCMS](https://github.com/simba77/johncms),
+This package is part of [mobiCMS](https://github.com/mobicms/mobicms) and [JohnCMS](https://github.com/johncms/johncms),
 but can be used freely in any other projects.
 
 [![GitHub](https://img.shields.io/github/license/mobicms/render?color=green)](https://github.com/mobicms/render/blob/develop/LICENSE)
