@@ -16,7 +16,7 @@ class TemplateNameTest extends TestCase
     public function setUp(): void
     {
         $this->engine = new Engine();
-        $this->engine->addFolder('test', M_PATH_ROOT);
+        $this->engine->addPath(M_PATH_ROOT);
     }
 
     public function testCanCreateInstanceWithInvalidTemplateName(): void
@@ -28,7 +28,7 @@ class TemplateNameTest extends TestCase
 
     public function testGetPath(): void
     {
-        $name = new TemplateName($this->engine, 'test::tpl-data');
+        $name = new TemplateName($this->engine, 'main::tpl-data');
         $this->assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
             $name->getPath()
@@ -38,11 +38,11 @@ class TemplateNameTest extends TestCase
     public function testGetPathWithMultipleFolders(): void
     {
         $engine = new Engine();
-        $engine->addFolder('test', 'somefolder');
-        $engine->addFolder('test', M_PATH_ROOT);
-        $engine->addFolder('test', 'anotherfolder');
+        $engine->addPath('somefolder');
+        $engine->addPath(M_PATH_ROOT);
+        $engine->addPath('anotherfolder');
 
-        $name = new TemplateName($engine, 'test::tpl-data');
+        $name = new TemplateName($engine, 'main::tpl-data');
         $this->assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
             $name->getPath()
@@ -52,8 +52,8 @@ class TemplateNameTest extends TestCase
     public function testGetPathWithNonexistentTemplate(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The template "test::nonexistent" does not exist.');
-        $name = new TemplateName($this->engine, 'test::nonexistent');
+        $this->expectExceptionMessage('The template "main::nonexistent" does not exist.');
+        $name = new TemplateName($this->engine, 'main::nonexistent');
         $name->getPath();
     }
 }

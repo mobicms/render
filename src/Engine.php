@@ -58,14 +58,14 @@ class Engine
     /**
      * Add a new template folder for grouping templates under different namespaces
      */
-    public function addFolder(string $nameSpace, string $folder): self
+    public function addPath(string $folder, string $nameSpace = 'main'): self
     {
-        if (empty($nameSpace)) {
-            throw new InvalidArgumentException('You must specify namespace.');
-        }
-
         if (empty($folder)) {
             throw new InvalidArgumentException('You must specify folder.');
+        }
+
+        if (empty($nameSpace)) {
+            throw new InvalidArgumentException('You must specify namespace.');
         }
 
         $folder = rtrim($folder, '/\\');

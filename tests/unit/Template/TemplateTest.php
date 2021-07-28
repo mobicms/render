@@ -17,18 +17,18 @@ class TemplateTest extends TestCase
     public function setUp(): void
     {
         $this->engine = new Engine();
-        $this->engine->addFolder('test', M_PATH_ROOT);
+        $this->engine->addPath(M_PATH_ROOT);
     }
 
     public function testRender(): void
     {
-        $template = new Template($this->engine, 'test::tpl-empty');
+        $template = new Template($this->engine, 'main::tpl-empty');
         $this->assertEquals('Empty', $template->render());
     }
 
     public function testRenderViaToStringMagicMethod(): void
     {
-        $template = new Template($this->engine, 'test::tpl-empty');
+        $template = new Template($this->engine, 'main::tpl-empty');
         $this->assertEquals('Empty', (string) $template);
     }
 
@@ -38,7 +38,7 @@ class TemplateTest extends TestCase
     public function testAssignData(): void
     {
         $data = ['var' => 'TestData'];
-        $template = new Template($this->engine, 'test::tpl-data');
+        $template = new Template($this->engine, 'main::tpl-data');
         $template->data($data);
         $this->assertEquals($template->data(), $data);
         $this->assertEquals('TestData', $template->render());
@@ -51,7 +51,7 @@ class TemplateTest extends TestCase
     public function testCanCallFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
-        $template = new Template($this->engine, 'test::tpl-func-uppercase');
+        $template = new Template($this->engine, 'main::tpl-func-uppercase');
         $this->assertEquals('TESTDATA', $template->render(['var' => 'TestData']));
     }
 
@@ -62,8 +62,8 @@ class TemplateTest extends TestCase
     public function testRenderDoesNotExist(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('The template "test::missing" does not exist.');
-        $template = new Template($this->engine, 'test::missing');
+        $this->expectExceptionMessage('The template "main::missing" does not exist.');
+        $template = new Template($this->engine, 'main::missing');
         $template->render();
     }
 
@@ -74,7 +74,7 @@ class TemplateTest extends TestCase
     {
         $this->expectException(Throwable::class);
         $this->expectExceptionMessage('error');
-        $template = new Template($this->engine, 'test::tpl-exception');
+        $template = new Template($this->engine, 'main::tpl-exception');
         $template->render();
     }
 
@@ -83,7 +83,7 @@ class TemplateTest extends TestCase
      */
     public function testLayout(): void
     {
-        $template = new Template($this->engine, 'test::tpl-layout');
+        $template = new Template($this->engine, 'main::tpl-layout');
         $this->assertEquals('Hello User!', $template->render());
     }
 
@@ -92,7 +92,7 @@ class TemplateTest extends TestCase
      */
     public function testSectionReplace(): void
     {
-        $template = new Template($this->engine, 'test::tpl-section-replace');
+        $template = new Template($this->engine, 'main::tpl-section-replace');
         $this->assertEquals('Hello World!', $template->render());
     }
 
@@ -101,7 +101,7 @@ class TemplateTest extends TestCase
      */
     public function testSectionAppend(): void
     {
-        $template = new Template($this->engine, 'test::tpl-section-append');
+        $template = new Template($this->engine, 'main::tpl-section-append');
         $this->assertEquals('Hello Beautiful World!', $template->render());
     }
 
@@ -110,7 +110,7 @@ class TemplateTest extends TestCase
      */
     public function testSection(): void
     {
-        $template = new Template($this->engine, 'test::tpl-section');
+        $template = new Template($this->engine, 'main::tpl-section');
         $this->assertEquals('Hello All!' . "\n", $template->render());
     }
 
@@ -121,7 +121,7 @@ class TemplateTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The section name "content" is reserved.');
-        $template = new Template($this->engine, 'test::tpl-section-reserved');
+        $template = new Template($this->engine, 'main::tpl-section-reserved');
         $template->render();
     }
 
@@ -132,7 +132,7 @@ class TemplateTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('You cannot nest sections within other sections.');
-        $template = new Template($this->engine, 'test::tpl-section-nested');
+        $template = new Template($this->engine, 'main::tpl-section-nested');
         $template->render();
     }
 
@@ -143,7 +143,7 @@ class TemplateTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('You must start a section before you can stop it.');
-        $template = new Template($this->engine, 'test::tpl-section-stop');
+        $template = new Template($this->engine, 'main::tpl-section-stop');
         $template->render();
     }
 
@@ -152,7 +152,7 @@ class TemplateTest extends TestCase
      */
     public function testPushSection(): void
     {
-        $template = new Template($this->engine, 'test::tpl-section-push');
+        $template = new Template($this->engine, 'main::tpl-section-push');
         $this->assertEquals('Hello Beautiful World!', $template->render());
     }
 
@@ -161,7 +161,7 @@ class TemplateTest extends TestCase
      */
     public function testFetchFunction(): void
     {
-        $template = new Template($this->engine, 'test::tpl-fetch');
+        $template = new Template($this->engine, 'main::tpl-fetch');
         $this->assertEquals('Empty', $template->render());
     }
 
@@ -171,7 +171,7 @@ class TemplateTest extends TestCase
     public function testBatchFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
-        $template = new Template($this->engine, 'test::tpl-batch');
+        $template = new Template($this->engine, 'main::tpl-batch');
         $this->assertEquals('testdata', $template->render());
     }
 
@@ -182,7 +182,7 @@ class TemplateTest extends TestCase
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('The batch function could not find the "uppercase" function.');
-        $template = new Template($this->engine, 'test::tpl-batch');
+        $template = new Template($this->engine, 'main::tpl-batch');
         $this->assertEquals('testdata', $template->render());
     }
 
@@ -192,7 +192,7 @@ class TemplateTest extends TestCase
     public function testEscapeFunction(): void
     {
         $data = ['var' => '&"\'<>'];
-        $template = new Template($this->engine, 'test::tpl-data');
+        $template = new Template($this->engine, 'main::tpl-data');
         $this->assertEquals('&amp;&quot;&#039;&lt;&gt;', $template->render($data));
     }
 
@@ -201,7 +201,7 @@ class TemplateTest extends TestCase
      */
     public function testEscapeFunctionBatch(): void
     {
-        $template = new Template($this->engine, 'test::tpl-escape-batch');
+        $template = new Template($this->engine, 'main::tpl-escape-batch');
         $this->assertEquals('&gt;GNORTS/&lt;ATADTSET&gt;GNORTS&lt;', $template->render());
     }
 }

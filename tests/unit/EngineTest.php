@@ -27,41 +27,34 @@ class EngineTest extends TestCase
 
     public function testAddAndGetSeveralFolders(): void
     {
-        $this->engine->addFolder('ns1', 'folder1');
-        $this->engine->addFolder('ns1', 'folder2');
-        $this->engine->addFolder('ns2', 'folder3');
+        $this->engine->addPath('folder1', 'ns1');
+        $this->engine->addPath('folder2', 'ns1');
+        $this->engine->addPath(M_PATH_ROOT);
         $this->assertContains('folder1', $this->engine->getFolder('ns1'));
         $this->assertContains('folder2', $this->engine->getFolder('ns1'));
-        $this->assertContains('folder3', $this->engine->getFolder('ns2'));
+        $this->assertContains(rtrim(M_PATH_ROOT, '/\\'), $this->engine->getFolder('main'));
     }
 
     public function testAddFolderWithEmptyNamespace(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You must specify namespace.');
-        $this->engine->addFolder('', 'folder');
+        $this->engine->addPath('folder', '');
     }
 
     public function testAddFolderWithEmptyFolder(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You must specify folder.');
-        $this->engine->addFolder('ns', '');
+        $this->engine->addPath('');
     }
 
     public function testAddFolderWithFoldersConflict(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "test" folder in the "ns" namespace already exists.');
-        $this->engine->addFolder('ns', 'test');
-        $this->engine->addFolder('ns', 'test');
-    }
-
-    public function testGetFolder(): void
-    {
-        $this->engine->addFolder('name', M_PATH_ROOT);
-        $folder = $this->engine->getFolder('name');
-        $this->assertEquals(M_PATH_ROOT, $folder[0] . DIRECTORY_SEPARATOR);
+        $this->expectExceptionMessage('The "test" folder in the "main" namespace already exists.');
+        $this->engine->addPath('test');
+        $this->engine->addPath('test');
     }
 
     public function testGetNonexistentFolder(): void
@@ -90,10 +83,10 @@ class EngineTest extends TestCase
      */
     public function testRenderTemplate(): void
     {
-        $this->engine->addFolder('test', M_PATH_ROOT);
+        $this->engine->addPath(M_PATH_ROOT);
         $this->assertEquals(
             'Hello!',
-            $this->engine->render('test::tpl-data', ['var' => 'Hello!'])
+            $this->engine->render('main::tpl-data', ['var' => 'Hello!'])
         );
     }
 
@@ -106,9 +99,9 @@ class EngineTest extends TestCase
         $this->assertInstanceOf(TemplateFunction::class, $this->engine->getFunction('uppercase'));
         $this->assertEquals('strtoupper', $this->engine->getFunction('uppercase')->getCallback());
 
-        $this->engine->addFolder('test', M_PATH_ROOT);
+        $this->engine->addPath(M_PATH_ROOT);
         $result = $this->engine->render(
-            'test::tpl-func-uppercase',
+            'main::tpl-func-uppercase',
             ['var' => 'abcdefgh']
         );
         $this->assertEquals('ABCDEFGH', $result);
