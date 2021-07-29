@@ -14,49 +14,15 @@ use Throwable;
 class Template
 {
     /**
-     * Instance of the template engine
-     */
-    private Engine $engine;
-
-    /**
-     * The name of the template
-     */
-    private TemplateName $name;
-
-    /**
-     * The data assigned to the template
-     *
-     * @var array<mixed>
-     */
-    private array $data = [];
-
-    /**
-     * An array of section content
-     *
      * @var array<string>
      */
     private array $sections = [];
-
-    /**
-     * The name of the section currently being rendered
-     */
+    private Engine $engine;
+    private TemplateName $name;
+    private array $data = [];
     private string $sectionName = '';
-
-    /**
-     * Whether the section should be appended or not
-     */
     private bool $appendSection = false;
-
-    /**
-     * The name of the template layout
-     */
     private string $layoutName = '';
-
-    /**
-     * The data assigned to the template layout
-     *
-     * @var array<mixed>
-     */
     private array $layoutData = [];
 
     public function __construct(Engine $engine, string $name)
