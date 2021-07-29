@@ -6,8 +6,6 @@ namespace MobicmsTest\Render;
 
 use InvalidArgumentException;
 use Mobicms\Render\Engine;
-use Mobicms\Render\Template\TemplateFunction;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -59,7 +57,7 @@ class EngineTest extends TestCase
 
     public function testGetNonexistentFolder(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The template namespace "name" was not found.');
         $this->engine->getPath('name');
     }
@@ -96,7 +94,7 @@ class EngineTest extends TestCase
     public function testRegisterFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
-        $this->assertInstanceOf(TemplateFunction::class, $this->engine->getFunction('uppercase'));
+        $this->assertIsCallable($this->engine->getFunction('uppercase'));
 
         $this->engine->addPath(M_PATH_ROOT);
         $result = $this->engine->render(
@@ -108,22 +106,28 @@ class EngineTest extends TestCase
 
     public function testRegisterExistFunction(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The template function name "uppercase" is already registered.');
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $this->engine->registerFunction('uppercase', 'strtoupper');
+    }
+
+    public function testRegisterFunctionWithInvalidName(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->engine->registerFunction('invalid-name', 'strtoupper');
     }
 
     public function testGetFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $function = $this->engine->getFunction('uppercase');
-        $this->assertEquals('TTT', $function->call(['TTT']));
+        $this->assertEquals('TTT', $function('TTT'));
     }
 
     public function testGetInvalidFunction(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The template function "some_function_that_does_not_exist" was not found.');
         $this->engine->getFunction('some_function_that_does_not_exist');
     }

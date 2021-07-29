@@ -71,7 +71,7 @@ class Template
      */
     public function __call(string $name, array $arguments)
     {
-        return $this->engine->getFunction($name)->call($arguments);
+        return call_user_func_array($this->engine->getFunction($name), $arguments);
     }
 
     /**

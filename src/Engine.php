@@ -7,7 +7,6 @@ namespace Mobicms\Render;
 use InvalidArgumentException;
 use Mobicms\Render\Template\Template;
 use Mobicms\Render\Template\TemplateData;
-use Mobicms\Render\Template\TemplateFunction;
 use Throwable;
 
 use function in_array;
@@ -29,7 +28,7 @@ class Engine
     /**
      * Collection of template functions
      *
-     * @var array<TemplateFunction>
+     * @var array<callable>
      */
     protected array $functions = [];
 
@@ -115,12 +114,21 @@ class Engine
 
     public function registerFunction(string $name, callable $callback): self
     {
-        $this->checkFunctionName($name);
-        $this->functions[$name] = new TemplateFunction($callback);
+        if (isset($this->functions[$name])) {
+            throw new InvalidArgumentException('The template function name "' . $name . '" is already registered.');
+        }
+
+        if (preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name) !== 1) {
+            throw new InvalidArgumentException(
+                'Not a valid function name.'
+            );
+        }
+
+        $this->functions[$name] = $callback;
         return $this;
     }
 
-    public function getFunction(string $name): TemplateFunction
+    public function getFunction(string $name): callable
     {
         if (! isset($this->functions[$name])) {
             throw new InvalidArgumentException('The template function "' . $name . '" was not found.');
@@ -149,18 +157,5 @@ class Engine
     {
         $template = new Template($this, $name);
         return $template->render($params);
-    }
-
-    private function checkFunctionName(string $name): void
-    {
-        if (isset($this->functions[$name])) {
-            throw new InvalidArgumentException('The template function name "' . $name . '" is already registered.');
-        }
-
-        if (preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name) !== 1) {
-            throw new InvalidArgumentException(
-                'Not a valid function name.'
-            );
-        }
     }
 }
