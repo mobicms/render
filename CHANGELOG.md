@@ -9,27 +9,40 @@ Detailed changes can see in the [repository log].
 ## [Unreleased]
 
 #### Added
-- `Engine::addPath()`  
-  Instead of three arguments of the old addFolder() method (namespace, default folder and search array),
-  two arguments with a folder and optional namespace are used.
+- Nothing
 
 #### Changed
-- Specifying a namespace now is not mandatory.  
-  If it is not specified, it will be used main:: as default.
-- `Engine::getFolder()` renamed to `Engine::getPath()`
-- Various code improvements
+- Nothing
 
 #### Deprecated
 - Nothing
 
 #### Removed
-- `Engine::addFolder()`
+- Nothing
 
 #### Fixed
 - Nothing
 
 #### Security
 - Nothing
+
+
+## [3.0.0] - 2021-07-29
+
+#### Added
+- `Engine::addPath()`  
+  Instead of three arguments of the old addFolder() method (namespace, default folder and search array),
+  two arguments with a folder and optional namespace are used.
+
+#### Changed
+- Specifying a namespace now is not mandatory.  
+  If it is not specified, it will be used `main::` as default.
+- `Engine::getFolder()` renamed to `Engine::getPath()`
+- Various code improvements
+
+#### Removed
+- `Engine::addFolder()`
+- `TemplateFunftion` class
 
 
 ## [2.1.0] - 2021-07-28
@@ -116,7 +129,8 @@ Here are the most significant changes compared to the original packag.
   - `[S] Engine::make()`
 - Some other code that is not used.
 
-[Unreleased]: https://github.com/mobicms/render/compare/2.1.0...HEAD
+[Unreleased]: https://github.com/mobicms/render/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/mobicms/render/compare/2.1.0...3.0.0
 [2.1.0]: https://github.com/mobicms/render/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/mobicms/render/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/mobicms/render/compare/1.0.1...1.1.0
