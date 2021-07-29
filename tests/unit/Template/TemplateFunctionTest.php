@@ -10,56 +10,52 @@ use PHPUnit\Framework\TestCase;
 
 class TemplateFunctionTest extends TestCase
 {
-    private TemplateFunction $function;
-
-    public function setUp(): void
+    public function testCanCreateInstance(): TemplateFunction
     {
-        $this->function = new TemplateFunction(
-            'uppercase',
+        $instance = new TemplateFunction(
             function (string $string) {
                 return strtoupper($string);
             }
         );
+        $this->assertInstanceOf(TemplateFunction::class, $instance);
+        return $instance;
     }
 
-    public function testSetAndGetName(): void
+    /**
+     * @depends testCanCreateInstance
+     */
+    public function testFunctionCall(TemplateFunction $instance): void
     {
-        $this->assertInstanceOf(TemplateFunction::class, $this->function->setName('test'));
-        $this->assertEquals('test', $this->function->getName());
+        $this->assertEquals('TESTDATA', $instance->call(['TestData']));
     }
 
-    public function testSetInvalidName(): void
-    {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Not a valid function name.');
-        $this->function->setName('invalid-function-name');
-    }
+//    public function testSetInvalidName(): void
+//    {
+//        $this->expectException(LogicException::class);
+//        $this->expectExceptionMessage('Not a valid function name.');
+//        $this->function->checkName('invalid-function-name');
+//    }
 
-    public function testSetAndGetCallback(): void
-    {
-        $this->assertInstanceOf(TemplateFunction::class, $this->function->setCallback('strtolower'));
-        $this->assertEquals('strtolower', $this->function->getCallback());
-    }
+//    public function testSetAndGetCallback(): void
+//    {
+//        $this->assertInstanceOf(TemplateFunction::class, $this->function->checkCallback('strtolower'));
+//        $this->assertEquals('strtolower', $this->function->getCallback());
+//    }
 
-    public function testSetInvalidCallback(): void
-    {
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Not a valid function callback.');
-        $this->function->setCallback(null);
-    }
+//    public function testSetInvalidCallback(): void
+//    {
+//        $this->expectException(LogicException::class);
+//        $this->expectExceptionMessage('Not a valid function callback.');
+//        $this->function->checkCallback(null);
+//    }
 
-    public function testFunctionCall(): void
-    {
-        $this->assertEquals('TESTDATA', $this->function->call(['TestData']));
-    }
-
-    public function testExtensionFunctionCall(): void
-    {
-        $this->function->setCallback(
-            function () {
-                return 'bar';
-            }
-        );
-        $this->assertEquals('bar', $this->function->call());
-    }
+//    public function testExtensionFunctionCall(): void
+//    {
+//        $this->function->checkCallback(
+//            function () {
+//                return 'bar';
+//            }
+//        );
+//        $this->assertEquals('bar', $this->function->call());
+//    }
 }

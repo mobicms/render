@@ -67,14 +67,14 @@ class EngineTest extends TestCase
     public function testAddData(): void
     {
         $this->engine->addData(['name' => 'TestData']);
-        $data = $this->engine->getData();
+        $data = $this->engine->getTemplateData();
         $this->assertEquals('TestData', $data['name']);
     }
 
     public function testAddDataWithTemplates(): void
     {
         $this->engine->addData(['name' => 'TestData'], ['template1', 'template2']);
-        $data1 = $this->engine->getData('template1');
+        $data1 = $this->engine->getTemplateData('template1');
         $this->assertEquals('TestData', $data1['name']);
     }
 
@@ -97,7 +97,6 @@ class EngineTest extends TestCase
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $this->assertInstanceOf(TemplateFunction::class, $this->engine->getFunction('uppercase'));
-        $this->assertEquals('strtoupper', $this->engine->getFunction('uppercase')->getCallback());
 
         $this->engine->addPath(M_PATH_ROOT);
         $result = $this->engine->render(
@@ -119,8 +118,7 @@ class EngineTest extends TestCase
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $function = $this->engine->getFunction('uppercase');
-        $this->assertEquals('uppercase', $function->getName());
-        $this->assertEquals('strtoupper', $function->getCallback());
+        $this->assertEquals('TTT', $function->call(['TTT']));
     }
 
     public function testGetInvalidFunction(): void

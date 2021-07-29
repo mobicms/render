@@ -24,7 +24,7 @@ class TemplateNameTest extends TestCase
         $name = new TemplateName($this->engine, 'main::tpl-data');
         $this->assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
-            $name->getPath()
+            $name->resolvePath()
         );
     }
 
@@ -33,7 +33,7 @@ class TemplateNameTest extends TestCase
         $name = new TemplateName($this->engine, 'tpl-data');
         $this->assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
-            $name->getPath()
+            $name->resolvePath()
         );
     }
 
@@ -54,7 +54,7 @@ class TemplateNameTest extends TestCase
         $name = new TemplateName($engine, 'tpl-data');
         $this->assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
-            $name->getPath()
+            $name->resolvePath()
         );
     }
 
@@ -63,6 +63,6 @@ class TemplateNameTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The template "main::nonexistent" does not exist.');
         $name = new TemplateName($this->engine, 'main::nonexistent');
-        $name->getPath();
+        $name->resolvePath();
     }
 }

@@ -12,9 +12,6 @@ use Throwable;
 
 use function in_array;
 
-/**
- * Template API and environment settings storage
- */
 class Engine
 {
     /*
@@ -39,12 +36,12 @@ class Engine
     /**
      * Collection of preassigned template data
      */
-    protected TemplateData $data;
+    protected TemplateData $templateData;
 
     public function __construct(string $fileExtension = 'phtml')
     {
         $this->fileExtension = $fileExtension;
-        $this->data = new TemplateData();
+        $this->templateData = new TemplateData();
     }
 
     /**
@@ -104,44 +101,25 @@ class Engine
      */
     public function addData(array $data, array $templates = []): self
     {
-        $this->data->add($data, $templates);
+        $this->templateData->add($data, $templates);
         return $this;
     }
 
     /**
      * Get all preassigned template data
-     *
-     * @param string|null $template
-     * @return array<mixed>
      */
-    public function getData(?string $template = null): array
+    public function getTemplateData(?string $template = null): array
     {
-        return $this->data->get($template);
+        return $this->templateData->get($template);
     }
 
-    /**
-     * Register a new template function
-     *
-     * @param string $name
-     * @param callable $callback
-     * @return Engine
-     */
     public function registerFunction(string $name, callable $callback): self
     {
-        if (isset($this->functions[$name])) {
-            throw new InvalidArgumentException('The template function name "' . $name . '" is already registered.');
-        }
-
-        $this->functions[$name] = new TemplateFunction($name, $callback);
+        $this->checkFunctionName($name);
+        $this->functions[$name] = new TemplateFunction($callback);
         return $this;
     }
 
-    /**
-     * Get a template function
-     *
-     * @param string $name
-     * @return TemplateFunction
-     */
     public function getFunction(string $name): TemplateFunction
     {
         if (! isset($this->functions[$name])) {
@@ -151,23 +129,11 @@ class Engine
         return $this->functions[$name];
     }
 
-    /**
-     * Check if a template function exists
-     *
-     * @param string $name
-     * @return bool
-     */
     public function doesFunctionExist(string $name): bool
     {
         return isset($this->functions[$name]);
     }
 
-    /**
-     * Load an extension
-     *
-     * @param ExtensionInterface $extension
-     * @return Engine
-     */
     public function loadExtension(ExtensionInterface $extension): self
     {
         $extension->register($this);
@@ -183,5 +149,18 @@ class Engine
     {
         $template = new Template($this, $name);
         return $template->render($params);
+    }
+
+    private function checkFunctionName(string $name): void
+    {
+        if (isset($this->functions[$name])) {
+            throw new InvalidArgumentException('The template function name "' . $name . '" is already registered.');
+        }
+
+        if (preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name) !== 1) {
+            throw new InvalidArgumentException(
+                'Not a valid function name.'
+            );
+        }
     }
 }

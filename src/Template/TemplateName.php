@@ -7,26 +7,10 @@ namespace Mobicms\Render\Template;
 use InvalidArgumentException;
 use Mobicms\Render\Engine;
 
-/**
- * A template name
- */
 class TemplateName
 {
-    /**
-     * The original name
-     */
     private string $name;
-
-    /**
-     * The parsed template folder
-     *
-     * @var array<string>
-     */
     private array $folder;
-
-    /**
-     * The parsed template filename
-     */
     private string $file;
 
     public function __construct(Engine $engine, string $name)
@@ -50,13 +34,11 @@ class TemplateName
         $this->file = $parts[1] . '.' . $engine->getFileExtension();
     }
 
-    /**
-     * Resolve template path
-     */
-    public function getPath(): string
+    public function resolvePath(): string
     {
         $folderList = array_reverse($this->folder);
 
+        /** @var string $folder */
         foreach ($folderList as $folder) {
             $path = $folder . DIRECTORY_SEPARATOR . $this->file;
 

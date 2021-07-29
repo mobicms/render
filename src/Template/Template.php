@@ -63,7 +63,7 @@ class Template
     {
         $this->engine = $engine;
         $this->name = new TemplateName($engine, $name);
-        $this->data($this->engine->getData($name));
+        $this->data($this->engine->getTemplateData($name));
     }
 
     /**
@@ -110,7 +110,7 @@ class Template
         try {
             $level = ob_get_level();
             ob_start();
-            include $this->name->getPath();
+            include $this->name->resolvePath();
             $content = (string) ob_get_clean();
 
             if ($this->layoutName !== '') {
