@@ -12,7 +12,7 @@ Detailed changes can see in the [repository log].
 - Nothing
 
 #### Changed
-- Nothing
+- Bumped minimum PHP version to 8.0
 
 #### Deprecated
 - Nothing
