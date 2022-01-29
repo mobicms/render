@@ -9,8 +9,6 @@ but can be used freely in any other projects.
 
 [![CI-Analysis](https://github.com/mobicms/render/workflows/Analysis/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3AAnalysis)
 [![CI-Tests](https://github.com/mobicms/render/workflows/Tests/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3ATests)
-[![Code Coverage](https://scrutinizer-ci.com/g/mobicms/render/badges/coverage.png)](https://scrutinizer-ci.com/g/mobicms/render/code-structure/main/code-coverage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobicms/render/badges/quality-score.png)](https://scrutinizer-ci.com/g/mobicms/render)
 
 **mobicms/render is a native PHP template system** that started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).
 The development of the original package went in a direction that was not suitable for our projects where Plates was used, so it was decided to continue development as an independent package.
