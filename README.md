@@ -9,7 +9,7 @@ but can be used freely in any other projects.
 
 [![CI-Analysis](https://github.com/mobicms/render/workflows/Analysis/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3AAnalysis)
 [![CI-Tests](https://github.com/mobicms/render/workflows/Tests/badge.svg)](https://github.com/mobicms/render/actions?query=workflow%3ATests)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mobicms_render&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mobicms_render)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mobicms_render&metric=alert_status)](https://sonarcloud.io/summary/overall?id=mobicms_render)
 
 **mobicms/render is a native PHP template system** that started on the basis of [league/plates v.3.3.0](https://github.com/thephpleague/plates/releases/tag/3.3.0).
 The development of the original package went in a direction that was not suitable for our projects where Plates was used, so it was decided to continue development as an independent package.
