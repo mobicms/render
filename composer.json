@@ -12,15 +12,15 @@
     ],
     "authors": [
         {
-            "name": "Jonathan Reinink",
-            "email": "jonathan@reinink.ca",
-            "role": "Developer"
-        },
-        {
             "name": "mobiCMS Contributors",
             "homepage": "https://github.com/mobicms/render/graphs/contributors"
         }
     ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
     "require": {
         "php": "~8.0.0 || ~8.1.0"
     },
@@ -58,10 +58,5 @@
             "@putenv XDEBUG_MODE=coverage",
             "phpunit --colors=always --coverage-clover clover.xml --log-junit report.xml"
         ]
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
     }
 }
