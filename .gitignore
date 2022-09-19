@@ -1,5 +1,7 @@
-.idea
+/.idea
 /*.cache
 /clover.xml
+/report.xml
 /phpunit.xml
-/vendor
+/results.sarif
+/vendor/
