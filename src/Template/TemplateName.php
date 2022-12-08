@@ -10,7 +10,9 @@ use Mobicms\Render\Engine;
 class TemplateName
 {
     private string $name;
+
     private array $folder;
+
     private string $file;
 
     public function __construct(Engine $engine, string $name)

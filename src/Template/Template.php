@@ -17,12 +17,19 @@ class Template
      * @var array<string>
      */
     private array $sections = [];
+
     private Engine $engine;
+
     private TemplateName $name;
+
     private array $data = [];
+
     private string $sectionName = '';
+
     private bool $appendSection = false;
+
     private string $layoutName = '';
+
     private array $layoutData = [];
 
     public function __construct(Engine $engine, string $name)
@@ -195,10 +202,8 @@ class Template
      * Apply multiple functions to variable
      *
      * @psalm-suppress MixedAssignment
-     * @param mixed $var
-     * @return mixed
      */
-    public function batch($var, string $functions)
+    public function batch(mixed $var, string $functions): mixed
     {
         foreach (explode('|', $functions) as $function) {
             if ($this->engine->doesFunctionExist($function)) {

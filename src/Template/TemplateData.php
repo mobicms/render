@@ -9,26 +9,14 @@ namespace Mobicms\Render\Template;
  */
 class TemplateData
 {
-    /**
-     * Variables shared by all templates
-     *
-     * @var array<mixed>
-     */
     protected array $sharedVariables = [];
 
-    /**
-     * Specific template variables
-     *
-     * @var array<mixed>
-     */
     protected array $templateVariables = [];
 
     /**
      * Add template data
      *
-     * @param array<mixed> $data
      * @param array<string> $templates
-     * @return TemplateData
      */
     public function add(array $data, array $templates = []): self
     {
@@ -39,9 +27,6 @@ class TemplateData
 
     /**
      * Add data shared with all templates
-     *
-     * @param array<mixed> $data
-     * @return TemplateData
      */
     public function shareWithAll(array $data): self
     {
@@ -53,16 +38,13 @@ class TemplateData
     /**
      * Add data shared with some templates
      *
-     * @psalm-suppress MixedArgument
-     * @param array<mixed> $data
      * @param array<string> $templates
-     * @return TemplateData
      */
     public function shareWithSome(array $data, array $templates): self
     {
         foreach ($templates as $template) {
             if (isset($this->templateVariables[$template])) {
-                $this->templateVariables[$template] = array_merge($this->templateVariables[$template], $data);
+                $this->templateVariables[$template] = array_merge((array) $this->templateVariables[$template], $data);
             } else {
                 $this->templateVariables[$template] = $data;
             }
@@ -73,14 +55,11 @@ class TemplateData
 
     /**
      * Get template data
-     *
-     * @psalm-suppress MixedArgument
-     * @return array<mixed>
      */
     public function get(?string $template = null): array
     {
-        if (isset($template, $this->templateVariables[$template])) {
-            return array_merge($this->sharedVariables, $this->templateVariables[$template]);
+        if (null !== $template && isset($this->templateVariables[$template])) {
+            return array_merge($this->sharedVariables, (array) $this->templateVariables[$template]);
         }
 
         return $this->sharedVariables;
