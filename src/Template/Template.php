@@ -83,7 +83,7 @@ class Template
         try {
             $level = ob_get_level();
             ob_start();
-            include $this->name->resolvePath();
+            include $this->name->resolvePath(); //NOSONAR
             $content = (string) ob_get_clean();
 
             if ($this->layoutName !== '') {
