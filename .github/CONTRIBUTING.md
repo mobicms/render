@@ -54,7 +54,7 @@ When you do begin working on your feature, here are some guidelines to consider:
   I will use this description to update the CHANGELOG. If there is no
   description or it does not adequately describe your feature, I will ask you
   to update the description.
-* Our project follows the **[PSR-12 coding standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-12-extended-coding-style-guide.md)**. Please
+* Our project follows the **[PSR-12 coding standard][psr-12]**. Please
   ensure your code does, too.
 * Please **write tests** for any new features you add.
 * Please **ensure that tests pass** before submitting your pull request.
@@ -62,7 +62,7 @@ When you do begin working on your feature, here are some guidelines to consider:
   However, running the tests locally will help save time.
 * **Use topic/feature branches.** Please do not ask to pull from your master
   branch.
-  * For more information, see "[Understanding the GitHub flow](https://guides.github.com/introduction/flow)."
+  * For more information, see "[Understanding the GitHub flow][github flow]."
 * **Submit one feature per pull request.** If you have multiple features you
   wish to submit, please break them up into separate pull requests.
 * **Write good commit messages.** Make sure each individual commit in your pull
@@ -89,3 +89,5 @@ composer check
 [contributor]: https://github.com/mobicms/render/blob/master/.github/CODE_OF_CONDUCT.md
 [issues]: https://github.com/mobicms/render/issues
 [pull requests]: https://github.com/mobicms/render/pulls
+[psr-12]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-12-extended-coding-style-guide.md
+[github flow]: https://guides.github.com/introduction/flow
