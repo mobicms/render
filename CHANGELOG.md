@@ -12,7 +12,7 @@ Detailed changes can see in the [repository log].
 - Nothing
 
 #### Changed
-- Bumped minimum PHP version to 8.0
+- Nothing
 
 #### Deprecated
 - Nothing
@@ -25,6 +25,16 @@ Detailed changes can see in the [repository log].
 
 #### Security
 - Nothing
+
+
+## [4.0.0] - 2022-12-10
+
+#### Added
+- PHP 8.2 support
+
+#### Changed
+- Bumped minimum PHP version to 8.0
+- Various internal improvements
 
 
 ## [3.0.0] - 2021-07-29
@@ -129,7 +139,8 @@ Here are the most significant changes compared to the original packag.
   - `[S] Engine::make()`
 - Some other code that is not used.
 
-[Unreleased]: https://github.com/mobicms/render/compare/3.0.0...HEAD
+[Unreleased]: https://github.com/mobicms/render/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/mobicms/render/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/mobicms/render/compare/2.1.0...3.0.0
 [2.1.0]: https://github.com/mobicms/render/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/mobicms/render/compare/1.1.0...2.0.0
