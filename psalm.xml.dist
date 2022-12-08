@@ -3,6 +3,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+        findUnusedPsalmSuppress="true"
+        findUnusedCode="true"
 >
     <projectFiles>
         <directory name="src"/>
@@ -10,4 +12,38 @@
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Mobicms\Render\Engine::__construct"/>
+                <referencedMethod name="Mobicms\Render\Engine::addData"/>
+                <referencedMethod name="Mobicms\Render\Engine::addPath"/>
+                <referencedMethod name="Mobicms\Render\Engine::loadExtension"/>
+                <referencedMethod name="Mobicms\Render\Engine::registerFunction"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::__call"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::e"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::fetch"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::layout"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::push"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::section"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::sectionAppend"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::sectionReplace"/>
+                <referencedMethod name="Mobicms\Render\Template\Template::stop"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+
+        <PossiblyUnusedParam>
+            <errorLevel type="suppress">
+                <file name="src/Template/Template.php"/>
+            </errorLevel>
+        </PossiblyUnusedParam>
+
+        <PossiblyUnusedReturnValue>
+            <errorLevel type="suppress">
+                <file name="src/Template/Template.php"/>
+                <file name="src/Template/TemplateData.php"/>
+            </errorLevel>
+        </PossiblyUnusedReturnValue>
+    </issueHandlers>
 </psalm>
