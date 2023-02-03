@@ -33,6 +33,7 @@ class TemplateName
         }
 
         $this->folder = $engine->getPath($parts[0]);
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
         $this->file = $parts[1] . '.' . $engine->getFileExtension();
     }
 

@@ -203,7 +203,7 @@ class Template
      *
      * @psalm-suppress MixedAssignment
      */
-    public function batch(mixed $var, string $functions): mixed
+    public function batch(string $var, string $functions): mixed
     {
         foreach (explode('|', $functions) as $function) {
             if ($this->engine->doesFunctionExist($function)) {
