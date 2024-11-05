@@ -71,7 +71,6 @@ class Template
     /**
      * Render the template and layout
      *
-     * @psalm-suppress UnresolvableInclude
      * @throws Throwable
      */
     public function render(array $data = []): string
@@ -200,8 +199,6 @@ class Template
 
     /**
      * Apply multiple functions to variable
-     *
-     * @psalm-suppress MixedAssignment
      */
     public function batch(string $var, string $functions): mixed
     {

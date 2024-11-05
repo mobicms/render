@@ -96,6 +96,7 @@ class Engine
     /**
      * Add preassigned template data
      *
+     * @param array<mixed> $data
      * @param array<string> $templates
      */
     public function addData(array $data, array $templates = []): self
@@ -106,6 +107,8 @@ class Engine
 
     /**
      * Get all preassigned template data
+     *
+     * @return array<mixed>
      */
     public function getTemplateData(?string $template = null): array
     {
@@ -151,6 +154,7 @@ class Engine
     /**
      * Create a new template and render it
      *
+     * @param array<mixed> $params
      * @throws Throwable
      */
     public function render(string $name, array $params = []): string
