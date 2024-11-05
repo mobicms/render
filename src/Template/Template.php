@@ -22,6 +22,7 @@ class Template
 
     private TemplateName $name;
 
+    /** @var array<mixed> */
     private array $data = [];
 
     private string $sectionName = '';
@@ -30,6 +31,7 @@ class Template
 
     private string $layoutName = '';
 
+    /** @var array<mixed> */
     private array $layoutData = [];
 
     public function __construct(Engine $engine, string $name)
@@ -41,8 +43,10 @@ class Template
 
     /**
      * Magic method used to call extension functions
+     *
+     * @param array<mixed> $arguments
      */
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         return call_user_func_array($this->engine->getFunction($name), $arguments);
     }
@@ -60,6 +64,9 @@ class Template
 
     /**
      * Assign or get template data
+     *
+     * @param array<mixed> $data
+     * @return array<mixed>
      */
     public function data(array $data = []): array
     {
@@ -71,6 +78,7 @@ class Template
     /**
      * Render the template and layout
      *
+     * @param array<mixed> $data
      * @throws Throwable
      */
     public function render(array $data = []): string
@@ -103,6 +111,8 @@ class Template
 
     /**
      * Set the template's layout
+     *
+     * @param array<mixed> $data
      */
     public function layout(string $name, array $data = []): void
     {
@@ -190,6 +200,7 @@ class Template
     /**
      * Fetch a rendered template
      *
+     * @param array<mixed> $data
      * @throws Throwable
      */
     public function fetch(string $name, array $data = []): string

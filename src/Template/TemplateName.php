@@ -11,6 +11,7 @@ class TemplateName
 {
     private string $name;
 
+    /** @var array<string> */
     private array $folder;
 
     private string $file;
