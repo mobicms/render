@@ -56,11 +56,11 @@ class Engine
      */
     public function addPath(string $folder, string $nameSpace = 'main'): self
     {
-        if (empty($folder)) {
+        if ($folder === '') {
             throw new InvalidArgumentException('You must specify folder.');
         }
 
-        if (empty($nameSpace)) {
+        if ($nameSpace === '') {
             throw new InvalidArgumentException('Namespace cannot be empty.');
         }
 
@@ -68,7 +68,7 @@ class Engine
 
         if (
             isset($this->nameSpaces[$nameSpace])
-            && in_array($folder, $this->nameSpaces[$nameSpace])
+            && in_array($folder, $this->nameSpaces[$nameSpace], true)
         ) {
             throw new InvalidArgumentException(
                 'The "' . $folder . '" folder in the "' . $nameSpace . '" namespace already exists.'

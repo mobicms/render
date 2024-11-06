@@ -20,7 +20,7 @@ class EngineTest extends TestCase
 
     public function testGetFileExtension(): void
     {
-        $this->assertEquals('phtml', $this->engine->getFileExtension());
+        self::assertEquals('phtml', $this->engine->getFileExtension());
     }
 
     public function testAddAndGetSeveralFolders(): void
@@ -28,9 +28,9 @@ class EngineTest extends TestCase
         $this->engine->addPath('folder1', 'ns1');
         $this->engine->addPath('folder2', 'ns1');
         $this->engine->addPath(M_PATH_ROOT);
-        $this->assertContains('folder1', $this->engine->getPath('ns1'));
-        $this->assertContains('folder2', $this->engine->getPath('ns1'));
-        $this->assertContains(rtrim(M_PATH_ROOT, '/\\'), $this->engine->getPath('main'));
+        self::assertContains('folder1', $this->engine->getPath('ns1'));
+        self::assertContains('folder2', $this->engine->getPath('ns1'));
+        self::assertContains(rtrim(M_PATH_ROOT, '/\\'), $this->engine->getPath('main'));
     }
 
     public function testAddFolderWithEmptyNamespace(): void
@@ -66,14 +66,14 @@ class EngineTest extends TestCase
     {
         $this->engine->addData(['name' => 'TestData']);
         $data = $this->engine->getTemplateData();
-        $this->assertEquals('TestData', $data['name']);
+        self::assertEquals('TestData', $data['name']);
     }
 
     public function testAddDataWithTemplates(): void
     {
         $this->engine->addData(['name' => 'TestData'], ['template1', 'template2']);
         $data1 = $this->engine->getTemplateData('template1');
-        $this->assertEquals('TestData', $data1['name']);
+        self::assertEquals('TestData', $data1['name']);
     }
 
     /**
@@ -82,7 +82,7 @@ class EngineTest extends TestCase
     public function testRenderTemplate(): void
     {
         $this->engine->addPath(M_PATH_ROOT);
-        $this->assertEquals(
+        self::assertEquals(
             'Hello!',
             $this->engine->render('main::tpl-data', ['var' => 'Hello!'])
         );
@@ -94,14 +94,12 @@ class EngineTest extends TestCase
     public function testRegisterFunction(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
-        $this->assertIsCallable($this->engine->getFunction('uppercase'));
-
         $this->engine->addPath(M_PATH_ROOT);
         $result = $this->engine->render(
             'main::tpl-func-uppercase',
             ['var' => 'abcdefgh']
         );
-        $this->assertEquals('ABCDEFGH', $result);
+        self::assertEquals('ABCDEFGH', $result);
     }
 
     public function testRegisterExistFunction(): void
@@ -122,7 +120,7 @@ class EngineTest extends TestCase
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
         $function = $this->engine->getFunction('uppercase');
-        $this->assertEquals('TTT', $function('TTT'));
+        self::assertEquals('TTT', $function('TTT'));
     }
 
     public function testGetInvalidFunction(): void
@@ -135,14 +133,14 @@ class EngineTest extends TestCase
     public function testDoesFunctionExist(): void
     {
         $this->engine->registerFunction('uppercase', 'strtoupper');
-        $this->assertTrue($this->engine->doesFunctionExist('uppercase'));
-        $this->assertFalse($this->engine->doesFunctionExist('some_function_that_does_not_exist'));
+        self::assertTrue($this->engine->doesFunctionExist('uppercase'));
+        self::assertFalse($this->engine->doesFunctionExist('some_function_that_does_not_exist'));
     }
 
     public function testLoadExtension(): void
     {
-        $this->assertFalse($this->engine->doesFunctionExist('foo'));
+        self::assertFalse($this->engine->doesFunctionExist('foo'));
         $this->engine->loadExtension(new FakeExtension());
-        $this->assertTrue($this->engine->doesFunctionExist('foo'));
+        self::assertTrue($this->engine->doesFunctionExist('foo'));
     }
 }

@@ -22,7 +22,7 @@ class TemplateNameTest extends TestCase
     public function testGetPath(): void
     {
         $name = new TemplateName($this->engine, 'main::tpl-data');
-        $this->assertEquals(
+        self::assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
             $name->resolvePath()
         );
@@ -31,7 +31,7 @@ class TemplateNameTest extends TestCase
     public function testGetPathWithoutNamespace(): void
     {
         $name = new TemplateName($this->engine, 'tpl-data');
-        $this->assertEquals(
+        self::assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
             $name->resolvePath()
         );
@@ -52,7 +52,7 @@ class TemplateNameTest extends TestCase
         $engine->addPath('anotherfolder');
 
         $name = new TemplateName($engine, 'tpl-data');
-        $this->assertEquals(
+        self::assertEquals(
             M_PATH_ROOT . 'tpl-data.phtml',
             $name->resolvePath()
         );

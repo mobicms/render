@@ -23,6 +23,7 @@ class TemplateData
      */
     public function add(array $data, array $templates = []): self
     {
+        /** @phpstan-ignore empty.notAllowed */
         return empty($templates)
             ? $this->shareWithAll($data)
             : $this->shareWithSome($data, $templates);
