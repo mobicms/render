@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7e203bf9a5ca45145a41312038bfbca",
+    "content-hash": "31091b1b2b93c188e766913b4155d97f",
     "packages": [],
     "packages-dev": [
         {
@@ -370,24 +370,25 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.7",
+            "version": "2.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0"
+                "reference": "8019243b33c59bd2d31df7be68964b6b2814a5b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
-                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8019243b33c59bd2d31df7be68964b6b2814a5b1",
+                "reference": "8019243b33c59bd2d31df7be68964b6b2814a5b1",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "php": "^7.4|^8.0"
             },
             "conflict": {
                 "phpstan/phpstan-shim": "*"
             },
+            "default-branch": true,
             "bin": [
                 "phpstan",
                 "phpstan.phar"
@@ -424,7 +425,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-18T11:12:07+00:00"
+            "time": "2024-11-05T13:26:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1969,9 +1970,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {},
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "~8.2 || ~8.3"
