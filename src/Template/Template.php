@@ -188,7 +188,7 @@ class Template
     /**
      * Returns the content for a section block
      */
-    public function section(string $name, string $default = null): ?string
+    public function section(string $name, string $default = ''): string
     {
         if (! isset($this->sections[$name])) {
             return $default;
@@ -231,9 +231,9 @@ class Template
     /**
      * Escape string
      */
-    public function e(string $string, string $functions = null): string
+    public function e(string $string, string $functions = ''): string
     {
-        if (null !== $functions) {
+        if ('' !== $functions) {
             $string = (string) $this->batch($string, $functions);
         }
 
