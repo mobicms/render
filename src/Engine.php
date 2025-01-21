@@ -65,17 +65,8 @@ class Engine
         }
 
         $folder = rtrim($folder, '/\\');
-
-        if (
-            isset($this->nameSpaces[$nameSpace])
-            && in_array($folder, $this->nameSpaces[$nameSpace], true)
-        ) {
-            throw new InvalidArgumentException(
-                'The "' . $folder . '" folder in the "' . $nameSpace . '" namespace already exists.'
-            );
-        }
-
         $this->nameSpaces[$nameSpace][] = $folder;
+
         return $this;
     }
 

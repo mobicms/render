@@ -6,141 +6,102 @@ namespace MobicmsTest\Render;
 
 use InvalidArgumentException;
 use Mobicms\Render\Engine;
-use PHPUnit\Framework\TestCase;
-use Throwable;
 
-class EngineTest extends TestCase
-{
-    private Engine $engine;
+test('The default template file extension should be "phtml"', function () {
+    $engine = new Engine();
+    expect($engine->getFileExtension())->toBe('phtml');
+});
 
-    public function setUp(): void
-    {
-        $this->engine = new Engine();
-    }
+test('Let\'s try to add and then get several folders', function () {
+    $engine = new Engine();
+    $engine->addPath('folder1', 'ns1')
+        ->addPath('folder2', 'ns1')
+        ->addPath(M_PATH_ROOT);
+    expect($engine->getPath('ns1'))->toContain('folder1')
+        ->and($engine->getPath('ns1'))->toContain('folder2')
+        ->and($engine->getPath('main'))->toContain(rtrim(M_PATH_ROOT, '/\\'));
+});
 
-    public function testGetFileExtension(): void
-    {
-        self::assertEquals('phtml', $this->engine->getFileExtension());
-    }
+test('Adding a folder with an empty namespace throws an exception', function () {
+    $engine = new Engine();
+    $engine->addPath('folder', '');
+})->throws(InvalidArgumentException::class, 'Namespace cannot be empty.');
 
-    public function testAddAndGetSeveralFolders(): void
-    {
-        $this->engine->addPath('folder1', 'ns1');
-        $this->engine->addPath('folder2', 'ns1');
-        $this->engine->addPath(M_PATH_ROOT);
-        self::assertContains('folder1', $this->engine->getPath('ns1'));
-        self::assertContains('folder2', $this->engine->getPath('ns1'));
-        self::assertContains(rtrim(M_PATH_ROOT, '/\\'), $this->engine->getPath('main'));
-    }
+test('Adding a folder with an empty path throws an exception', function () {
+    $engine = new Engine();
+    $engine->addPath('');
+})->throws(InvalidArgumentException::class, 'You must specify folder.');
 
-    public function testAddFolderWithEmptyNamespace(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Namespace cannot be empty.');
-        $this->engine->addPath('folder', '');
-    }
+test('Accessing a nonexistent namespace throws an exception', function () {
+    $engine = new Engine();
+    $engine->getPath('name');
+})->throws(InvalidArgumentException::class, 'The template namespace "name" was not found.');
 
-    public function testAddFolderWithEmptyFolder(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('You must specify folder.');
-        $this->engine->addPath('');
-    }
+test('Ability to pass data to a template', function () {
+    $engine = new Engine();
 
-    public function testAddFolderWithFoldersConflict(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "test" folder in the "main" namespace already exists.');
-        $this->engine->addPath('test');
-        $this->engine->addPath('test');
-    }
+    // Share data with all templates
+    $engine->addData(['all' => 'AllTemplatesData']);
 
-    public function testGetNonexistentFolder(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The template namespace "name" was not found.');
-        $this->engine->getPath('name');
-    }
+    // Passing data to a specific template
+    $engine->addData(['tpl1' => 'Tpl1Data'], ['template1']);
+    $engine->addData(['tpl2' => 'Tpl2Data'], ['template2']);
 
-    public function testAddData(): void
-    {
-        $this->engine->addData(['name' => 'TestData']);
-        $data = $this->engine->getTemplateData();
-        self::assertEquals('TestData', $data['name']);
-    }
+    expect($engine->getTemplateData()['all'])->toBe('AllTemplatesData')
+        ->and($engine->getTemplateData('template1')['tpl1'])->toBe('Tpl1Data')
+        ->and($engine->getTemplateData('template2')['tpl2'])->toBe('Tpl2Data');
+});
 
-    public function testAddDataWithTemplates(): void
-    {
-        $this->engine->addData(['name' => 'TestData'], ['template1', 'template2']);
-        $data1 = $this->engine->getTemplateData('template1');
-        self::assertEquals('TestData', $data1['name']);
-    }
+test('Can render template', function () {
+    $engine = new Engine();
+    $engine->addPath(M_PATH_ROOT);
+    expect($engine->render('main::tpl-data', ['var' => 'Hello!']))->toBe('Hello!');
+});
 
-    /**
-     * @throws Throwable
-     */
-    public function testRenderTemplate(): void
-    {
-        $this->engine->addPath(M_PATH_ROOT);
-        self::assertEquals(
-            'Hello!',
-            $this->engine->render('main::tpl-data', ['var' => 'Hello!'])
-        );
-    }
+test('Ability to register your own functions', function () {
+    $engine = new Engine();
+    $engine->registerFunction('uppercase', 'strtoupper');
+    $engine->addPath(M_PATH_ROOT);
+    $result = $engine->render(
+        'main::tpl-func-uppercase',
+        ['var' => 'abcdefgh']
+    );
+    expect($result)->toBe('ABCDEFGH');
+});
 
-    /**
-     * @throws Throwable
-     */
-    public function testRegisterFunction(): void
-    {
-        $this->engine->registerFunction('uppercase', 'strtoupper');
-        $this->engine->addPath(M_PATH_ROOT);
-        $result = $this->engine->render(
-            'main::tpl-func-uppercase',
-            ['var' => 'abcdefgh']
-        );
-        self::assertEquals('ABCDEFGH', $result);
-    }
+test('Trying to register an existing function throws an exception', function () {
+    $engine = new Engine();
+    $engine->registerFunction('uppercase', 'strtoupper');
+    $engine->registerFunction('uppercase', 'strtoupper');
+})->throws(InvalidArgumentException::class, 'The template function name "uppercase" is already registered.');
 
-    public function testRegisterExistFunction(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The template function name "uppercase" is already registered.');
-        $this->engine->registerFunction('uppercase', 'strtoupper');
-        $this->engine->registerFunction('uppercase', 'strtoupper');
-    }
+test('Trying to register a function with an incorrect name throws an exception', function () {
+    $engine = new Engine();
+    $engine->registerFunction('invalid name', 'strtoupper');
+})->throws(InvalidArgumentException::class);
 
-    public function testRegisterFunctionWithInvalidName(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->engine->registerFunction('invalid-name', 'strtoupper');
-    }
+test('Possibility to request a registered function', function () {
+    $engine = new Engine();
+    $engine->registerFunction('uppercase', 'strtoupper');
+    $function = $engine->getFunction('uppercase');
+    expect($function('ttt'))->toBe('TTT');
+});
 
-    public function testGetFunction(): void
-    {
-        $this->engine->registerFunction('uppercase', 'strtoupper');
-        $function = $this->engine->getFunction('uppercase');
-        self::assertEquals('TTT', $function('TTT'));
-    }
+test('Trying to request a non-existent function throws an exception', function () {
+    $engine = new Engine();
+    $engine->getFunction('function_does_not_exist');
+})->throws(InvalidArgumentException::class, 'The template function "function_does_not_exist" was not found.');
 
-    public function testGetInvalidFunction(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The template function "some_function_that_does_not_exist" was not found.');
-        $this->engine->getFunction('some_function_that_does_not_exist');
-    }
+test('Ability to check whether a function is registered', function () {
+    $engine = new Engine();
+    $engine->registerFunction('uppercase', 'strtoupper');
+    expect($engine->doesFunctionExist('uppercase'))->toBeTrue()
+        ->and($engine->doesFunctionExist('function_does_not_exist'))->toBeFalse();
+});
 
-    public function testDoesFunctionExist(): void
-    {
-        $this->engine->registerFunction('uppercase', 'strtoupper');
-        self::assertTrue($this->engine->doesFunctionExist('uppercase'));
-        self::assertFalse($this->engine->doesFunctionExist('some_function_that_does_not_exist'));
-    }
-
-    public function testLoadExtension(): void
-    {
-        self::assertFalse($this->engine->doesFunctionExist('foo'));
-        $this->engine->loadExtension(new FakeExtension());
-        self::assertTrue($this->engine->doesFunctionExist('foo'));
-    }
-}
+test('Ability to load extensions', function () {
+    $engine = new Engine();
+    expect($engine->doesFunctionExist('foo'))->toBeFalse();
+    $engine->loadExtension(new FakeExtension());
+    expect($engine->doesFunctionExist('foo'))->toBeTrue();
+});
