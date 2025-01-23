@@ -9,8 +9,6 @@ use Mobicms\Render\Template\Template;
 use Mobicms\Render\Template\TemplateData;
 use Throwable;
 
-use function in_array;
-
 class Engine
 {
     /*
