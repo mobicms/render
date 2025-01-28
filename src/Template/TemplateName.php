@@ -29,7 +29,7 @@ class TemplateName
             );
         }
 
-        if ($count === 1) {
+        if (!isset($parts[1])) {
             array_unshift($parts, 'main');
         }
 
@@ -41,7 +41,6 @@ class TemplateName
     {
         $folderList = array_reverse($this->folder);
 
-        /** @var string $folder */
         foreach ($folderList as $folder) {
             $path = $folder . DIRECTORY_SEPARATOR . $this->file;
 

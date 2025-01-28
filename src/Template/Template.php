@@ -20,7 +20,7 @@ class Template
 
     private Engine $engine;
 
-    private TemplateName $name;
+    private string $templateFile;
 
     /** @var array<mixed> */
     private array $data = [];
@@ -37,7 +37,8 @@ class Template
     public function __construct(Engine $engine, string $name)
     {
         $this->engine = $engine;
-        $this->name = new TemplateName($engine, $name);
+        $templateName = new TemplateName($engine, $name);
+        $this->templateFile = $templateName->resolvePath();
         $this->data($this->engine->getTemplateData($name));
     }
 
@@ -90,7 +91,8 @@ class Template
         try {
             $level = ob_get_level();
             ob_start();
-            include $this->name->resolvePath(); //NOSONAR
+            /** @psalm-suppress UnresolvableInclude */
+            include $this->templateFile; //NOSONAR
             $content = (string) ob_get_clean();
 
             if ($this->layoutName !== '') {
@@ -179,8 +181,8 @@ class Template
         }
 
         $this->sections[$this->sectionName] = $this->appendSection
-            ? $this->sections[$this->sectionName] . ob_get_clean()
-            : ob_get_clean();
+            ? $this->sections[$this->sectionName] . (string) ob_get_clean()
+            : (string) ob_get_clean();
         $this->sectionName = '';
         $this->appendSection = false;
     }
@@ -215,8 +217,10 @@ class Template
     {
         foreach (explode('|', $functions) as $function) {
             if ($this->engine->doesFunctionExist($function)) {
+                /** @var mixed $var */
                 $var = call_user_func([$this, $function], $var);
             } elseif (is_callable($function)) {
+                /** @var mixed $var */
                 $var = $function($var);
             } else {
                 throw new LogicException(

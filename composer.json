@@ -54,9 +54,8 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "static-analysis": "psalm --show-info=true",
+        "static-analysis": "psalm --no-diff --show-info=true",
         "taint-analysis": "psalm --taint-analysis --show-info=true --report=results.sarif",
-        "psalm-fix": "psalm --alter --issues=PossiblyUnusedMethod --dry-run",
         "test": "pest --colors=always",
         "test-coverage": [
             "@putenv XDEBUG_MODE=coverage",
