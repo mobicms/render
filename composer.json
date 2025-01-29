@@ -22,8 +22,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "~8.2 || ~8.3 || ~8.4"
     },
@@ -55,7 +53,6 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "static-analysis": "psalm --no-diff --show-info=true",
-        "taint-analysis": "psalm --taint-analysis --show-info=true --report=results.sarif",
         "test": "pest --colors=always",
         "test-coverage": [
             "@putenv XDEBUG_MODE=coverage",
