@@ -41,7 +41,7 @@
             "tests/stubs/constants.php"
         ],
         "psr-4": {
-            "MobicmsTest\\Render\\": "tests/unit"
+            "MobicmsTest\\Stubs\\": "tests/stubs/src"
         }
     },
     "scripts": {

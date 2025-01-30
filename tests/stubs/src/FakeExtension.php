@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MobicmsTest\Render;
+namespace MobicmsTest\Stubs;
 
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;

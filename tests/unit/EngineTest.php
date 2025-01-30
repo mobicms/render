@@ -6,6 +6,7 @@ namespace MobicmsTest\Render;
 
 use InvalidArgumentException;
 use Mobicms\Render\Engine;
+use MobicmsTest\Stubs\FakeExtension;
 
 $engine = new Engine();
 
