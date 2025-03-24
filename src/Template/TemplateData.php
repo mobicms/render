@@ -7,7 +7,7 @@ namespace Mobicms\Render\Template;
 /**
  * Preassigned template data
  */
-class TemplateData
+final class TemplateData
 {
     /** @var array<mixed> */
     protected array $sharedVariables = [];

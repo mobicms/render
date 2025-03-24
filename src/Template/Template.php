@@ -11,7 +11,7 @@ use Throwable;
 /**
  * Container which holds template data and provides access to template functions
  */
-class Template
+final class Template
 {
     /**
      * @var array<string>

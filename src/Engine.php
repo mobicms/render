@@ -9,7 +9,7 @@ use Mobicms\Render\Template\Template;
 use Mobicms\Render\Template\TemplateData;
 use Throwable;
 
-class Engine
+final class Engine
 {
     /*
      * Template file extension

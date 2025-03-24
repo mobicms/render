@@ -7,7 +7,7 @@ namespace Mobicms\Render\Template;
 use InvalidArgumentException;
 use Mobicms\Render\Engine;
 
-class TemplateName
+final class TemplateName
 {
     private string $name;
 
