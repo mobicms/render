@@ -10,6 +10,8 @@ use Throwable;
 
 /**
  * Container which holds template data and provides access to template functions
+ *
+ * @psalm-api
  */
 final class Template
 {
@@ -81,12 +83,12 @@ final class Template
      *
      * @param array<mixed> $data
      * @throws Throwable
+     *
+     * @psalm-suppress UnusedParam
      */
     public function render(array $data = []): string
     {
-        $this->data($data);
-        unset($data);
-        extract($this->data, EXTR_SKIP);
+        extract($this->data($data), EXTR_SKIP);
 
         try {
             $level = ob_get_level();

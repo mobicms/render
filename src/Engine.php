@@ -9,6 +9,9 @@ use Mobicms\Render\Template\Template;
 use Mobicms\Render\Template\TemplateData;
 use Throwable;
 
+/**
+ * @psalm-api
+ */
 final class Engine
 {
     /*
