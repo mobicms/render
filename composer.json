@@ -37,9 +37,6 @@
         }
     },
     "autoload-dev": {
-        "files": [
-            "tests/stubs/constants.php"
-        ],
         "psr-4": {
             "MobicmsTest\\Stubs\\": "tests/stubs/src"
         }

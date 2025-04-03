@@ -14,26 +14,41 @@ test('The default template file extension should be "phtml"', function () use ($
     expect($engine->getFileExtension())->toBe('phtml');
 });
 
-test('Let\'s try to add and then get several folders', function () use ($engine) {
-    $engine->addPath('folder1', 'ns1')
-        ->addPath('folder2', 'ns1')
-        ->addPath(M_PATH_ROOT);
-    expect($engine->getPath('ns1'))->toContain('folder1')
-        ->and($engine->getPath('ns1'))->toContain('folder2')
-        ->and($engine->getPath('main'))->toContain(rtrim(M_PATH_ROOT, '/\\'));
+describe('addPath()', function () {
+    $engine = new Engine();
+
+    test('let\'s try to add and then get several folders', function () use ($engine) {
+        $engine->addPath('folder1', 'ns1')
+            ->addPath('folder2', 'ns1')
+            ->addPath(M_PATH_ROOT);
+        expect($engine->getPath('ns1'))->toContain('folder1')
+            ->and($engine->getPath('ns1'))->toContain('folder2')
+            ->and($engine->getPath('main'))->toContain(rtrim(M_PATH_ROOT, '/\\'));
+    });
+
+    it('throws an exception on adding a folder with an empty namespace', function () use ($engine) {
+        $engine->addPath('folder', '');
+    })->throws(InvalidArgumentException::class, 'Namespace cannot be empty.');
+
+    it('throws an exception on adding a folder with an empty path', function () use ($engine) {
+        $engine->addPath('');
+    })->throws(InvalidArgumentException::class, 'You must specify folder.');
 });
 
-test('Ability to pass data to a template', function () use ($engine) {
-    // Share data with all templates
-    $engine->addData(['all' => 'AllTemplatesData']);
+describe('addData()', function () {
+    $engine = new Engine();
 
-    // Passing data to a specific template
-    $engine->addData(['tpl1' => 'Tpl1Data'], ['template1']);
-    $engine->addData(['tpl2' => 'Tpl2Data'], ['template2']);
+    test('share data with all templates', function () use ($engine) {
+        $engine->addData(['all' => 'AllTemplatesData']);
+        expect($engine->getTemplateData()['all'])->toBe('AllTemplatesData');
+    });
 
-    expect($engine->getTemplateData()['all'])->toBe('AllTemplatesData')
-        ->and($engine->getTemplateData('template1')['tpl1'])->toBe('Tpl1Data')
-        ->and($engine->getTemplateData('template2')['tpl2'])->toBe('Tpl2Data');
+    test('passing data to a specific template', function () use ($engine) {
+        $engine->addData(['tpl1' => 'Tpl1Data'], ['template1']);
+        $engine->addData(['tpl2' => 'Tpl2Data'], ['template2']);
+        expect($engine->getTemplateData('template1')['tpl1'])->toBe('Tpl1Data')
+            ->and($engine->getTemplateData('template2')['tpl2'])->toBe('Tpl2Data');
+    });
 });
 
 test('Can render template', function () use ($engine) {
@@ -70,14 +85,6 @@ test('Ability to load extensions', function () use ($engine) {
 
 describe('Exception handling:', function () {
     $engine = new Engine();
-
-    test('adding a folder with an empty namespace', function () use ($engine) {
-        $engine->addPath('folder', '');
-    })->throws(InvalidArgumentException::class, 'Namespace cannot be empty.');
-
-    test('adding a folder with an empty path', function () use ($engine) {
-        $engine->addPath('');
-    })->throws(InvalidArgumentException::class, 'You must specify folder.');
 
     test('accessing a nonexistent namespace', function () use ($engine) {
         $engine->getPath('name');
