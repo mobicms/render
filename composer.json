@@ -26,10 +26,10 @@
         "php": "~8.2 || ~8.3 || ~8.4"
     },
     "require-dev": {
-        "pestphp/pest": "^3.8",
-        "slevomat/coding-standard": "^8.19",
+        "pestphp/pest": "^v4.4",
+        "slevomat/coding-standard": "^8.22",
         "squizlabs/php_codesniffer": "^3.13",
-        "vimeo/psalm": "^6.12"
+        "vimeo/psalm": "^6.15"
     },
     "autoload": {
         "psr-4": {
